@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1214">
+<meta property="og:title" content="SanityAI">
+<meta property="og:image" content="keys/k2-d.webp">
+<link rel="preload" as="image" href="keys/k1-d.webp">
+<title>SanityAI</title>
+<meta name="description" content="SanityAI makes brands visible in AI search, automates the follow-up and steers paid media toward revenue. Hint tracks how ChatGPT, Perplexity, Gemini and Claude talk about you; Steer catches performance loops before they cost you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Geist:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: a sticky full-screen canvas plays one continuous film reel scrubbed by scroll; copy sits in a left column on a hairline frame and holds while each scene rests. */
+:root{
+  --night:#0b1214;
+  --tide:#14211f;
+  --fog:#e4eae7;
+  --mist:#a3b3ae;
+  --beam:#f0a83c;
+  --line:rgba(228,234,231,.16);
+  --display:"Newsreader","Iowan Old Style",Georgia,serif;
+  --text:"Geist",ui-sans-serif,-apple-system,"Segoe UI",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --colL:7vw;
+  color-scheme:dark;
+}
+html,body{background:var(--night);color:var(--fog)}
+body{font-family:var(--text);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--beam);outline-offset:3px}
+
+.top{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(env(safe-area-inset-top,0px) + 18px) var(--colL) 18px;pointer-events:none}
+.top>*{pointer-events:auto}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-size:22px;letter-spacing:-.01em}
+.mark svg{width:18px;height:18px}
+.cta{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;
+  background:var(--beam);color:var(--night);padding:11px 16px;display:inline-flex;gap:10px;align-items:center;transition:transform .4s var(--ease)}
+.cta:hover{transform:translateY(-2px)}
+.cta .arw{display:inline-block;transition:transform .4s var(--ease)}
+.cta:hover .arw{transform:translateX(3px)}
+
+.rail{position:fixed;left:calc(var(--colL) - 4px);top:50%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.rail button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);opacity:.55;transition:opacity .4s,color .4s}
+.rail button::before{content:"";width:14px;height:1px;background:currentColor;transition:width .5s var(--ease)}
+.rail button[aria-current="true"]{opacity:1;color:var(--fog)}
+.rail button[aria-current="true"]::before{width:34px;background:var(--beam)}
+.rail button:focus-visible{outline:2px solid var(--beam);outline-offset:4px}
+
+.story{position:relative}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--night)}
+canvas.film{position:absolute;inset:0;width:100%;height:100%;display:block}
+.shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(11,18,20,.82) 0%,rgba(11,18,20,.45) 34%,rgba(11,18,20,0) 58%),linear-gradient(0deg,rgba(11,18,20,.55),rgba(11,18,20,0) 30%),linear-gradient(180deg,rgba(11,18,20,.45),rgba(11,18,20,0) 18%)}
+.grid{position:absolute;inset:0;pointer-events:none}
+.grid i{position:absolute;background:var(--line)}
+.grid .v1{left:var(--colL);top:0;bottom:0;width:1px}
+.grid .v2{right:var(--colL);top:0;bottom:0;width:1px}
+.grid .h1{left:0;right:0;top:84px;height:1px}
+.grid .h2{left:0;right:0;bottom:64px;height:1px}
+.grid b{position:absolute;width:9px;height:9px;transform:translate(-50%,-50%);opacity:.6;background:
+  linear-gradient(var(--fog),var(--fog)) center/1px 9px no-repeat,linear-gradient(var(--fog),var(--fog)) center/9px 1px no-repeat}
+.readout{position:absolute;right:var(--colL);bottom:22px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--mist);font-variant-numeric:tabular-nums;text-transform:uppercase;display:flex;gap:14px;align-items:center}
+.readout .bar{width:90px;height:1px;background:var(--line);position:relative;overflow:hidden}
+.readout .bar i{position:absolute;inset:0;background:var(--beam);transform-origin:left;transform:scaleX(0)}
+.loading{position:absolute;left:var(--colL);bottom:22px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--mist);text-transform:uppercase;padding-left:16px;transition:opacity .6s}
+.loading.done{opacity:0}
+
+.copy{position:absolute;left:calc(var(--colL) + 170px);top:50%;transform:translateY(-50%);width:min(500px,33vw);height:0}
+.beat{position:absolute;left:0;top:0;transform:translateY(calc(-50% + 22px));opacity:0;visibility:hidden;width:100%;
+  transition:opacity .6s var(--ease),transform .8s var(--ease),visibility 0s .6s}
+.beat.on{opacity:1;visibility:visible;transform:translateY(-50%);transition:opacity .6s var(--ease),transform .8s var(--ease),visibility 0s}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--beam);display:flex;gap:12px;align-items:center;margin:0 0 20px}
+.eyebrow span{color:var(--mist)}
+h1,h2{font-family:var(--display);font-weight:300;font-size:clamp(34px,4.3vw,70px);line-height:.98;letter-spacing:-.025em;margin:0;text-wrap:balance;text-shadow:0 2px 30px rgba(11,18,20,.5)}
+h1 em,h2 em{font-style:italic;color:var(--beam)}
+.beat p{margin:20px 0 0;max-width:38ch;opacity:.9;text-shadow:0 1px 16px rgba(11,18,20,.7)}
+.meta{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);padding:6px 9px;color:var(--fog);background:rgba(11,18,20,.35)}
+.hero-cta{margin-top:28px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.ghost{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
+
+form{margin-top:24px;display:grid;gap:10px;max-width:440px}
+.field{position:relative}
+.field label{position:absolute;z-index:1;pointer-events:none;left:14px;top:9px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+.field input,.field textarea{width:100%;box-sizing:border-box;background:rgba(20,33,31,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(228,234,231,.26);color:var(--fog);font:15px/1.4 var(--text);padding:28px 14px 11px;border-radius:2px;outline:none;transition:border-color .3s}
+.field textarea{min-height:88px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--beam)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+form .cta{justify-self:start;margin-top:4px}
+.note{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mist);min-height:1.4em;margin:2px 0 0}
+.note.ok{color:var(--beam)}
+
+footer{position:relative;background:var(--night);border-top:1px solid var(--line);padding-block:40px 56px;padding-inline:var(--colL);
+  display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between;font-size:13px;color:var(--mist)}
+footer strong{font-family:var(--display);font-weight:400;font-size:20px;color:var(--fog);display:block;margin-bottom:6px}
+footer .cols{display:flex;gap:48px;flex-wrap:wrap}
+footer .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:8px;opacity:.7}
+.sel{user-select:all;color:var(--fog)}
+
+@media (max-width:900px){
+  :root{--colL:16px}
+  .rail{display:none}
+  .shade{background:linear-gradient(0deg,rgba(11,18,20,.94) 0%,rgba(11,18,20,.66) 40%,rgba(11,18,20,0) 66%),linear-gradient(180deg,rgba(11,18,20,.5),rgba(11,18,20,0) 16%)}
+  .copy{left:24px;right:24px;width:auto;top:auto;bottom:92px;transform:none}
+  .beat{top:auto;bottom:0;transform:translateY(22px)}
+  .beat.on{transform:none}
+  h1,h2{font-size:clamp(32px,9.4vw,50px)}
+  .beat p{font-size:15px}
+  .grid .h1{top:70px}
+  .row2{grid-template-columns:1fr}
+  .top{padding-inline:24px}
+  .cta{padding:10px 13px}
+  .readout .bar{width:56px}
+  .loading{left:24px;padding-left:0}
+}
+@media (max-width:900px) and (max-height:760px){ .final p{display:none} .final .field textarea{min-height:64px} }
+@media (prefers-reduced-motion:reduce){ .beat,.beat.on{transition:none} }
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <a class="mark" href="#c1" data-jump="0" aria-label="SanityAI home">
+    <svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="3" fill="var(--beam)"/><path d="M9 1v3M9 14v3M1 9h3M14 9h3" stroke="var(--fog)" stroke-width="1"/></svg>
+    SanityAI
+  </a>
+  <a class="cta" href="#c6" data-jump="5">Book a call <span class="arw">→</span></a>
+</header>
+
+<ol class="rail" aria-label="Chapters">
+  <li><button data-jump="0">The noise</button></li>
+  <li><button data-jump="1">Hint</button></li>
+  <li><button data-jump="2">Automation</button></li>
+  <li><button data-jump="3">Paid media</button></li>
+  <li><button data-jump="4">Revenue</button></li>
+  <li><button data-jump="5">Let's talk</button></li>
+</ol>
+
+<main class="story" id="story">
+  <div class="stage">
+    <canvas class="film" aria-hidden="true"></canvas>
+    <div class="shade"></div>
+    <div class="grid" aria-hidden="true"><i class="v1"></i><i class="v2"></i><i class="h1"></i><i class="h2"></i>
+      <b style="left:var(--colL);top:84px"></b><b style="left:calc(100% - var(--colL));top:84px"></b>
+      <b style="left:var(--colL);top:calc(100% - 64px)"></b><b style="left:calc(100% - var(--colL));top:calc(100% - 64px)"></b></div>
+
+    <div class="copy">
+      <section class="beat on" id="c1" aria-labelledby="h1">
+        <p class="eyebrow">01 <span>The noise</span></p>
+        <h1 id="h1">Everyone is shouting. <em>Be the one they follow.</em></h1>
+        <p>Ad feeds, AI answers and inboxes are louder than ever. Budgets go up, attention goes down, and most brands can't tell which signal actually reached a buyer.</p>
+        <div class="hero-cta"><a class="cta" href="#c6" data-jump="5">Book a call <span class="arw">→</span></a><a class="ghost" href="#c2" data-jump="1">Scroll the story ↓</a></div>
+      </section>
+      <section class="beat" id="c2" aria-labelledby="h2b">
+        <p class="eyebrow">02 <span>Hint · AI visibility</span></p>
+        <h2 id="h2b">Tune the light <em>the answer engines see.</em></h2>
+        <p>Buyers now ask ChatGPT, Perplexity, Gemini and Claude before they reach your site. Hint shows how each one describes you, who they recommend instead, and what to fix.</p>
+        <div class="meta"><span class="chip">ChatGPT</span><span class="chip">Perplexity</span><span class="chip">Gemini</span><span class="chip">Claude</span></div>
+      </section>
+      <section class="beat" id="c3" aria-labelledby="h3b">
+        <p class="eyebrow">03 <span>Automation</span></p>
+        <h2 id="h3b">The machinery <em>that never sleeps.</em></h2>
+        <p>Voice agents that answer at 2 a.m., WhatsApp follow-ups that go out on time, leads routed to your CRM and every touchpoint attributed, including the ones that came from AI.</p>
+        <div class="meta"><span class="chip">Voice agents</span><span class="chip">n8n workflows</span><span class="chip">CRM sync</span><span class="chip">Attribution</span></div>
+      </section>
+      <section class="beat" id="c4" aria-labelledby="h4b">
+        <p class="eyebrow">04 <span>Steer · Paid media</span></p>
+        <h2 id="h4b">Every sail lit. <em>Every token placed.</em></h2>
+        <p>We run Google, Meta, LinkedIn and Bing as one fleet, and Steer watches for performance loops: same audience, same creative, same wasted spend. You course-correct before it costs you.</p>
+        <div class="meta"><span class="chip">Google Ads</span><span class="chip">Meta</span><span class="chip">LinkedIn</span><span class="chip">Bing</span></div>
+      </section>
+      <section class="beat" id="c5" aria-labelledby="h5b">
+        <p class="eyebrow">05 <span>Revenue</span></p>
+        <h2 id="h5b">Signals in. <em>Revenue on the scales.</em></h2>
+        <p>Visibility, automation and media only matter when the ledger moves. We report on pipeline and revenue by source, not clicks and impressions.</p>
+      </section>
+      <section class="beat final" id="c6" aria-labelledby="h6b">
+        <p class="eyebrow">06 <span>Let's talk</span></p>
+        <h2 id="h6b">Let's find <em>your light.</em></h2>
+        <p>Tell us what you sell and where you want to be seen. We reply within two working days.</p>
+        <form id="contact" novalidate>
+          <div class="row2">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="field"><label for="f-msg">What do you want to fix?</label><textarea id="f-msg" name="message" required></textarea></div>
+          <button class="cta" type="submit">Send <span class="arw">→</span></button>
+          <p class="note" id="f-note" role="status"></p>
+        </form>
+      </section>
+    </div>
+    <div class="loading" id="loading" aria-hidden="true">Loading film 0%</div>
+    <div class="readout" aria-hidden="true"><span class="bar"><i id="bar"></i></span><span><span id="ro">01</span> / 06</span></div>
+  </div>
+</main>
+
+<footer>
+  <div><strong>SanityAI</strong>AI search visibility, marketing automation and paid media. Dubai.</div>
+  <div class="cols">
+    <div><span class="lbl">Products</span>Hint · Steer</div>
+    <div><span class="lbl">Contact</span><span class="sel">Use the form above</span></div>
+  </div>
+</footer>
+
+<script>
+(()=>{
+/* ---------- film data ---------- */
+const BASE='';                 // folder holding keys/ and packs/
+const PACK='bin';                 // 'bin' on the live site, 'json' in the preview
+const SCENES=6;
+const FOCAL=[0.46,0.80,0.80,0.62,0.66,0.84]; // where the keeper stands, per scene (0..1 across the frame)
+const HOLD=1.15, MOVE=2.2;             // screen-heights of scroll: resting on a scene / playing a transition
+const tier = (innerWidth<900 ? 'm' : 'd');
+
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const story=document.getElementById('story');
+const cv=document.querySelector('canvas.film'), ctx=cv.getContext('2d');
+const beats=[...document.querySelectorAll('.beat')];
+const rail=[...document.querySelectorAll('.rail button')];
+const ro=document.getElementById('ro'), bar=document.getElementById('bar'), loadEl=document.getElementById('loading');
+
+/* timeline: hold0, move0, hold1, move1 ... hold5 */
+const segs=[]; for(let i=0;i<SCENES;i++){ segs.push({t:'hold',i,len:HOLD}); if(i<SCENES-1) segs.push({t:'move',i,len:MOVE}); }
+const TOTAL=segs.reduce((a,s)=>a+s.len,0);
+function sizeStory(){ story.style.height=((TOTAL+1)*100)+'vh'; }
+sizeStory();
+
+/* ---------- assets ---------- */
+const keys=new Array(SCENES);                    // still keyframes, load first
+const clips=Array.from({length:SCENES-1},()=>({frames:null,count:0,state:'idle'}));
+function loadKey(i){ return new Promise(r=>{const im=new Image(); im.decoding='async'; im.onload=()=>{keys[i]=im; r();}; im.onerror=r; im.src=`${BASE}keys/k${i+1}-${tier}.webp`;}); }
+
+async function loadClip(n){
+  const c=clips[n]; if(c.state!=='idle') return; c.state='loading';
+  try{
+    const url=`${BASE}packs/t${n+1}-${tier}.${PACK}`;
+    let blobs=[];
+    if(PACK==='bin'){
+      // uint32 header length | JSON list of frame sizes | WebP frames back to back
+      const buf=await fetch(url).then(r=>{if(!r.ok) throw 0; return r.arrayBuffer();});
+      const hl=new DataView(buf).getUint32(0,true);
+      const head=JSON.parse(new TextDecoder().decode(new Uint8Array(buf,4,hl)));
+      let off=4+hl; blobs=head.map(len=>{const b=new Blob([new Uint8Array(buf,off,len)],{type:'image/webp'}); off+=len; return b;});
+    } else {
+      // JSON list of base64 WebP frames (used where binary files can't be served)
+      const list=await fetch(url).then(r=>{if(!r.ok) throw 0; return r.json();});
+      blobs=list.map(s=>{const bin=atob(s),u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i); return new Blob([u],{type:'image/webp'});});
+    }
+    c.count=blobs.length; c.frames=new Array(c.count);
+    const jobs=blobs.map((blob,k)=>createImageBitmap(blob).then(b=>{c.frames[k]=b;}).catch(()=>{}));
+    await Promise.all(jobs); c.state='ready';
+  }catch(e){ c.state='failed'; }
+  progress(); want=true;
+}
+function progress(){
+  const done=clips.filter(c=>c.state==='ready'||c.state==='failed').length;
+  loadEl.textContent=`Loading film ${Math.round(done/clips.length*100)}%`;
+  if(done===clips.length) loadEl.classList.add('done');
+}
+
+/* ---------- drawing ---------- */
+let W=0,H=0,dpr=1;
+function resize(){ dpr=Math.min(devicePixelRatio||1,2); W=cv.clientWidth; H=cv.clientHeight; cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); want=true; }
+function draw(img,focal,zoom){
+  if(!img) return false;
+  const iw=img.width, ih=img.height, s=Math.max(cv.width/iw, cv.height/ih)*zoom;
+  const dw=iw*s, dh=ih*s;
+  // keep the focal point inside the view, centred when possible
+  let x=cv.width/2 - focal*dw; x=Math.min(0,Math.max(cv.width-dw,x));
+  const y=(cv.height-dh)/2;
+  ctx.drawImage(img,x,y,dw,dh); return true;
+}
+const lerp=(a,b,t)=>a+(b-a)*t;
+const smooth=t=>t*t*(3-2*t);
+
+/* position (0..TOTAL) -> what to show */
+function locate(p){
+  let acc=0;
+  for(const s of segs){ if(p<=acc+s.len) return {s,t:(p-acc)/s.len}; acc+=s.len; }
+  return {s:segs[segs.length-1],t:1};
+}
+function sceneAt(p){ const {s,t}=locate(p); return s.t==='hold'?s.i:(t<.5?s.i:s.i+1); }
+
+// phone frames are pre-cropped around the keeper, so they are drawn centred
+const fx=i=> tier==='m' ? 0.5 : FOCAL[i];
+const PUSH=0.035;
+function render(p){
+  const {s,t}=locate(p);
+  ctx.fillStyle='#0b1214'; ctx.fillRect(0,0,cv.width,cv.height);
+  if(s.t==='hold'){
+    // a slow push-in while resting, so the frame never feels frozen
+    draw(keys[s.i],fx(s.i),1+PUSH*t);
+    return;
+  }
+  // during a move the push eases back out, so hold->move->hold never jumps
+  const n=s.i, c=clips[n], z=1+PUSH*(1-smooth(t));
+  const focal = tier==='m' ? 0.5 : lerp(FOCAL[n],FOCAL[n+1],smooth(t));
+  if(c.state==='ready' && c.count && !reduce){
+    const f=Math.min(c.count-1,Math.round(t*(c.count-1)));
+    let img=c.frames[f]; for(let d=1;!img&&d<c.count;d++){ img=c.frames[f-d]||c.frames[f+d]; }
+    if(draw(img,focal,z)) return;
+  }
+  // until the clip arrives (or with reduced motion): cross-fade the two stills
+  if(c.state==='idle') loadClip(n);
+  draw(keys[n],fx(n),z);
+  ctx.globalAlpha=smooth(t); draw(keys[n+1],fx(n+1),z); ctx.globalAlpha=1;
+}
+
+/* ---------- scroll with inertia ---------- */
+let cur=0, target=0, want=true, active=-1;
+function readTarget(){
+  const total=story.offsetHeight-innerHeight;
+  const y=Math.min(Math.max(-story.getBoundingClientRect().top,0),total);
+  target=total>0 ? y/total*TOTAL : 0;
+}
+function tick(){
+  readTarget();
+  const d=target-cur;
+  if(Math.abs(d)>0.0004 || want){
+    cur = reduce ? target : cur + d*0.14;
+    render(cur); want=false;
+    const sc=sceneAt(cur);
+    if(sc!==active){
+      active=sc;
+      beats.forEach((b,i)=>b.classList.toggle('on',i===sc));
+      rail.forEach((b,i)=>b.setAttribute('aria-current',i===sc));
+      ro.textContent=String(sc+1).padStart(2,'0');
+      // fetch the clips either side of where the reader is
+      if(sc>0) loadClip(sc-1); if(sc<SCENES-1) loadClip(sc);
+    }
+    bar.style.transform=`scaleX(${cur/TOTAL})`;
+  }
+  requestAnimationFrame(tick);
+}
+
+function jump(i){
+  let acc=0; for(const s of segs){ if(s.t==='hold'&&s.i===i){ acc+=s.len*0.45; break;} acc+=s.len; }
+  const total=story.offsetHeight-innerHeight;
+  scrollTo({top:story.offsetTop+acc/TOTAL*total,behavior:reduce?'auto':'smooth'});
+}
+document.querySelectorAll('[data-jump]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();jump(+el.dataset.jump);}));
+addEventListener('resize',()=>{sizeStory();resize();});
+
+/* ---------- boot ---------- */
+resize();
+loadKey(0).then(()=>{want=true; return Promise.all([1,2,3,4,5].map(loadKey));}).then(()=>{want=true; loadClip(0);
+  // then the rest in story order, one at a time so the first ones arrive fast
+  (async()=>{for(let n=0;n<clips.length;n++) await loadClip(n);})();
+});
+progress();
+requestAnimationFrame(tick);
+
+/* ---------- form ---------- */
+const form=document.getElementById('contact'), note=document.getElementById('f-note');
+const ENDPOINT='FORM_ENDPOINT';
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const d=new FormData(form);
+  if(!d.get('name')||!/^\S+@\S+\.\S+$/.test(d.get('email')||'')||!d.get('message')){
+    note.className='note'; note.textContent='Add your name, a valid work email and a line about what you want to fix.'; return; }
+  if(ENDPOINT.startsWith('http')){
+    try{ const r=await fetch(ENDPOINT,{method:'POST',body:d,headers:{Accept:'application/json'}}); if(!r.ok) throw 0;
+      note.className='note ok'; note.textContent='Sent. We reply within two working days.'; form.reset();
+    }catch{ note.className='note'; note.textContent='That didn\'t send. Email us at the address below instead.'; }
+  } else { note.className='note ok'; note.textContent='Preview only: the form connects to your inbox on the live site.'; }
+});
+})();
+</script>
+
+</body>
+</html>
