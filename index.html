@@ -7,8 +7,8 @@
 <link rel="icon" href="assets/logo-dark.png">
 <meta property="og:title" content="SanityAI · Marketing that makes sense again">
 <meta property="og:description" content="Marketing strategy, search and AI search optimisation, automation and paid media, joined into one system.">
-<meta property="og:image" content="keys/k1-d.webp">
-<link rel="preload" as="image" href="keys/k1-d.webp">
+<meta property="og:image" content="film-23d14b43/keys/k1-d.webp">
+<link rel="preload" as="image" href="film-23d14b43/keys/k1-d.webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/PPMondwest-Regular.woff2" crossorigin>
 <title>SanityAI</title>
 <meta name="description" content="SanityAI brings marketing strategy, search, automation and advertising together so they work as one. 11+ years across the Gulf, $1M+ in traceable revenue, 60% lower cost per customer.">
@@ -36,7 +36,7 @@
   --hh:64px;
   color-scheme:light;
 }
-html,body{background:var(--sand);color:var(--ink)}
+html,body{margin:0;padding:0;background:var(--sand);color:var(--ink)}
 html{scroll-padding-top:calc(var(--hh) + 12px)}
 body{font-family:var(--text);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit}
@@ -95,12 +95,16 @@ canvas.film{position:absolute;inset:0;width:100%;height:100%;display:block}
 .loading{margin-left:6px;color:var(--ink-2);transition:opacity .6s}
 .loading.done{display:none}
 
+.more{display:none}
+
 /* ---------- painted sections ---------- */
 .sec{position:relative;isolation:isolate;padding-block:96px;padding-inline:var(--gut);overflow:hidden}
 .sec .paint{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;background-repeat:no-repeat}
 .sec::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(247,239,227,.88),rgba(247,239,227,.35) 38%,rgba(247,239,227,.35) 70%,rgba(247,239,227,.85))}
 .sec .thread{position:absolute;left:0;right:0;top:40px;height:120px;z-index:-1;pointer-events:none;opacity:.9}
 .wrap{max-width:1120px;margin:0 auto}
+.sec.full{min-height:100vh;min-height:100svh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding-top:calc(var(--hh) + 48px)}
+.sec.full>.wrap{width:100%}
 .head{max-width:620px}
 .kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:500;display:flex;gap:10px;align-items:center;margin:0 0 10px}
 .kicker::before{content:"";width:20px;height:2px;border-radius:2px;background:var(--amber)}
@@ -114,11 +118,6 @@ canvas.film{position:absolute;inset:0;width:100%;height:100%;display:block}
 .stat p{margin:10px 0 0;color:var(--ink-2)}
 .stat:nth-child(2) strong{color:var(--sea)}.stat:nth-child(3) strong{color:var(--coral)}
 
-.tools{margin-top:28px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
-.tool{grid-column:span 2;padding:22px;min-width:0}
-.tool:nth-child(n+4){grid-column:span 3}
-.tool .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0c5d6e;font-weight:600;display:block;margin-bottom:10px}
-.tool p{margin:8px 0 0;color:var(--ink-2)}
 
 .steps{margin:28px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:s}
 .steps li{counter-increment:s;padding:22px;min-width:0}
@@ -172,21 +171,30 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
   .bar{height:56px;gap:12px}
   .bar .menu{display:none}
   .mmenu{display:flex!important}
-  .copy{left:12px;right:12px;width:auto;top:auto;bottom:70px}
-  .beat{top:auto;bottom:0;transform:translateY(22px);padding:18px 18px 16px;border-radius:16px}
+  canvas.film{top:var(--hh);height:calc(100% - var(--hh))}
+  .copy{left:12px;right:12px;width:auto;max-width:560px;top:auto;bottom:62px}
+  .beat{top:auto;bottom:0;transform:translateY(22px);padding:16px 16px 14px;border-radius:16px;background:rgba(255,249,240,.86)}
   .beat.on{transform:none}
-  .beat p{font-size:13.5px}
+  .eyebrow{margin-bottom:8px}
+  .beat h1+p,.beat h2+p{margin-top:8px;font-size:13.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .beat.open h1+p,.beat.open h2+p{-webkit-line-clamp:unset;display:block}
+  .more{display:inline-block;margin:4px 0 0;padding:0;border:0;background:none;font:600 12.5px/1.4 var(--text);color:#0c5d6e;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .tags{margin-top:10px}
+  .actions{margin-top:12px}
+  .figs{margin-top:10px;gap:8px}
+  .figs div{padding:8px 10px}
   .figs strong{font-size:20px}
+  .figs span{font-size:11px}
   .readout{left:12px;bottom:16px}
   .sec{padding-block:64px}
+  .sec.full{padding-top:calc(var(--hh) + 32px)}
   .stats,.steps{grid-template-columns:1fr 1fr}
-  .tools{grid-template-columns:1fr}
-  .tool,.tool:nth-child(n+4){grid-column:auto}
   .contact{grid-template-columns:1fr}
   .row2{grid-template-columns:1fr}
   .wa-float{width:48px;height:48px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 }
-@media (max-width:900px) and (max-height:760px){ .beat p{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden} }
+@media (min-width:601px) and (max-width:900px){ .mmenu{justify-content:center;gap:6px} .mmenu a{padding:7px 14px} }
+@media (max-width:600px){ .beat .tags{display:none} .beat.open .tags{display:flex} }
 @media (max-width:520px){ .stats,.steps{grid-template-columns:1fr} }
 .mmenu{display:none;gap:2px;overflow-x:auto;justify-content:space-between;padding:0 12px 10px;margin:0;list-style:none;scrollbar-width:none}
 .mmenu::-webkit-scrollbar{display:none}
@@ -271,7 +279,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
   </div>
 </section>
 
-<section class="sec" id="results" aria-labelledby="results-h">
+<section class="sec full" id="results" aria-labelledby="results-h">
   <div class="paint" style="background-image:url('assets/bg/bg6.webp');background-position:30% 60%"></div>
   <svg class="thread" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 80 C 260 20, 420 110, 720 60 S 1180 10, 1440 70" fill="none" stroke="#f0a12a" stroke-width="2.5" stroke-linecap="round"/></svg>
   <div class="wrap">
@@ -289,25 +297,8 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
   </div>
 </section>
 
-<section class="sec" id="tools" aria-labelledby="tools-h">
-  <div class="paint" style="background-image:url('assets/bg/bg3.webp');background-position:center 30%"></div>
-  <div class="wrap">
-    <div class="head panel">
-      <p class="kicker">Tools we've built</p>
-      <h2 id="tools-h">We don't just use the tools, we build them.</h2>
-      <p class="lede">These free tools help businesses see how many visitors now come from AI assistants, and how to get more of them. Marketers around the world use them every day.</p>
-    </div>
-    <div class="tools">
-      <div class="tool panel"><span class="tag">WordPress plugin</span><h3>AI Visibility Toolkit</h3><p>Makes your website easier for AI assistants to read and recommend.</p></div>
-      <div class="tool panel"><span class="tag">Google Tag Manager</span><h3>AI Traffic Source</h3><p>Shows which visits came from ChatGPT, Perplexity, Gemini and similar tools.</p></div>
-      <div class="tool panel"><span class="tag">Looker Studio</span><h3>AI Insights for GA4</h3><p>A ready-made report of the visitors and sales that AI assistants send you.</p></div>
-      <div class="tool panel"><span class="tag">Open source</span><h3>AI Referral Attribution Kit</h3><p>Connects each sale back to the AI tool that sent the customer, so you know what's really working.</p></div>
-      <div class="tool panel"><span class="tag">Chrome extension</span><h3>GEO Readiness Auditor</h3><p>Checks any web page against 78 points that affect whether AI search will show it.</p></div>
-    </div>
-  </div>
-</section>
 
-<section class="sec" id="process" aria-labelledby="process-h">
+<section class="sec full" id="process" aria-labelledby="process-h">
   <div class="paint" style="background-image:url('assets/bg/bg4.webp');background-position:20% 55%"></div>
   <svg class="thread" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 300 110, 520 10, 820 70 S 1240 110, 1440 30" fill="none" stroke="#f0a12a" stroke-width="2.5" stroke-linecap="round"/></svg>
   <div class="wrap">
@@ -325,7 +316,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
   </div>
 </section>
 
-<section class="sec" id="faq" aria-labelledby="faq-h">
+<section class="sec full" id="faq" aria-labelledby="faq-h">
   <div class="paint" style="background-image:url('assets/bg/bg1.webp');background-position:center 70%"></div>
   <div class="wrap">
     <div class="head panel">
@@ -374,7 +365,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
   <div class="wrap">
     <div><img class="logo" src="assets/logo-light.png" alt="SanityAI" width="709" height="104"><p>Marketing strategy, search, automation and paid ads, working together. Based in Dubai, working across the Gulf and beyond.</p></div>
     <div class="cols">
-      <div><span class="lbl">Explore</span><a href="#results">Results</a><br><a href="#tools">Tools</a><br><a href="#faq">FAQs</a></div>
+      <div><span class="lbl">Explore</span><a href="#results">Results</a><br><a href="#process">How we work</a><br><a href="#faq">FAQs</a></div>
       <div><span class="lbl">Talk to us</span><a href="#contact">Send a message</a><br><a href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener">WhatsApp +971 58 578 5819</a></div>
     </div>
   </div>
@@ -399,11 +390,12 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 <script>
 (()=>{
 /* ---------- film ---------- */
-const BASE='', PACK='bin';
+const BASE='', MEDIA='film-23d14b43/', PACK='bin';
 const SCENES=7;
 const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];
-const HOLD=1.15, MOVE=2.2;
-const tier=(innerWidth<900?'m':'d');
+const HOLD=0.45, MOVE=2.4;
+const tier=(innerWidth<600?'m':'d');
+const narrow=()=>innerWidth<=900;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const story=document.getElementById('story');
 const cv=document.querySelector('canvas.film'), ctx=cv.getContext('2d');
@@ -417,12 +409,12 @@ sizeStory();
 
 const keys=new Array(SCENES);
 const clips=Array.from({length:SCENES-1},()=>({frames:null,count:0,state:'idle'}));
-const loadKey=i=>new Promise(r=>{const im=new Image(); im.decoding='async'; im.onload=()=>{keys[i]=im;r();}; im.onerror=r; im.src=`${BASE}keys/k${i+1}-${tier}.webp`;});
+const loadKey=i=>new Promise(r=>{const im=new Image(); im.decoding='async'; im.onload=()=>{keys[i]=im;r();}; im.onerror=r; im.src=`${BASE}${MEDIA}keys/k${i+1}-${tier}.webp`;});
 
 async function loadClip(n){
   const c=clips[n]; if(c.state!=='idle') return; c.state='loading';
   try{
-    const url=`${BASE}packs/t${n+1}-${tier}.${PACK}`; let blobs=[];
+    const url=`${BASE}${MEDIA}packs/t${n+1}-${tier}.${PACK}`; let blobs=[];
     if(PACK==='bin'){
       const buf=await fetch(url).then(r=>{if(!r.ok) throw 0; return r.arrayBuffer();});
       const hl=new DataView(buf).getUint32(0,true);
@@ -443,11 +435,12 @@ function progress(){
   loadEl.textContent=`· loading ${Math.round(done/clips.length*100)}%`;
   if(done===clips.length) loadEl.classList.add('done');
 }
-function resize(){ const dpr=Math.min(devicePixelRatio||1,2); cv.width=Math.round(cv.clientWidth*dpr); cv.height=Math.round(cv.clientHeight*dpr); want=true; }
+const topEl=document.getElementById('top');
+function resize(){ document.documentElement.style.setProperty('--hh',topEl.offsetHeight+'px'); const dpr=Math.min(devicePixelRatio||1,2); cv.width=Math.round(cv.clientWidth*dpr); cv.height=Math.round(cv.clientHeight*dpr); want=true; }
 function draw(img,focal,zoom){
   if(!img) return false;
   const s=Math.max(cv.width/img.width, cv.height/img.height)*zoom, dw=img.width*s, dh=img.height*s;
-  let x = tier==='m' ? cv.width/2 - focal*dw : cv.width*0.74 - focal*dw;
+  let x = narrow() ? cv.width/2 - focal*dw : cv.width*0.74 - focal*dw;
   x=Math.min(0,Math.max(cv.width-dw,x));
   ctx.drawImage(img,x,(cv.height-dh)/2,dw,dh); return true;
 }
@@ -469,6 +462,11 @@ function render(p){
   if(c.state==='idle') loadClip(n);
   draw(keys[n],fx(n),z); ctx.globalAlpha=smooth(t); draw(keys[n+1],fx(n+1),z); ctx.globalAlpha=1;
 }
+
+beats.forEach(b=>{ const p=b.querySelector('h1+p,h2+p'); if(!p) return;
+  const m=document.createElement('button'); m.type='button'; m.className='more'; m.textContent='Read more'; m.setAttribute('aria-expanded','false');
+  m.addEventListener('click',()=>{ const o=b.classList.toggle('open'); m.textContent=o?'Show less':'Read more'; m.setAttribute('aria-expanded',String(o)); });
+  p.after(m); });
 
 /* ---------- menu that follows the scroll ---------- */
 const links=[...document.querySelectorAll('[data-key]')];
