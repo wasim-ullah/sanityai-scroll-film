@@ -11,181 +11,187 @@
 <link rel="preload" as="image" href="keys/k1-d.webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/PPMondwest-Regular.woff2" crossorigin>
 <title>SanityAI</title>
-<meta name="description" content="SanityAI joins marketing strategy, search and AI search optimisation, automation and paid media into one system. 11+ years across the GCC, $1M+ attributable revenue, 60% lower CPA.">
+<meta name="description" content="SanityAI brings marketing strategy, search, automation and advertising together so they work as one. 11+ years across the Gulf, $1M+ in traceable revenue, 60% lower cost per customer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: a sticky full-screen canvas plays one continuous painted film (7 scenes, 6 camera moves) scrubbed by scroll; copy rests on a warm veil at left. Below the film the page continues as parchment sections. */
+/* Layout: fixed glass header with a scroll-aware menu; a full-width painted film scrubbed by scroll with copy on a glass card; then painted-background sections whose content sits on glass panels. Palette taken from the film: indigo robe, turquoise sea, peach sky, amber thread. */
 @font-face{font-family:"PP Mondwest";src:url("assets/PPMondwest-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 :root{
-  --paper:#f6f1e7;      /* warm off-white page */
-  --paper-2:#efe7d7;    /* card / band */
-  --ink:#16171d;        /* text */
-  --ink-2:#4b4a52;      /* secondary text */
-  --thread:#e8a21b;     /* the golden thread: single accent */
-  --indigo:#2c2f7a;     /* from the strategist's robe, used for links/hover */
-  --line:rgba(22,23,29,.14);
+  --sand:#f7efe3;       /* page ground, from the dawn sky */
+  --glass:rgba(255,249,240,.80);
+  --ink:#1b1d3a;        /* deep indigo ink */
+  --ink-2:#4a4c6b;
+  --indigo:#262c74;     /* the strategist's robe */
+  --sea:#13889f;        /* turquoise sea */
+  --peach:#f6c49a;      /* sunset sky */
+  --amber:#f0a12a;      /* the golden thread */
+  --coral:#e46a45;      /* sashes and target */
+  --line:rgba(27,29,58,.14);
   --display:"PP Mondwest","Iowan Old Style",Georgia,serif;
   --text:"Instrument Sans",ui-sans-serif,-apple-system,"Segoe UI",Arial,sans-serif;
   --ease:cubic-bezier(.22,1,.36,1);
-  --colL:6vw;
+  --gut:5vw;
+  --hh:64px;
   color-scheme:light;
 }
-html,body{background:var(--paper);color:var(--ink)}
-body{font-family:var(--text);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+html,body{background:var(--sand);color:var(--ink)}
+html{scroll-padding-top:calc(var(--hh) + 12px)}
+body{font-family:var(--text);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--thread);outline-offset:3px}
-h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.01em;text-wrap:balance;margin:0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.005em;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:30px}h2{font-size:25px}h3{font-size:20px}
 
-/* ---------- header ---------- */
-.top{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;
-  padding:calc(env(safe-area-inset-top,0px) + 20px) var(--colL) 18px;pointer-events:none;transition:background .4s,backdrop-filter .4s}
-.top.solid{background:rgba(246,241,231,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top>*{pointer-events:auto}
-.logo{display:block;height:22px;width:auto;transition:height .5s var(--ease)}
-.top .logo{height:20px}
-.btn{font-family:var(--text);font-weight:500;font-size:14px;letter-spacing:.01em;text-decoration:none;border:0;cursor:pointer;
-  background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;display:inline-flex;gap:10px;align-items:center;transition:transform .4s var(--ease),background .3s}
-.btn:hover{transform:translateY(-2px);background:var(--indigo)}
-.btn .arw{display:inline-block;transition:transform .4s var(--ease)}
+/* ---------- buttons ---------- */
+.btn{font:600 13px/1 var(--text);letter-spacing:.01em;text-decoration:none;border:0;cursor:pointer;color:var(--ink);
+  background:linear-gradient(135deg,var(--amber),#f7b955 55%,var(--peach));padding:12px 18px;border-radius:999px;display:inline-flex;gap:8px;align-items:center;
+  box-shadow:0 6px 18px -8px rgba(240,161,42,.8);transition:transform .35s var(--ease),box-shadow .35s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(240,161,42,.9)}
+.btn .arw{display:inline-block;transition:transform .35s var(--ease)}
 .btn:hover .arw{transform:translateX(3px)}
-.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
-.btn.ghost:hover{background:rgba(22,23,29,.06)}
+.btn.dark{background:var(--indigo);color:#fff;box-shadow:0 6px 18px -10px rgba(38,44,116,.9)}
+.btn.ghost{background:rgba(255,255,255,.55);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.wa{background:#1fae5b;color:#fff;box-shadow:0 6px 18px -10px rgba(31,174,91,.9)}
+.btn svg{width:16px;height:16px}
 
-/* chapter rail */
-.rail{position:fixed;left:calc(var(--colL) - 2px);top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none;transition:opacity .4s}
-.rail.gone{opacity:0;pointer-events:none}
-.rail button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);opacity:.6;transition:opacity .4s,color .4s}
-.rail button::before{content:"";width:12px;height:2px;border-radius:2px;background:currentColor;transition:width .5s var(--ease),background .4s}
-.rail button[aria-current="true"]{opacity:1;color:var(--ink)}
-.rail button[aria-current="true"]::before{width:30px;background:var(--thread)}
-.rail button:focus-visible{outline:2px solid var(--thread);outline-offset:4px}
+/* ---------- header + menu ---------- */
+.top{position:fixed;inset:0 0 auto 0;z-index:40;padding-top:env(safe-area-inset-top,0px);
+  background:rgba(247,239,227,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{height:var(--hh);display:flex;align-items:center;gap:24px;padding-inline:var(--gut)}
+.logo{display:block;height:16px;width:auto}
+.menu{flex:1;display:flex;justify-content:center;gap:4px;margin:0;padding:0;list-style:none;min-width:0}
+.menu a{display:block;text-decoration:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:8px 12px;border-radius:999px;white-space:nowrap;transition:color .3s,background .3s}
+.menu a:hover{color:var(--ink);background:rgba(27,29,58,.06)}
+.menu a.on{color:var(--ink);background:#fff;box-shadow:inset 0 -2px 0 var(--amber),0 2px 8px -4px rgba(27,29,58,.25)}
+.top .btn{padding:10px 15px}
 
 /* ---------- film ---------- */
 .story{position:relative}
-.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--paper)}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--sand)}
 canvas.film{position:absolute;inset:0;width:100%;height:100%;display:block}
-.veil{position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(246,241,231,.93) 0%,rgba(246,241,231,.78) 27%,rgba(246,241,231,.25) 46%,rgba(246,241,231,0) 58%),
-             linear-gradient(180deg,rgba(246,241,231,.65),rgba(246,241,231,0) 16%)}
-.readout{position:absolute;right:var(--colL);bottom:24px;font-size:11px;letter-spacing:.16em;color:var(--ink);font-variant-numeric:tabular-nums;text-transform:uppercase;display:flex;gap:12px;align-items:center;
-  background:rgba(246,241,231,.82);padding:7px 12px;border-radius:999px}
-.readout .bar{width:80px;height:2px;border-radius:2px;background:var(--line);position:relative;overflow:hidden}
-.readout .bar i{position:absolute;inset:0;background:var(--thread);transform-origin:left;transform:scaleX(0)}
-.loading{position:absolute;left:var(--colL);bottom:26px;font-size:11px;letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase;transition:opacity .6s}
-.loading.done{opacity:0}
-
-.copy{position:absolute;left:calc(var(--colL) + 150px);top:52%;width:min(470px,33vw);height:0}
-.beat{position:absolute;left:0;top:0;transform:translateY(calc(-50% + 22px));opacity:0;visibility:hidden;width:100%;
+.copy{position:absolute;left:var(--gut);top:calc(50% + var(--hh)/2);width:min(430px,36vw);height:0}
+.beat{position:absolute;left:0;top:0;transform:translateY(calc(-50% + 22px));opacity:0;visibility:hidden;width:100%;box-sizing:border-box;
+  background:var(--glass);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:26px 26px 24px;box-shadow:0 24px 50px -30px rgba(27,29,58,.45);
   transition:opacity .6s var(--ease),transform .8s var(--ease),visibility 0s .6s}
 .beat.on{opacity:1;visibility:visible;transform:translateY(-50%);transition:opacity .6s var(--ease),transform .8s var(--ease),visibility 0s}
-.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:10px;align-items:center;margin:0 0 18px}
-.eyebrow b{font-weight:600;color:var(--ink)}
-.eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--thread)}
-.beat h1,.beat h2{font-size:clamp(38px,4.6vw,76px);line-height:1}
-.beat .hero-logo{height:clamp(30px,3.4vw,52px);width:auto;margin:0 0 26px}
-.beat p{margin:20px 0 0;max-width:42ch;color:var(--ink)}
-.tags{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
-.tags li{font-size:12.5px;font-weight:500;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.72);box-shadow:inset 0 0 0 1px var(--line)}
-.actions{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
-.figs{margin:24px 0 0;display:grid;grid-template-columns:repeat(3,auto);gap:18px 26px;justify-content:start}
-.figs div{display:flex;flex-direction:column}
-.figs strong{font-family:var(--display);font-weight:400;font-size:clamp(28px,2.6vw,40px);line-height:1;font-variant-numeric:tabular-nums}
-.figs span{font-size:13px;color:var(--ink-2);max-width:16ch;margin-top:6px;line-height:1.35}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:10px;align-items:center;margin:0 0 12px;font-weight:500}
+.eyebrow b{color:var(--coral);font-weight:600}
+.eyebrow::before{content:"";width:20px;height:2px;border-radius:2px;background:var(--amber)}
+.beat p{margin:12px 0 0}
+.tags{margin:16px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.tags li{font-size:12px;font-weight:500;padding:5px 10px;border-radius:999px;background:rgba(19,136,159,.10);color:#0c5d6e}
+.actions{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.figs{margin:16px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.figs div{background:#fff;border-radius:12px;padding:10px 12px}
+.figs strong{font-family:var(--display);font-weight:400;font-size:24px;line-height:1;display:block;color:var(--indigo);font-variant-numeric:tabular-nums}
+.figs span{font-size:12px;color:var(--ink-2);display:block;margin-top:4px;line-height:1.35}
+.readout{position:absolute;left:var(--gut);bottom:22px;font-size:11px;letter-spacing:.14em;color:var(--ink);font-variant-numeric:tabular-nums;text-transform:uppercase;display:flex;gap:10px;align-items:center;
+  background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:7px 12px;border-radius:999px}
+.readout .track{width:80px;height:2px;border-radius:2px;background:var(--line);position:relative;overflow:hidden}
+.readout .track i{position:absolute;inset:0;background:var(--amber);transform-origin:left;transform:scaleX(0)}
+.loading{margin-left:6px;color:var(--ink-2);transition:opacity .6s}
+.loading.done{display:none}
 
-/* ---------- sections below the film ---------- */
-.sec{padding-block:96px;padding-inline:var(--colL);border-top:1px solid var(--line)}
-.wrap{max-width:1180px;margin:0 auto}
-.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);display:flex;gap:10px;align-items:center;margin:0 0 16px}
-.kicker::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--thread)}
-.sec h2{font-size:clamp(34px,4vw,58px);line-height:1.02;max-width:20ch}
-.lede{font-size:19px;max-width:60ch;color:var(--ink-2);margin:18px 0 0}
+/* ---------- painted sections ---------- */
+.sec{position:relative;isolation:isolate;padding-block:96px;padding-inline:var(--gut);overflow:hidden}
+.sec .paint{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;background-repeat:no-repeat}
+.sec::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(247,239,227,.88),rgba(247,239,227,.35) 38%,rgba(247,239,227,.35) 70%,rgba(247,239,227,.85))}
+.sec .thread{position:absolute;left:0;right:0;top:40px;height:120px;z-index:-1;pointer-events:none;opacity:.9}
+.wrap{max-width:1120px;margin:0 auto}
+.head{max-width:620px}
+.kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:500;display:flex;gap:10px;align-items:center;margin:0 0 10px}
+.kicker::before{content:"";width:20px;height:2px;border-radius:2px;background:var(--amber)}
+.lede{margin:10px 0 0;color:var(--ink-2);max-width:62ch}
+.panel{background:var(--glass);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,255,255,.7);border-radius:20px;box-shadow:0 24px 50px -32px rgba(27,29,58,.45)}
+.head.panel{padding:24px 26px}
 
-.stats{margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
-.stat{padding:28px 24px 8px 0;border-right:1px solid var(--line);min-width:0}
-.stat:last-child{border-right:0}
-.stat strong{font-family:var(--display);font-weight:400;font-size:clamp(40px,4.2vw,64px);line-height:1;display:block;font-variant-numeric:tabular-nums}
-.stat p{margin:12px 0 0;font-size:15px;color:var(--ink-2);max-width:26ch}
-.stat + .stat{padding-left:24px}
+.stats{margin-top:28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.stat{padding:22px;min-width:0}
+.stat strong{font-family:var(--display);font-weight:400;font-size:40px;line-height:1;display:block;color:var(--indigo);font-variant-numeric:tabular-nums}
+.stat p{margin:10px 0 0;color:var(--ink-2)}
+.stat:nth-child(2) strong{color:var(--sea)}.stat:nth-child(3) strong{color:var(--coral)}
 
-.brands{margin-top:56px}
-.brands h3{font-family:var(--text);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500;margin-bottom:16px}
-.brands ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px 40px}
-.brands li{font-family:var(--display);font-size:clamp(22px,2vw,30px)}
+.tools{margin-top:28px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.tool{grid-column:span 2;padding:22px;min-width:0}
+.tool:nth-child(n+4){grid-column:span 3}
+.tool .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0c5d6e;font-weight:600;display:block;margin-bottom:10px}
+.tool p{margin:8px 0 0;color:var(--ink-2)}
 
-.tools{margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.tool{background:var(--paper-2);border-radius:14px;padding:24px;min-width:0}
-.tool h3{font-size:24px;line-height:1.1}
-.tool p{margin:10px 0 0;font-size:15.5px;color:var(--ink-2)}
-.tool .num{font-size:12px;letter-spacing:.14em;color:var(--ink-2);display:block;margin-bottom:14px}
+.steps{margin:28px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;counter-reset:s}
+.steps li{counter-increment:s;padding:22px;min-width:0}
+.steps li::before{content:counter(s,decimal-leading-zero);display:block;font-family:var(--display);font-size:30px;line-height:1;color:var(--amber);margin-bottom:12px}
+.steps .when{display:block;font-size:12px;color:#0c5d6e;font-weight:600;margin:4px 0 6px}
+.steps p{margin:0;color:var(--ink-2)}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:44px}
-.creds{list-style:none;margin:0;padding:0}
-.creds li{padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
-.steps{list-style:none;margin:0;padding:0;counter-reset:s}
-.steps li{counter-increment:s;padding:16px 0 16px 56px;border-bottom:1px solid var(--line);position:relative}
-.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:14px;font-family:var(--display);font-size:26px;color:var(--thread)}
-.steps strong{font-weight:600}
-.steps span{display:block;color:var(--ink-2);font-size:15.5px;margin-top:2px}
-.sub{font-family:var(--text);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500;margin:0 0 6px}
-
-.faq{margin-top:40px;border-top:1px solid var(--line)}
+.faq{margin-top:28px;padding:6px 26px}
 .faq details{border-bottom:1px solid var(--line)}
-.faq summary{list-style:none;cursor:pointer;padding:22px 48px 22px 0;position:relative;font-family:var(--display);font-size:clamp(21px,2vw,27px);line-height:1.2}
+.faq details:last-child{border-bottom:0}
+.faq summary{list-style:none;cursor:pointer;padding:18px 40px 18px 0;position:relative;font-weight:600;font-size:15px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"";position:absolute;right:6px;top:50%;width:14px;height:14px;margin-top:-7px;
-  background:linear-gradient(var(--ink),var(--ink)) center/14px 2px no-repeat,linear-gradient(var(--ink),var(--ink)) center/2px 14px no-repeat;transition:transform .4s var(--ease)}
+.faq summary::after{content:"";position:absolute;right:4px;top:50%;width:12px;height:12px;margin-top:-6px;
+  background:linear-gradient(var(--ink),var(--ink)) center/12px 2px no-repeat,linear-gradient(var(--ink),var(--ink)) center/2px 12px no-repeat;transition:transform .35s var(--ease)}
 .faq details[open] summary::after{transform:rotate(45deg)}
-.faq details p{margin:0 0 24px;max-width:70ch;color:var(--ink-2)}
+.faq details p{margin:0 0 18px;max-width:72ch;color:var(--ink-2)}
 
-.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
-form{display:grid;gap:12px}
+.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:20px;align-items:start}
+.contact .side{padding:26px}
+.contact .side p{color:var(--ink-2);margin:10px 0 0}
+.contact .side .actions{margin-top:20px}
+form{display:grid;gap:10px;padding:22px}
 .field{position:relative}
-.field label{position:absolute;z-index:1;pointer-events:none;left:16px;top:10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
-.field input,.field textarea{width:100%;box-sizing:border-box;background:#fffdf8;border:1px solid var(--line);border-radius:12px;color:var(--ink);font:16px/1.4 var(--text);padding:30px 16px 12px;outline:none;transition:border-color .3s,box-shadow .3s}
-.field textarea{min-height:130px;resize:vertical}
-.field input:focus,.field textarea:focus{border-color:var(--thread);box-shadow:0 0 0 3px rgba(232,162,27,.2)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field label{position:absolute;z-index:1;pointer-events:none;left:14px;top:9px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.field input,.field textarea{width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--ink);font:14px/1.4 var(--text);padding:27px 14px 11px;outline:none;transition:border-color .3s,box-shadow .3s}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(240,161,42,.22)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hp{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden}
-.note{font-size:14px;color:var(--ink-2);min-height:1.5em;margin:4px 0 0}
-.note.ok{color:#2f6b3a}.note.err{color:#a3342a}
+.note{font-size:13px;color:var(--ink-2);min-height:1.5em;margin:2px 0 0}
+.note.ok{color:#1d7a43}.note.err{color:#b23a2a}
 form .btn{justify-self:start}
 form .btn[disabled]{opacity:.6;cursor:wait}
 
-footer{background:var(--ink);color:#d9d6ce;padding-block:56px 64px;padding-inline:var(--colL)}
+footer{background:linear-gradient(135deg,var(--indigo),#18194a 70%);color:#d8d9ee;padding-block:52px 60px;padding-inline:var(--gut)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:28px 64px;justify-content:space-between;align-items:flex-start}
-footer .logo{height:24px;margin-bottom:14px}
-footer p{margin:0;font-size:14px;color:#a9a6a0;max-width:40ch}
-footer .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8d8a84;display:block;margin-bottom:8px}
-footer a{text-decoration:none;color:#f1eee7}
-footer .cols{display:flex;gap:56px;flex-wrap:wrap;font-size:15px}
+footer .logo{height:18px;margin-bottom:12px}
+footer p{margin:0;color:#aeb0d4;max-width:42ch}
+footer .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8f92c2;display:block;margin-bottom:8px}
+footer a{text-decoration:none;color:#fff}
+footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 
+.wa-float{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;width:54px;height:54px;border-radius:50%;
+  background:#1fae5b;color:#fff;display:grid;place-items:center;box-shadow:0 12px 26px -10px rgba(31,174,91,.9);transition:transform .35s var(--ease)}
+.wa-float:hover{transform:scale(1.06)}
+.wa-float svg{width:28px;height:28px}
+
+@media (max-width:1080px){ .menu a{padding:8px 9px} .top .btn .lbl-long{display:none} }
 @media (max-width:900px){
-  :root{--colL:20px}
-  body{font-size:16px}
-  .rail{display:none}
-  .veil{background:linear-gradient(0deg,rgba(246,241,231,.97) 0%,rgba(246,241,231,.9) 42%,rgba(246,241,231,.2) 62%,rgba(246,241,231,0) 72%),linear-gradient(180deg,rgba(246,241,231,.7),rgba(246,241,231,0) 14%)}
-  .copy{left:20px;right:20px;width:auto;top:auto;bottom:84px}
-  .beat{top:auto;bottom:0;transform:translateY(22px)}
+  :root{--gut:16px;--hh:104px}
+  .bar{height:56px;gap:12px}
+  .bar .menu{display:none}
+  .mmenu{display:flex!important}
+  .copy{left:12px;right:12px;width:auto;top:auto;bottom:70px}
+  .beat{top:auto;bottom:0;transform:translateY(22px);padding:18px 18px 16px;border-radius:16px}
   .beat.on{transform:none}
-  .beat h1,.beat h2{font-size:clamp(34px,9.6vw,48px)}
-  .beat p{font-size:15px;margin-top:14px}
-  .beat .hero-logo{height:28px;margin-bottom:16px}
-  .tags{margin-top:14px}.tags li{font-size:12px}
-  .figs{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .figs strong{font-size:26px}.figs span{font-size:12px}
-  .readout{bottom:22px}
-  .sec{padding-block:72px}
-  .stats{grid-template-columns:1fr 1fr}
-  .stat{border-right:0;border-bottom:1px solid var(--line);padding:22px 0 14px!important}
-  .stat:nth-child(odd){padding-right:16px!important;border-right:1px solid var(--line)}
-  .stat:nth-child(even){padding-left:16px!important}
-  .split,.contact{grid-template-columns:1fr;gap:36px}
+  .beat p{font-size:13.5px}
+  .figs strong{font-size:20px}
+  .readout{left:12px;bottom:16px}
+  .sec{padding-block:64px}
+  .stats,.steps{grid-template-columns:1fr 1fr}
+  .tools{grid-template-columns:1fr}
+  .tool,.tool:nth-child(n+4){grid-column:auto}
+  .contact{grid-template-columns:1fr}
   .row2{grid-template-columns:1fr}
-  .top .btn{padding:10px 14px;font-size:13px}
+  .wa-float{width:48px;height:48px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 }
-@media (max-width:900px) and (max-height:740px){ .beat p{display:none} }
+@media (max-width:900px) and (max-height:760px){ .beat p{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden} }
+@media (max-width:520px){ .stats,.steps{grid-template-columns:1fr} }
+.mmenu{display:none;gap:4px;overflow-x:auto;padding:0 12px 10px;margin:0;list-style:none;scrollbar-width:none}
+.mmenu::-webkit-scrollbar{display:none}
+.mmenu a{display:block;text-decoration:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:7px 12px;border-radius:999px;white-space:nowrap;background:rgba(255,255,255,.5)}
+.mmenu a.on{color:var(--ink);background:#fff;box-shadow:inset 0 -2px 0 var(--amber)}
 @media (prefers-reduced-motion:reduce){ .beat,.beat.on{transition:none} }
 </style>
 </head>
@@ -193,170 +199,179 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap;font-size:15px}
 
 
 <header class="top" id="top">
-  <a href="#c1" data-jump="0" aria-label="SanityAI home"><img class="logo" src="assets/logo-dark.png" alt="SanityAI" width="709" height="104"></a>
-  <a class="btn" href="#contact">Book a call <span class="arw">→</span></a>
+  <div class="bar">
+    <a href="#story" data-jump="0" aria-label="SanityAI home"><img class="logo" src="assets/logo-dark.png" alt="SanityAI" width="709" height="104"></a>
+    <ul class="menu" aria-label="Sections">
+      <li><a href="#c2" data-key="marketing" data-jump="1">Marketing</a></li>
+      <li><a href="#c3" data-key="search" data-jump="2">Search</a></li>
+      <li><a href="#c4" data-key="automation" data-jump="3">Automation</a></li>
+      <li><a href="#c5" data-key="paid" data-jump="4">Paid media</a></li>
+      <li><a href="#results" data-key="results">Results</a></li>
+      <li><a href="#tools" data-key="tools">Tools</a></li>
+      <li><a href="#process" data-key="process">Process</a></li>
+      <li><a href="#faq" data-key="faq">FAQs</a></li>
+      <li><a href="#contact" data-key="contact">Contact</a></li>
+    </ul>
+    <a class="btn" href="#contact" style="margin-left:auto">Book a call <span class="arw">→</span></a>
+  </div>
+  <ul class="mmenu" aria-label="Sections">
+    <li><a href="#c2" data-key="marketing" data-jump="1">Marketing</a></li>
+    <li><a href="#c3" data-key="search" data-jump="2">Search</a></li>
+    <li><a href="#c4" data-key="automation" data-jump="3">Automation</a></li>
+    <li><a href="#c5" data-key="paid" data-jump="4">Paid media</a></li>
+    <li><a href="#results" data-key="results">Results</a></li>
+    <li><a href="#tools" data-key="tools">Tools</a></li>
+    <li><a href="#process" data-key="process">Process</a></li>
+    <li><a href="#faq" data-key="faq">FAQs</a></li>
+    <li><a href="#contact" data-key="contact">Contact</a></li>
+  </ul>
 </header>
-
-<ol class="rail" id="rail" aria-label="Chapters">
-  <li><button data-jump="0">SanityAI</button></li>
-  <li><button data-jump="1">Marketing</button></li>
-  <li><button data-jump="2">Search</button></li>
-  <li><button data-jump="3">Automation</button></li>
-  <li><button data-jump="4">Paid media</button></li>
-  <li><button data-jump="5">Results</button></li>
-  <li><button data-jump="6">Contact</button></li>
-</ol>
 
 <main>
 <section class="story" id="story" aria-label="How SanityAI works">
   <div class="stage">
     <canvas class="film" aria-hidden="true"></canvas>
-    <div class="veil"></div>
     <div class="copy">
       <article class="beat on" id="c1">
-        <img class="hero-logo" src="assets/logo-dark.png" alt="SanityAI" width="709" height="104">
-        <p class="eyebrow">AI marketing and automation · Dubai</p>
+        <p class="eyebrow">Marketing, search and automation · Dubai</p>
         <h1>Marketing that makes sense again.</h1>
-        <p>Buyers now find brands through ads, search results and AI answers, and most marketing teams are stretched across all three with tools that don't talk to each other. SanityAI joins strategy, search, automation and paid media into one system, built and run by people who have spent 11 years doing it across the GCC. One thread, from first impression to revenue.</p>
+        <p>People find businesses through ads, Google and now AI assistants like ChatGPT. Most teams juggle all three with tools that don't talk to each other. We bring strategy, search, automation and advertising together so they work as one, and we've been doing it across the Gulf for over 11 years.</p>
         <div class="actions"><a class="btn" href="#contact">Book a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1">See how it works</a></div>
       </article>
       <article class="beat" id="c2">
         <p class="eyebrow"><b>01</b> Marketing strategy</p>
         <h2>The right questions create clarity.</h2>
-        <p>Every engagement starts with the same three questions: who buys, why they buy, and what it costs you to reach them today. We map your audiences, offers and channels against real revenue data, not vanity metrics. The result is a plan your team can execute in the next 90 days, with a clear owner and a number attached to every line.</p>
-        <ul class="tags"><li>Positioning</li><li>Go-to-market</li><li>Funnel audits</li><li>Measurement plans</li></ul>
+        <p>We start every project by asking who buys from you, why they buy, and what it costs you to win each customer today. Then we look at your real sales numbers, not likes and clicks. You get a simple 90-day plan with a clear owner and a target for every step.</p>
+        <ul class="tags"><li>Positioning</li><li>Launch plans</li><li>Sales funnel review</li><li>Clear reporting</li></ul>
       </article>
       <article class="beat" id="c3">
-        <p class="eyebrow"><b>02</b> Search optimisation</p>
+        <p class="eyebrow"><b>02</b> Search</p>
         <h2>Be the answer they find.</h2>
-        <p>Search now happens in two places: classic search results and AI assistants like ChatGPT, Perplexity, Gemini and Claude. We optimise for both. That means technical SEO and content that ranks, plus the structure, citations and entity signals AI models rely on when they recommend a brand. We track how often you're named, and fix the gaps.</p>
-        <ul class="tags"><li>Technical SEO</li><li>Content</li><li>AI search (GEO)</li><li>Schema and entities</li></ul>
+        <p>Customers now search in two places: Google, and AI assistants like ChatGPT, Perplexity, Gemini and Claude. We help you show up in both. That means a website search engines understand, content people actually want to read, and the trusted mentions AI tools look for before they recommend a business.</p>
+        <ul class="tags"><li>Google search</li><li>Content</li><li>AI assistants</li><li>Website health</li></ul>
       </article>
       <article class="beat" id="c4">
         <p class="eyebrow"><b>03</b> Automation</p>
         <h2>Systems that never sleep.</h2>
-        <p>Leads go cold in minutes, not days. We build the machinery that answers them: AI voice agents in English and Arabic that pick up at 2 a.m., WhatsApp follow-ups that go out on time, and n8n workflows that route every lead into your CRM with its source attached. Your team spends its hours on conversations that close, not on copying data between tools.</p>
-        <ul class="tags"><li>AI voice agents</li><li>WhatsApp</li><li>n8n workflows</li><li>CRM integration</li></ul>
+        <p>Leads go cold in minutes. We set up help that responds straight away: AI phone assistants that answer in English and Arabic at any hour, WhatsApp messages that follow up on time, and simple workflows that put every new lead into your sales system. Your team spends its time talking to buyers, not copying data.</p>
+        <ul class="tags"><li>AI phone assistants</li><li>WhatsApp follow-ups</li><li>Lead handling</li><li>Sales system setup</li></ul>
       </article>
       <article class="beat" id="c5">
-        <p class="eyebrow"><b>04</b> Paid media optimisation</p>
+        <p class="eyebrow"><b>04</b> Paid media</p>
         <h2>Every coin aimed true.</h2>
-        <p>We run Google, Meta, LinkedIn and Bing as one budget, judged on cost per sale rather than cost per click. Server-side tracking and conversion APIs feed the platforms clean signals, so their algorithms find buyers instead of browsers. Weekly, we cut what isn't working and move spend to what is. Across four GCC markets, that discipline cut cost per acquisition by 60%.</p>
-        <ul class="tags"><li>Google Ads</li><li>Meta</li><li>LinkedIn</li><li>Server-side tracking</li></ul>
+        <p>We run Google, Meta, LinkedIn and Bing ads as one budget and judge them on sales, not clicks. With accurate tracking in place, the platforms learn who actually buys and find more people like them. Every week we cut what isn't working and move the money to what is. In four Gulf markets, that cut the cost of each new customer by 60%.</p>
+        <ul class="tags"><li>Google Ads</li><li>Meta</li><li>LinkedIn</li><li>Accurate tracking</li></ul>
       </article>
       <article class="beat" id="c6">
         <p class="eyebrow"><b>05</b> Results</p>
         <h2>Sustainable growth is the destination.</h2>
-        <p>Visibility, automation and media only matter when revenue moves. We report on pipeline and sales by source, and we tie every recommendation to the number it should change. Here is what that has looked like for the brands we've worked with.</p>
-        <div class="figs"><div><strong>$1M+</strong><span>attributable revenue</span></div><div><strong>60%</strong><span>lower CPA across four GCC markets</span></div><div><strong>40%</strong><span>lead-to-sale conversion vs 8–15% benchmark</span></div></div>
+        <p>Everything we do should show up in your sales figures. We report on leads and revenue by channel, and every recommendation comes with the number it should move. Here is what that has looked like so far.</p>
+        <div class="figs"><div><strong>$1M+</strong><span>revenue traced to our campaigns</span></div><div><strong>60%</strong><span>lower cost per customer</span></div><div><strong>40%</strong><span>of leads turned into sales</span></div></div>
       </article>
       <article class="beat" id="c7">
         <p class="eyebrow"><b>06</b> Contact</p>
         <h2>Let's pick up the thread.</h2>
-        <p>Tell us what you sell, where you sell it and what's not working. We'll review your setup before the call and come with three specific things we'd change first. No retainers until you've seen the plan. We reply within two working days.</p>
-        <div class="actions"><a class="btn" href="#contact">Write to us <span class="arw">→</span></a></div>
+        <p>Tell us what you sell, where you sell it and what isn't working. We'll look at your setup before we talk and bring three specific changes we'd make first. We reply within two working days.</p>
+        <div class="actions"><a class="btn" href="#contact">Write to us <span class="arw">→</span></a><a class="btn wa" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener">WhatsApp us</a></div>
       </article>
     </div>
-    <div class="loading" id="loading" aria-hidden="true">Loading film 0%</div>
-    <div class="readout" aria-hidden="true"><span class="bar"><i id="bar"></i></span><span><span id="ro">01</span> / 07</span></div>
+    <div class="readout" aria-hidden="true"><span class="track"><i id="bar"></i></span><span><span id="ro">01</span> / 07</span><span class="loading" id="loading">· loading</span></div>
   </div>
 </section>
 
 <section class="sec" id="results" aria-labelledby="results-h">
+  <div class="paint" style="background-image:url('assets/bg/bg6.webp');background-position:30% 60%"></div>
+  <svg class="thread" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 80 C 260 20, 420 110, 720 60 S 1180 10, 1440 70" fill="none" stroke="#f0a12a" stroke-width="2.5" stroke-linecap="round"/></svg>
   <div class="wrap">
-    <p class="kicker">Selected results</p>
-    <h2 id="results-h">Numbers, not adjectives.</h2>
-    <p class="lede">A few outcomes from the work behind SanityAI. Each one comes from the same approach: clean tracking first, then decisions made on revenue, not clicks.</p>
-    <div class="stats">
-      <div class="stat"><strong>$1M+</strong><p>Attributable revenue, traced to campaigns through multi-touch attribution</p></div>
-      <div class="stat"><strong>60%</strong><p>Lower cost per acquisition after restructuring paid media across four GCC markets</p></div>
-      <div class="stat"><strong>40%</strong><p>Lead-to-sale conversion for a UAE insurance comparison platform, against an 8–15% industry benchmark</p></div>
-      <div class="stat"><strong>11+ yrs</strong><p>Of GCC marketing for enterprise, government-linked and consumer brands</p></div>
+    <div class="head panel">
+      <p class="kicker">Results</p>
+      <h2 id="results-h">Real results, in plain numbers.</h2>
+      <p class="lede">A few outcomes from the work behind SanityAI. Each one came from the same habit: get the tracking right first, then make decisions based on sales.</p>
     </div>
-    <div class="brands">
-      <h3>Brands we've worked with</h3>
-      <ul><li>AXA Gulf</li><li>Abu Dhabi Ports Group</li><li>IFFCO</li><li>Hearst / Harper's Bazaar</li><li>Regal Rexnord</li><li>InPerSuit</li></ul>
+    <div class="stats">
+      <div class="stat panel"><strong>$1M+</strong><p>Revenue we could trace directly back to our campaigns</p></div>
+      <div class="stat panel"><strong>60%</strong><p>Lower cost per new customer after rebuilding ad accounts in four Gulf markets</p></div>
+      <div class="stat panel"><strong>40%</strong><p>Of leads turned into sales for a UAE insurance comparison site, where 8 to 15% is typical</p></div>
+      <div class="stat panel"><strong>11+ yrs</strong><p>Marketing for large companies, government-linked groups and consumer brands across the Gulf</p></div>
     </div>
   </div>
 </section>
 
 <section class="sec" id="tools" aria-labelledby="tools-h">
+  <div class="paint" style="background-image:url('assets/bg/bg3.webp');background-position:center 30%"></div>
   <div class="wrap">
-    <p class="kicker">Tools we've built and published</p>
-    <h2 id="tools-h">We don't just use the stack, we contribute to it.</h2>
-    <p class="lede">These are free, public tools we built for measuring and improving visibility in AI search. Teams around the world use them to see a channel most analytics still miss.</p>
+    <div class="head panel">
+      <p class="kicker">Tools we've built</p>
+      <h2 id="tools-h">We don't just use the tools, we build them.</h2>
+      <p class="lede">These free tools help businesses see how many visitors now come from AI assistants, and how to get more of them. Marketers around the world use them every day.</p>
+    </div>
     <div class="tools">
-      <div class="tool"><span class="num">WordPress</span><h3>AI Visibility Toolkit</h3><p>A plugin on wordpress.org that makes sites easier for AI assistants to read and cite.</p></div>
-      <div class="tool"><span class="num">Google Tag Manager</span><h3>AI Traffic Source template</h3><p>Identifies visits that come from ChatGPT, Perplexity, Gemini and other assistants.</p></div>
-      <div class="tool"><span class="num">Looker Studio</span><h3>AI Insights for GA4</h3><p>A connector that reports AI-referred traffic and conversions alongside your other channels.</p></div>
-      <div class="tool"><span class="num">Open source</span><h3>AI Referral Attribution Kit</h3><p>A kit for attributing pipeline and revenue to AI referrals, not just sessions.</p></div>
-      <div class="tool"><span class="num">Chrome</span><h3>GEO Readiness Auditor</h3><p>A browser extension that checks any page against 78 AI-search checkpoints in 12 categories.</p></div>
+      <div class="tool panel"><span class="tag">WordPress plugin</span><h3>AI Visibility Toolkit</h3><p>Makes your website easier for AI assistants to read and recommend.</p></div>
+      <div class="tool panel"><span class="tag">Google Tag Manager</span><h3>AI Traffic Source</h3><p>Shows which visits came from ChatGPT, Perplexity, Gemini and similar tools.</p></div>
+      <div class="tool panel"><span class="tag">Looker Studio</span><h3>AI Insights for GA4</h3><p>A ready-made report of the visitors and sales that AI assistants send you.</p></div>
+      <div class="tool panel"><span class="tag">Open source</span><h3>AI Referral Attribution Kit</h3><p>Connects each sale back to the AI tool that sent the customer, so you know what's really working.</p></div>
+      <div class="tool panel"><span class="tag">Chrome extension</span><h3>GEO Readiness Auditor</h3><p>Checks any web page against 78 points that affect whether AI search will show it.</p></div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="how" aria-labelledby="how-h">
+<section class="sec" id="process" aria-labelledby="process-h">
+  <div class="paint" style="background-image:url('assets/bg/bg4.webp');background-position:20% 55%"></div>
+  <svg class="thread" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 300 110, 520 10, 820 70 S 1240 110, 1440 30" fill="none" stroke="#f0a12a" stroke-width="2.5" stroke-linecap="round"/></svg>
   <div class="wrap">
-    <p class="kicker">How we work</p>
-    <h2 id="how-h">From audit to revenue in four steps.</h2>
-    <div class="split">
-      <div>
-        <p class="sub">The process</p>
-        <ol class="steps">
-          <li><strong>Audit</strong><span>Weeks 1–2. Tracking, channels, search visibility and funnel, with a written findings report.</span></li>
-          <li><strong>Plan</strong><span>Weeks 2–3. A 90-day roadmap with owners, budgets and the number each step should move.</span></li>
-          <li><strong>Build</strong><span>Weeks 3–8. Tracking, automations, content and campaigns go live in priority order.</span></li>
-          <li><strong>Run and report</strong><span>Ongoing. Weekly optimisation and monthly revenue reporting by source.</span></li>
-        </ol>
-      </div>
-      <div>
-        <p class="sub">Credentials</p>
-        <ul class="creds">
-          <li>Toptal Verified Expert, top 3% of freelance talent</li>
-          <li>Chartered Institute of Marketing member (MCIM)</li>
-          <li>CXL Certified Optimizer</li>
-          <li>Reforge Growth Series</li>
-          <li>Google Analytics and AI-Powered Performance Ads</li>
-          <li>Surfer AI Search Optimization</li>
-        </ul>
-      </div>
+    <div class="head panel">
+      <p class="kicker">How we work</p>
+      <h2 id="process-h">From first call to results in four steps.</h2>
+      <p class="lede">No long contracts before you've seen the plan. Here is what the first few months look like.</p>
     </div>
+    <ol class="steps">
+      <li class="panel"><h3>Review</h3><span class="when">Weeks 1–2</span><p>We look at your tracking, ads, search presence and sales process, and write up what we find.</p></li>
+      <li class="panel"><h3>Plan</h3><span class="when">Weeks 2–3</span><p>A 90-day plan with who does what, the budget, and the result each step should bring.</p></li>
+      <li class="panel"><h3>Build</h3><span class="when">Weeks 3–8</span><p>Tracking, automations, content and ads go live, most important first.</p></li>
+      <li class="panel"><h3>Run and report</h3><span class="when">Ongoing</span><p>Weekly improvements and a monthly report showing sales by channel.</p></li>
+    </ol>
   </div>
 </section>
 
 <section class="sec" id="faq" aria-labelledby="faq-h">
+  <div class="paint" style="background-image:url('assets/bg/bg1.webp');background-position:center 70%"></div>
   <div class="wrap">
-    <p class="kicker">FAQs</p>
-    <h2 id="faq-h">Questions we hear before every first call.</h2>
-    <div class="faq">
-      <details open><summary>What does SanityAI actually do?</summary><p>We connect four things most companies buy separately: marketing strategy, search optimisation (including AI search), automation, and paid media. One team owns the whole path from first impression to closed sale, so nothing gets lost between agencies.</p></details>
-      <details><summary>Who do you work with?</summary><p>Growing companies in the GCC and beyond that already spend on marketing and want it to return more. Our work spans insurance, real estate, hospitality, healthcare, B2B services and e-commerce. If you sell something people search for, we can help.</p></details>
-      <details><summary>What is AI search optimisation, and do I need it?</summary><p>It is making sure assistants like ChatGPT, Perplexity, Gemini and Claude know your brand and recommend it. A growing share of buyers ask an assistant before they visit any website. If those answers name your competitors and not you, that demand never reaches you.</p></details>
-      <details><summary>How fast will we see results?</summary><p>Tracking fixes and automations usually show impact within the first month. Paid media typically improves within 4 to 8 weeks as the platforms learn from cleaner data. Search and AI visibility compound over 3 to 6 months.</p></details>
-      <details><summary>Do you work in Arabic?</summary><p>Yes. We build voice agents, WhatsApp flows and campaigns in English and Arabic, and plan for both from the start rather than translating at the end.</p></details>
-      <details><summary>Which tools and platforms do you use?</summary><p>Google Ads, Meta, LinkedIn and Bing for media; GA4, server-side Google Tag Manager and conversion APIs for tracking; n8n, HubSpot, GoHighLevel and your existing CRM for automation. We work with what you have before we suggest anything new.</p></details>
-      <details><summary>How do engagements and pricing work?</summary><p>We start with a fixed-fee audit and 90-day plan. After that, most clients keep us on a monthly retainer sized to the scope. You see the plan before you commit to anything ongoing.</p></details>
-      <details><summary>Will we own the work?</summary><p>Yes. Ad accounts, tracking, automations, content and data stay in your accounts and remain yours if we part ways.</p></details>
+    <div class="head panel">
+      <p class="kicker">FAQs</p>
+      <h2 id="faq-h">Questions we hear before every first call.</h2>
+    </div>
+    <div class="faq panel">
+      <details open><summary>What does SanityAI actually do?</summary><p>We bring together four things most companies buy from different suppliers: marketing strategy, search (including AI assistants), automation and paid ads. One team looks after the whole journey from first click to closed sale, so nothing falls through the gaps.</p></details>
+      <details><summary>Who do you work with?</summary><p>Growing businesses in the Gulf and beyond that already spend on marketing and want more back from it. We've worked in insurance, real estate, hospitality, healthcare, business services and online retail.</p></details>
+      <details><summary>What is AI search, and do I need to think about it?</summary><p>More and more people ask ChatGPT, Perplexity, Gemini or Claude for recommendations before they visit any website. If those answers mention your competitors and not you, you're missing customers you never knew about. We help make sure you're part of the answer.</p></details>
+      <details><summary>How soon will we see results?</summary><p>Tracking fixes and automations usually make a difference in the first month. Ads tend to improve within 4 to 8 weeks. Search takes longer, usually 3 to 6 months, but keeps building over time.</p></details>
+      <details><summary>Which tools do you use?</summary><p>Mostly the ones you already have. For ads we work with Google, Meta, LinkedIn and Bing. For tracking, Google Analytics and Tag Manager. For automation, tools like n8n, HubSpot and GoHighLevel, connected to the sales system you use today.</p></details>
+      <details><summary>How does pricing work?</summary><p>We start with a fixed-price review and 90-day plan. After that, most clients work with us month to month, sized to what they need. You see the plan before you commit to anything ongoing.</p></details>
+      <details><summary>Will we own everything you build?</summary><p>Yes. Ad accounts, tracking, automations, content and data all stay in your name and remain yours if we stop working together.</p></details>
     </div>
   </div>
 </section>
 
 <section class="sec" id="contact" aria-labelledby="contact-h">
+  <div class="paint" style="background-image:url('assets/bg/bg7.webp');background-position:center 60%"></div>
+  <svg class="thread" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90 C 280 30, 560 100, 860 50 S 1260 20, 1440 60" fill="none" stroke="#f0a12a" stroke-width="2.5" stroke-linecap="round"/></svg>
   <div class="wrap contact">
-    <div>
+    <div class="side panel">
       <p class="kicker">Contact</p>
       <h2 id="contact-h">Let's pick up the thread.</h2>
-      <p class="lede">Tell us what you sell, where you sell it and what's not working. We'll review your setup before the call and come with three specific things we'd change first. No retainers until you've seen the plan. We reply within two working days.</p>
+      <p>Tell us what you sell, where you sell it and what isn't working. We'll look at your setup before we talk and bring three specific changes we'd make first. You see the plan before any monthly commitment, and we reply within two working days.</p>
+      <p>Prefer to chat? Message us on WhatsApp and we'll get back to you the same day.</p>
+      <div class="actions"><a class="btn wa" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>WhatsApp us</a></div>
     </div>
-    <form id="contact-form" novalidate>
+    <form id="contact-form" class="panel" novalidate>
       <div class="row2">
         <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
         <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
       </div>
       <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization"></div>
-      <div class="field"><label for="f-msg">What do you want to fix?</label><textarea id="f-msg" name="message" required></textarea></div>
+      <div class="field"><label for="f-msg">What would you like to fix?</label><textarea id="f-msg" name="message" required></textarea></div>
       <div class="hp" aria-hidden="true"><label for="f-hp">Leave empty</label><input id="f-hp" name="_honey" tabindex="-1" autocomplete="off"></div>
-      <button class="btn" type="submit" id="f-send">Send <span class="arw">→</span></button>
+      <button class="btn dark" type="submit" id="f-send">Send message <span class="arw">→</span></button>
       <p class="note" id="f-note" role="status"></p>
     </form>
   </div>
@@ -365,26 +380,27 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap;font-size:15px}
 
 <footer>
   <div class="wrap">
-    <div><img class="logo" src="assets/logo-light.png" alt="SanityAI" width="709" height="104"><p>Marketing strategy, search and AI search optimisation, automation and paid media. Based in Dubai, working across the GCC and beyond.</p></div>
+    <div><img class="logo" src="assets/logo-light.png" alt="SanityAI" width="709" height="104"><p>Marketing strategy, search, automation and paid ads, working together. Based in Dubai, working across the Gulf and beyond.</p></div>
     <div class="cols">
       <div><span class="lbl">Explore</span><a href="#results">Results</a><br><a href="#tools">Tools</a><br><a href="#faq">FAQs</a></div>
-      <div><span class="lbl">Talk to us</span><a href="#contact">Send a message</a></div>
+      <div><span class="lbl">Talk to us</span><a href="#contact">Send a message</a><br><a href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener">WhatsApp +971 58 578 5819</a></div>
     </div>
   </div>
 </footer>
 
+<a class="wa-float" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener" aria-label="Chat with SanityAI on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
-{"@type":"Organization","name":"SanityAI","description":"Marketing strategy, search and AI search optimisation, automation and paid media.","areaServed":"GCC","address":{"@type":"PostalAddress","addressLocality":"Dubai","addressCountry":"AE"}},
+{"@type":"Organization","name":"SanityAI","description":"Marketing strategy, search, automation and paid ads, working together.","areaServed":"GCC","telephone":"+971585785819","address":{"@type":"PostalAddress","addressLocality":"Dubai","addressCountry":"AE"}},
 {"@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"What does SanityAI actually do?","acceptedAnswer":{"@type":"Answer","text":"We connect four things most companies buy separately: marketing strategy, search optimisation (including AI search), automation, and paid media. One team owns the whole path from first impression to closed sale, so nothing gets lost between agencies."}},
-{"@type":"Question","name":"Who do you work with?","acceptedAnswer":{"@type":"Answer","text":"Growing companies in the GCC and beyond that already spend on marketing and want it to return more. Our work spans insurance, real estate, hospitality, healthcare, B2B services and e-commerce. If you sell something people search for, we can help."}},
-{"@type":"Question","name":"What is AI search optimisation, and do I need it?","acceptedAnswer":{"@type":"Answer","text":"It is making sure assistants like ChatGPT, Perplexity, Gemini and Claude know your brand and recommend it. A growing share of buyers ask an assistant before they visit any website. If those answers name your competitors and not you, that demand never reaches you."}},
-{"@type":"Question","name":"How fast will we see results?","acceptedAnswer":{"@type":"Answer","text":"Tracking fixes and automations usually show impact within the first month. Paid media typically improves within 4 to 8 weeks as the platforms learn from cleaner data. Search and AI visibility compound over 3 to 6 months."}},
-{"@type":"Question","name":"Do you work in Arabic?","acceptedAnswer":{"@type":"Answer","text":"Yes. We build voice agents, WhatsApp flows and campaigns in English and Arabic, and plan for both from the start rather than translating at the end."}},
-{"@type":"Question","name":"Which tools and platforms do you use?","acceptedAnswer":{"@type":"Answer","text":"Google Ads, Meta, LinkedIn and Bing for media; GA4, server-side Google Tag Manager and conversion APIs for tracking; n8n, HubSpot, GoHighLevel and your existing CRM for automation. We work with what you have before we suggest anything new."}},
-{"@type":"Question","name":"How do engagements and pricing work?","acceptedAnswer":{"@type":"Answer","text":"We start with a fixed-fee audit and 90-day plan. After that, most clients keep us on a monthly retainer sized to the scope. You see the plan before you commit to anything ongoing."}},
-{"@type":"Question","name":"Will we own the work?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ad accounts, tracking, automations, content and data stay in your accounts and remain yours if we part ways."}}
+{"@type":"Question","name":"What does SanityAI actually do?","acceptedAnswer":{"@type":"Answer","text":"We bring together four things most companies buy from different suppliers: marketing strategy, search (including AI assistants), automation and paid ads. One team looks after the whole journey from first click to closed sale, so nothing falls through the gaps."}},
+{"@type":"Question","name":"Who do you work with?","acceptedAnswer":{"@type":"Answer","text":"Growing businesses in the Gulf and beyond that already spend on marketing and want more back from it. We've worked in insurance, real estate, hospitality, healthcare, business services and online retail."}},
+{"@type":"Question","name":"What is AI search, and do I need to think about it?","acceptedAnswer":{"@type":"Answer","text":"More and more people ask ChatGPT, Perplexity, Gemini or Claude for recommendations before they visit any website. If those answers mention your competitors and not you, you're missing customers you never knew about. We help make sure you're part of the answer."}},
+{"@type":"Question","name":"How soon will we see results?","acceptedAnswer":{"@type":"Answer","text":"Tracking fixes and automations usually make a difference in the first month. Ads tend to improve within 4 to 8 weeks. Search takes longer, usually 3 to 6 months, but keeps building over time."}},
+{"@type":"Question","name":"Which tools do you use?","acceptedAnswer":{"@type":"Answer","text":"Mostly the ones you already have. For ads we work with Google, Meta, LinkedIn and Bing. For tracking, Google Analytics and Tag Manager. For automation, tools like n8n, HubSpot and GoHighLevel, connected to the sales system you use today."}},
+{"@type":"Question","name":"How does pricing work?","acceptedAnswer":{"@type":"Answer","text":"We start with a fixed-price review and 90-day plan. After that, most clients work with us month to month, sized to what they need. You see the plan before you commit to anything ongoing."}},
+{"@type":"Question","name":"Will we own everything you build?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ad accounts, tracking, automations, content and data all stay in your name and remain yours if we stop working together."}}
 ]}]}
 </script>
 
@@ -393,14 +409,13 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap;font-size:15px}
 /* ---------- film ---------- */
 const BASE='', PACK='bin';
 const SCENES=7;
-const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];   // where each character stands across the frame
-const HOLD=1.15, MOVE=2.2;                           // screen-heights of scroll per rest / per camera move
+const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];
+const HOLD=1.15, MOVE=2.2;
 const tier=(innerWidth<900?'m':'d');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const story=document.getElementById('story');
 const cv=document.querySelector('canvas.film'), ctx=cv.getContext('2d');
 const beats=[...document.querySelectorAll('.beat')];
-const railBtns=[...document.querySelectorAll('.rail button')], rail=document.getElementById('rail'), top=document.getElementById('top');
 const ro=document.getElementById('ro'), bar=document.getElementById('bar'), loadEl=document.getElementById('loading');
 
 const segs=[]; for(let i=0;i<SCENES;i++){ segs.push({t:'hold',i,len:HOLD}); if(i<SCENES-1) segs.push({t:'move',i,len:MOVE}); }
@@ -433,16 +448,14 @@ async function loadClip(n){
 }
 function progress(){
   const done=clips.filter(c=>c.state==='ready'||c.state==='failed').length;
-  loadEl.textContent=`Loading film ${Math.round(done/clips.length*100)}%`;
+  loadEl.textContent=`· loading ${Math.round(done/clips.length*100)}%`;
   if(done===clips.length) loadEl.classList.add('done');
 }
-
 function resize(){ const dpr=Math.min(devicePixelRatio||1,2); cv.width=Math.round(cv.clientWidth*dpr); cv.height=Math.round(cv.clientHeight*dpr); want=true; }
 function draw(img,focal,zoom){
   if(!img) return false;
   const s=Math.max(cv.width/img.width, cv.height/img.height)*zoom, dw=img.width*s, dh=img.height*s;
-  let x=cv.width*0.74 - focal*dw;                 // keep the character well right of centre, clear of the copy
-  if(tier==='m') x=cv.width/2 - focal*dw;
+  let x = tier==='m' ? cv.width/2 - focal*dw : cv.width*0.74 - focal*dw;
   x=Math.min(0,Math.max(cv.width-dw,x));
   ctx.drawImage(img,x,(cv.height-dh)/2,dw,dh); return true;
 }
@@ -450,10 +463,9 @@ const lerp=(a,b,t)=>a+(b-a)*t, smooth=t=>t*t*(3-2*t), PUSH=0.035;
 const fx=i=> tier==='m'?0.5:FOCAL[i];
 function locate(p){ let acc=0; for(const s of segs){ if(p<=acc+s.len) return {s,t:(p-acc)/s.len}; acc+=s.len; } return {s:segs[segs.length-1],t:1}; }
 function sceneAt(p){ const {s,t}=locate(p); return s.t==='hold'?s.i:(t<.5?s.i:s.i+1); }
-
 function render(p){
   const {s,t}=locate(p);
-  ctx.fillStyle='#f6f1e7'; ctx.fillRect(0,0,cv.width,cv.height);
+  ctx.fillStyle='#f7efe3'; ctx.fillRect(0,0,cv.width,cv.height);
   if(s.t==='hold'){ draw(keys[s.i],fx(s.i),1+PUSH*t); return; }
   const n=s.i, c=clips[n], z=1+PUSH*(1-smooth(t));
   const focal= tier==='m'?0.5:lerp(FOCAL[n],FOCAL[n+1],smooth(t));
@@ -466,12 +478,23 @@ function render(p){
   draw(keys[n],fx(n),z); ctx.globalAlpha=smooth(t); draw(keys[n+1],fx(n+1),z); ctx.globalAlpha=1;
 }
 
+/* ---------- menu that follows the scroll ---------- */
+const links=[...document.querySelectorAll('[data-key]')];
+const mm=document.querySelector('.mmenu');
+const SCENE_KEY=[null,'marketing','search','automation','paid','results','contact'];
+const SECTIONS=['results','tools','process','faq','contact'].map(id=>document.getElementById(id));
+let activeKey;
+function setKey(k){
+  if(k===activeKey) return; activeKey=k;
+  links.forEach(a=>a.classList.toggle('on',a.dataset.key===k));
+  const m=mm.querySelector(`[data-key="${k}"]`);
+  if(m&&getComputedStyle(mm).display!=='none') mm.scrollTo({left:m.offsetLeft-12,behavior:reduce?'auto':'smooth'});
+}
+
 let cur=0,target=0,want=true,active=-1;
 function tick(){
   const total=story.offsetHeight-innerHeight, r=story.getBoundingClientRect();
   target=total>0?Math.min(Math.max(-r.top,0),total)/total*TOTAL:0;
-  const past=r.bottom<innerHeight*0.6;
-  rail.classList.toggle('gone',past); top.classList.toggle('solid',past);
   const d=target-cur;
   if(Math.abs(d)>0.0004||want){
     cur=reduce?target:cur+d*0.14; render(cur); want=false;
@@ -479,12 +502,16 @@ function tick(){
     if(sc!==active){
       active=sc;
       beats.forEach((b,i)=>b.classList.toggle('on',i===sc));
-      railBtns.forEach((b,i)=>b.setAttribute('aria-current',i===sc));
       ro.textContent=String(sc+1).padStart(2,'0');
       if(sc>0) loadClip(sc-1); if(sc<SCENES-1) loadClip(sc);
     }
     bar.style.transform=`scaleX(${cur/TOTAL})`;
   }
+  // which menu item is current
+  let key=null;
+  if(r.bottom>innerHeight*0.5){ key=SCENE_KEY[sceneAt(cur)]; }
+  else { for(const s of SECTIONS){ if(s.getBoundingClientRect().top<=innerHeight*0.4) key=s.id; } }
+  setKey(key);
   requestAnimationFrame(tick);
 }
 function jump(i){
@@ -508,16 +535,16 @@ form.addEventListener('submit',async e=>{
   const d=Object.fromEntries(new FormData(form));
   if(d._honey) return;
   if(!d.name||!/^\S+@\S+\.\S+$/.test(d.email||'')||!d.message){
-    note.className='note err'; note.textContent='Add your name, a valid work email and a line about what you want to fix.'; return; }
-  if(!ENDPOINT.startsWith('http')){ note.className='note ok'; note.textContent='Preview only. On the live site this sends straight to our inbox.'; return; }
+    note.className='note err'; note.textContent='Please add your name, a valid work email and a short note about what you want to fix.'; return; }
+  if(!ENDPOINT.startsWith('http')){ note.className='note ok'; note.textContent='Preview only. On the live site this goes straight to our inbox.'; return; }
   send.disabled=true; note.className='note'; note.textContent='Sending…';
   try{
     const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
       body:JSON.stringify({name:d.name,email:d.email,company:d.company||'',message:d.message,_subject:`New enquiry from ${d.name}${d.company?' ('+d.company+')':''}`,_template:'table',_captcha:'false',_replyto:d.email,page:location.href})});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||String(j.success)==='false') throw 0;
-    note.className='note ok'; note.textContent='Sent. We reply within two working days.'; form.reset();
-  }catch{ note.className='note err'; note.textContent='That didn\'t go through. Please try again in a minute.'; }
+    note.className='note ok'; note.textContent='Thanks, your message is on its way. We reply within two working days.'; form.reset();
+  }catch{ note.className='note err'; note.textContent='Sorry, that didn\'t send. Please try again, or message us on WhatsApp.'; }
   send.disabled=false;
 });
 })();
