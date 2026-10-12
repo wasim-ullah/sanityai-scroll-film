@@ -22,9 +22,9 @@ Every action pushes its own event name to `window.dataLayer`. To load your conta
 | `contact_form_submit_attempt` | Valid form sent |
 | `contact_form_submit_success` | Form delivered (main conversion) |
 | `contact_form_submit_error` | Form failed to send |
-| `header_book_call_click` | Book a call in the header (desktop) |
-| `hero_book_call_click` | Book a call in the first scene |
-| `hero_see_how_it_works_click` | See how it works |
+| `header_request_call_click` | Request a call in the header (desktop) |
+| `hero_request_call_click` | Request a call in the first scene |
+| `hero_learn_more_click` | Learn more |
 | `header_logo_click` | Logo |
 | `menu_open_click` | Chapter menu button |
 | `footer_email_click` | Email in the footer |

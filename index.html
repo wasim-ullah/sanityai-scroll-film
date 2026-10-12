@@ -43,17 +43,17 @@ h1{font-size:54px} h2{font-size:46px}
 /* label chip, like pear's "AT YOUR SERVICE" */
 .chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--white);
   background:rgba(255,255,255,.14);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:8px 10px;border-radius:4px;margin:0 0 22px}
-/* buttons: square pear shape, our amber */
-.btn{font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;color:var(--ink);
-  background:linear-gradient(135deg,var(--amber),#f7b955 55%,var(--peach));padding:7px 7px 7px 18px;border-radius:5px;display:inline-flex;gap:16px;align-items:center;min-height:44px;box-sizing:border-box;
-  box-shadow:0 10px 28px -12px rgba(240,161,42,.9);transition:transform .35s var(--ease),box-shadow .35s}
-.btn:hover{transform:translateY(-2px)}
-.btn .arw{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(20,22,58,.35);border-radius:4px;font-family:var(--text);letter-spacing:0;transition:transform .35s var(--ease)}
+/* buttons: pear.no style, black with white mono caps and a small outlined arrow box */
+.btn{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;color:#fff;
+  background:#0b0b0d;padding:6px 6px 6px 18px;border-radius:4px;display:inline-flex;gap:22px;align-items:center;min-height:42px;box-sizing:border-box;
+  box-shadow:0 8px 24px -14px rgba(0,0,0,.8);transition:background .3s,transform .35s var(--ease)}
+.btn:hover{background:#1c1c22}
+.btn .arw{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(255,255,255,.55);border-radius:3px;font-family:var(--text);font-size:13px;letter-spacing:0;transition:transform .35s var(--ease)}
 .btn:hover .arw{transform:translateX(2px)}
-.btn.ghost{background:rgba(255,255,255,.12);color:var(--white);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.btn.ghost .arw{border-color:rgba(255,255,255,.4)}
-.btn.wa{background:#1fae5b;color:#fff;box-shadow:0 10px 28px -12px rgba(31,174,91,.9)}
-.btn.wa .arw{border-color:rgba(255,255,255,.45)}
+.btn.ghost{background:rgba(11,11,13,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn.ghost:hover{background:rgba(11,11,13,.7)}
+.btn.wa{background:#1fae5b}
+.btn.wa:hover{background:#199a50}
 .btn svg{width:15px;height:15px}
 
 /* ---------- header: white logo, menu button, book a call ---------- */
@@ -68,7 +68,7 @@ h1{font-size:54px} h2{font-size:46px}
 .menu-open .menu-btn i{opacity:0}
 .menu-open .menu-btn::before{opacity:1;transform:rotate(45deg)} .menu-open .menu-btn::after{opacity:1;transform:rotate(-45deg)}
 .menu-btn i{transition:opacity .3s}
-.top .btn{min-height:40px;padding:6px 6px 6px 14px;gap:12px}
+.top .btn{min-height:40px;padding:5px 5px 5px 16px;gap:18px}
 .top .btn .arw{width:26px;height:26px}
 
 /* ---------- chapter menu overlay ---------- */
@@ -101,7 +101,6 @@ h1{font-size:54px} h2{font-size:46px}
 .guides i{position:absolute;display:block}
 .guides .v{top:0;bottom:0;left:calc(var(--gut) - 40px);width:1px;background:var(--faint)}
 .guides .h{left:0;right:0;top:88px;height:1px;background:var(--faint)}
-.guides .ticks{left:calc(var(--gut) - 40px);top:30vh;width:10px;height:24vh;background:repeating-linear-gradient(180deg,var(--faint) 0 1px,transparent 1px 6vh)}
 
 .copy{position:absolute;z-index:4;left:var(--gut);top:0;bottom:0;width:min(580px,43vw);display:grid;align-items:center;transition:transform .6s var(--ease)}
 .beat{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s;text-shadow:0 1px 18px rgba(14,16,48,.35)}
@@ -153,7 +152,7 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   :root{--gut:22px}
   .top{padding-top:calc(16px + env(safe-area-inset-top,0px))}
   .top .btn{display:none}
-  .guides .v,.guides .ticks{left:12px}
+  .guides .v{left:12px}
   .guides .h{top:72px}
   .shade{background:linear-gradient(180deg,rgba(14,16,48,.4) 0,rgba(14,16,48,0) 110px),
                     linear-gradient(0deg,rgba(14,16,48,.78) 0%,rgba(14,16,48,.5) 34%,rgba(14,16,48,0) 62%)}
@@ -179,7 +178,7 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .field-co{display:none}
   .field textarea{min-height:40px;height:40px}
   .form-foot{gap:8px}
-  .form-foot .btn{min-height:38px;padding:5px 5px 5px 12px;gap:10px;font-size:11px}
+  .form-foot .btn{min-height:38px;padding:5px 5px 5px 14px;gap:14px;font-size:11px}
   .form-foot .btn .arw{width:24px;height:24px}
   .form-foot .btn.wa{display:none}
   .foot{padding:16px 84px calc(16px + env(safe-area-inset-bottom,0px)) var(--gut)}
@@ -196,7 +195,7 @@ form .btn[disabled]{opacity:.6;cursor:wait}
 <header class="top" id="top">
   <a href="#story" data-jump="0" aria-label="SanityAI home" data-ev="header_logo_click"><img class="logo" src="assets/logo-light.png" alt="SanityAI" width="709" height="104"></a>
   <button class="menu-btn" id="menu-btn" type="button" aria-label="Open chapters" aria-expanded="false" aria-controls="chapters" data-ev="menu_open_click"><i><b></b><b></b><b></b><b></b></i></button>
-  <a class="btn" href="#c7" data-jump="6" data-ev="header_book_call_click">Book a call <span class="arw">→</span></a>
+  <a class="btn" href="#c7" data-jump="6" data-ev="header_request_call_click">Request a call <span class="arw">→</span></a>
 </header>
 
 <nav class="chapters" id="chapters" aria-label="Chapters" aria-hidden="true">
@@ -214,37 +213,37 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   <div class="stage">
     <div class="film" aria-hidden="true"></div>
     <div class="shade" aria-hidden="true"></div>
-    <div class="guides" aria-hidden="true"><i class="v"></i><i class="h"></i><i class="ticks"></i></div>
+    <div class="guides" aria-hidden="true"><i class="v"></i><i class="h"></i></div>
     <div class="copy">
       <article class="beat on" id="c1">
         <p class="chip hero-chip">Marketing · Search · Automation<span class="dubai"> · Dubai</span></p>
         <h1>Marketing that makes sense again.</h1>
         <p class="lead">People find businesses through ads, Google and now AI assistants like ChatGPT. Most teams juggle all three with tools that don't talk to each other. We bring strategy, search, automation and advertising together so they work as one, and we've been doing it across the continents since 2013.</p>
-        <div class="actions"><a class="btn" href="#c7" data-jump="6" data-ev="hero_book_call_click">Book a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1" data-ev="hero_see_how_it_works_click">See how it works <span class="arw">↓</span></a></div>
+        <div class="actions"><a class="btn" href="#c7" data-jump="6" data-ev="hero_request_call_click">Request a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1" data-ev="hero_learn_more_click">Learn more <span class="arw">↓</span></a></div>
       </article>
       <article class="beat" id="c2">
         <p class="chip">Marketing strategy</p>
         <h2>The right questions create clarity.</h2>
         <p class="lead">We start every project by asking who buys from you, why they buy, and what it costs you to win each customer today. Then we look at your real sales numbers, not likes and clicks. You get a simple 90-day plan with a clear owner and a target for every step.</p>
-        <ul class="tags"><li>Positioning</li><li>Launch plans</li><li>Sales funnel review</li><li>Clear reporting</li></ul>
+        <ul class="tags"><li>Sales funnel review</li><li>GTM strategy</li></ul>
       </article>
       <article class="beat" id="c3">
         <p class="chip">Search</p>
         <h2>Be the answer they find.</h2>
         <p class="lead">Customers now search in two places: Google, and AI assistants like ChatGPT, Perplexity, Gemini and Claude. We help you show up in both. That means a website search engines understand, content people actually want to read, and the trusted mentions AI tools look for before they recommend a business.</p>
-        <ul class="tags"><li>Google search</li><li>Content</li><li>AI assistants</li><li>Website health</li></ul>
+        <ul class="tags"><li>Website health</li><li>Search everywhere optimization</li></ul>
       </article>
       <article class="beat" id="c4">
         <p class="chip">Automation</p>
         <h2>Systems that never sleep.</h2>
         <p class="lead">Leads go cold in minutes. We set up help that responds straight away: AI phone assistants that answer in English and Arabic at any hour, WhatsApp messages that follow up on time, and simple workflows that put every new lead into your sales system. Your team spends its time talking to buyers, not copying data.</p>
-        <ul class="tags"><li>AI phone assistants</li><li>WhatsApp follow-ups</li><li>Lead handling</li><li>Sales system setup</li></ul>
+        <ul class="tags"><li>Sales system setup</li><li>Marketing automation</li></ul>
       </article>
       <article class="beat" id="c5">
         <p class="chip">Paid media</p>
         <h2>Every coin aimed true.</h2>
         <p class="lead">We run Google, Meta, LinkedIn and Bing ads as one budget and judge them on sales, not clicks. With accurate tracking in place, the platforms learn who actually buys and find more people like them. Every week we cut what isn't working and move the money to what is. In four Gulf markets, that cut the cost of each new customer by 60%.</p>
-        <ul class="tags"><li>Google Ads</li><li>Meta</li><li>LinkedIn</li><li>Accurate tracking</li></ul>
+        <ul class="tags"><li>Accurate tracking</li><li>Lead generation campaigns</li></ul>
       </article>
       <article class="beat" id="c6">
         <p class="chip">Results</p>
@@ -296,7 +295,7 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-ev]'); if(!el) return;
   const ev=el.dataset.ev;
   track(ev,{click_text:(el.textContent||el.getAttribute('aria-label')||'').trim().slice(0,80),click_url:el.href||'',
-    action_type: ev.startsWith('whatsapp_')?'whatsapp_click':/book_call|email/.test(ev)?'cta_click':'navigation_click'});
+    action_type: ev.startsWith('whatsapp_')?'whatsapp_click':/request_call|email/.test(ev)?'cta_click':'navigation_click'});
 });
 
 /* ---------- chapter menu ---------- */
