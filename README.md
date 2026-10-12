@@ -1,11 +1,10 @@
-# SanityAI scroll film
+# SanityAI website
 
-Static landing page: a scroll-scrubbed film of the lighthouse keeper's story.
+Static site: a scroll-scrubbed film of seven painted scenes (one character per screen, six continuous camera moves), followed by results, tools, process, FAQs and a contact form.
 
-- `index.html` — page, styles and the film engine (no build step)
+- `index.html` — page, styles, film engine, FAQ schema and the contact form (no build step)
+- `assets/` — PP Mondwest heading font (licensed separately) and the SanityAI logos
 - `keys/` — one still per scene (`-d` desktop 1280×720, `-m` phone 540×720 crop)
-- `packs/` — transition frames, one pack per clip and screen size
-  (uint32 header length | JSON list of frame sizes | WebP frames)
+- `packs/` — transition frames per clip and screen size (uint32 header length | JSON frame sizes | WebP frames)
 
-Before launch: replace `FORM_ENDPOINT` in `index.html` with a form service endpoint
-(e.g. Formspree) and the footer contact placeholder with a real address.
+Contact form posts to FormSubmit, which emails wasim@sanity.ai. The first submission sends a one-time activation email to that address; click it to start receiving messages.
