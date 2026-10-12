@@ -38,7 +38,7 @@ body{font-family:var(--text);font-size:14px;line-height:1.55;-webkit-font-smooth
 a{color:inherit}
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 h1,h2{font-family:var(--display);font-weight:400;letter-spacing:-.01em;line-height:1.02;margin:0;text-wrap:balance}
-h1{font-size:clamp(40px,5.6vw,84px)} h2{font-size:clamp(34px,4.4vw,66px)}
+h1{font-size:54px} h2{font-size:46px}
 
 /* label chip, like pear's "AT YOUR SERVICE" */
 .chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--white);
@@ -78,13 +78,11 @@ h1{font-size:clamp(40px,5.6vw,84px)} h2{font-size:clamp(34px,4.4vw,66px)}
 .menu-open .chapters{opacity:1;visibility:visible;transition:opacity .5s var(--ease),visibility 0s}
 .chapters ol{list-style:none;margin:0;padding:0;width:min(560px,86vw);text-align:center}
 .chapters li+li{border-top:1px solid rgba(255,255,255,.18)}
-.chapters a{display:block;text-decoration:none;padding:18px 0 20px;color:rgba(255,255,255,.5);transition:color .3s;transform:translateY(14px);opacity:0}
+.chapters a{display:block;text-decoration:none;padding:20px 0 22px;color:rgba(255,255,255,.5);transition:color .3s;transform:translateY(14px);opacity:0}
 .menu-open .chapters a{transform:none;opacity:1;transition:color .3s,transform .7s var(--ease),opacity .7s var(--ease)}
 .menu-open .chapters li:nth-child(2) a{transition-delay:0s,.05s,.05s}.menu-open .chapters li:nth-child(3) a{transition-delay:0s,.1s,.1s}
 .menu-open .chapters li:nth-child(4) a{transition-delay:0s,.15s,.15s}.menu-open .chapters li:nth-child(5) a{transition-delay:0s,.2s,.2s}
-.menu-open .chapters li:nth-child(6) a{transition-delay:0s,.25s,.25s}
 .chapters a:hover,.chapters a.on{color:#fff}
-.chapters small{display:block;font:500 10px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;margin-bottom:10px;opacity:.8}
 .chapters span{font:400 clamp(34px,5vw,60px)/1.05 var(--display)}
 
 /* ---------- film ---------- */
@@ -110,7 +108,7 @@ h1{font-size:clamp(40px,5.6vw,84px)} h2{font-size:clamp(34px,4.4vw,66px)}
 .beat>*{transform:translateY(18px);transition:transform .9s var(--ease)}
 .beat.on>*{transform:none}
 .beat.on>*:nth-child(2){transition-delay:.06s}.beat.on>*:nth-child(3){transition-delay:.12s}.beat.on>*:nth-child(4){transition-delay:.18s}.beat.on>*:nth-child(5){transition-delay:.24s}
-.lead{font-size:clamp(15px,1.2vw,18px);line-height:1.55;color:var(--soft);margin:22px 0 0;max-width:52ch}
+.lead{font-size:14px;line-height:1.6;color:var(--soft);margin:22px 0 0;max-width:52ch}
 .tags{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
 .tags li{font:500 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:7px 9px;border-radius:4px;border:1px solid rgba(255,255,255,.3);color:#fff}
 .actions{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
@@ -160,8 +158,10 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .copy{left:var(--gut);right:var(--gut);width:auto;top:auto;bottom:calc(76px + env(safe-area-inset-bottom,0px));align-items:end}
   .chapters{background:rgba(14,16,48,.72)}
   .chip{margin-bottom:14px}
+  .hero-chip{letter-spacing:.1em;white-space:nowrap;padding:7px 9px}
+  .hero-chip .dubai{display:none}
   h1{font-size:38px} h2{font-size:32px}
-  .lead{font-size:14.5px;margin-top:12px}
+  .lead{margin-top:12px}
   .tags{display:none}
   .actions{margin-top:18px}
   .figs{margin-top:18px;gap:22px}
@@ -191,12 +191,11 @@ form .btn[disabled]{opacity:.6;cursor:wait}
 
 <nav class="chapters" id="chapters" aria-label="Chapters" aria-hidden="true">
   <ol>
-    <li><a href="#c2" data-jump="1" data-key="1" data-ev="menu_marketing_click"><small>Ch. 1</small><span>Marketing</span></a></li>
-    <li><a href="#c3" data-jump="2" data-key="2" data-ev="menu_search_click"><small>Ch. 2</small><span>Search</span></a></li>
-    <li><a href="#c4" data-jump="3" data-key="3" data-ev="menu_automation_click"><small>Ch. 3</small><span>Automation</span></a></li>
-    <li><a href="#c5" data-jump="4" data-key="4" data-ev="menu_paid_media_click"><small>Ch. 4</small><span>Paid media</span></a></li>
-    <li><a href="#c6" data-jump="5" data-key="5" data-ev="menu_results_click"><small>Ch. 5</small><span>Results</span></a></li>
-    <li><a href="#c7" data-jump="6" data-key="6" data-ev="menu_contact_click"><small>Ch. 6</small><span>Contact</span></a></li>
+    <li><a href="#c2" data-jump="1" data-key="1" data-ev="menu_marketing_click"><span>Marketing</span></a></li>
+    <li><a href="#c3" data-jump="2" data-key="2" data-ev="menu_search_click"><span>Search</span></a></li>
+    <li><a href="#c4" data-jump="3" data-key="3" data-ev="menu_automation_click"><span>Automation</span></a></li>
+    <li><a href="#c5" data-jump="4" data-key="4" data-ev="menu_paid_media_click"><span>Paid media</span></a></li>
+    <li><a href="#c7" data-jump="6" data-key="6" data-ev="menu_contact_click"><span>Contact</span></a></li>
   </ol>
 </nav>
 
@@ -208,7 +207,7 @@ form .btn[disabled]{opacity:.6;cursor:wait}
     <div class="guides" aria-hidden="true"><i class="v"></i><i class="h"></i><i class="ticks"></i></div>
     <div class="copy">
       <article class="beat on" id="c1">
-        <p class="chip">Marketing · Search · Automation · Dubai</p>
+        <p class="chip hero-chip">Marketing · Search · Automation<span class="dubai"> · Dubai</span></p>
         <h1>Marketing that makes sense again.</h1>
         <p class="lead">People find businesses through ads, Google and now AI assistants like ChatGPT. Most teams juggle all three with tools that don't talk to each other. We bring strategy, search, automation and advertising together so they work as one, and we've been doing it across the Gulf for over 11 years.</p>
         <div class="actions"><a class="btn" href="#c7" data-jump="6" data-ev="hero_book_call_click">Book a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1" data-ev="hero_see_how_it_works_click">See how it works <span class="arw">↓</span></a></div>
@@ -310,7 +309,7 @@ const SCENES=7;
 const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];
 const tier=(innerWidth<600?'m':'d');
 const narrow=()=>innerWidth<=900;
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce=false; // the film plays everywhere, like pear.no; text motion still respects reduced-motion in CSS
 const story=document.getElementById('story'), film=document.querySelector('.film');
 const beats=[...document.querySelectorAll('.beat')];
 const src=name=>`${BASE}${MEDIA}v/${name}-${tier}.mp4`;
@@ -322,7 +321,7 @@ function vid(name,{loop=false,posterIdx=null}={}){
   if(vids[name]) return vids[name];
   const v=document.createElement('video');
   v.muted=true; v.defaultMuted=true; v.playsInline=true; v.setAttribute('playsinline',''); v.setAttribute('muted','');
-  v.preload='auto'; v.loop=loop; v.disablePictureInPicture=true;
+  v.preload='auto'; v.loop=loop; v.disablePictureInPicture=true; if(loop){ v.autoplay=true; v.setAttribute('autoplay',''); }
   if(posterIdx!==null) v.poster=poster(posterIdx);
   v.addEventListener('loadedmetadata',()=>frame(v,v===current?focalNow:FOCAL[posterIdx??scene]));
   v.src=src(name); film.appendChild(v); vids[name]=v; return v;
@@ -330,7 +329,10 @@ function vid(name,{loop=false,posterIdx=null}={}){
 const loopOf=i=>vid('L'+(i+1),{loop:true,posterIdx:i});
 const fwdOf=i=>vid('t'+(i+1));           // scene i -> i+1
 const revOf=i=>vid('t'+i+'r');           // scene i -> i-1
-function warm(i){ loopOf(i); if(i<SCENES-1){fwdOf(i); loopOf(i+1);} if(i>0){revOf(i); loopOf(i-1);} }
+function prime(v){ if(v.dataset.primed||v===current) return; v.dataset.primed='1';
+  const p=v.play(); if(p&&p.then) p.then(()=>{ if(v!==current&&!v.dataset.active&&!v.classList.contains('on')){ v.pause(); try{v.currentTime=0;}catch(e){} } }).catch(()=>{ delete v.dataset.primed; }); }
+function warm(i){ const n=[loopOf(i)]; if(i<SCENES-1) n.push(fwdOf(i),loopOf(i+1)); if(i>0) n.push(revOf(i),loopOf(i-1));
+  n.slice(1).forEach(v=>setTimeout(()=>prime(v),400)); }
 
 // framing: character at 74% across on wide screens, centred on small screens
 let focalNow=FOCAL[0];
@@ -360,10 +362,9 @@ function settle(i){
   film.style.backgroundImage=`url('${poster(i)}')`;
   Object.values(vids).forEach(v=>{ if(v!==L&&!v.paused) v.pause(); });
 }
-const isReady=v=>v.readyState>=3;
-function waitReady(v,ms){ return new Promise(r=>{ if(isReady(v)) return r(true);
-  const done=ok=>{clearTimeout(t);v.removeEventListener('canplay',yes);r(ok);}, yes=()=>done(true), t=setTimeout(()=>done(false),ms);
-  v.addEventListener('canplay',yes); }); }
+function waitPlaying(v,ms){ return new Promise(r=>{ if(!v.paused&&v.readyState>=3) return r(true);
+  const done=ok=>{clearTimeout(t);v.removeEventListener('playing',yes);r(ok);}, yes=()=>done(true), t=setTimeout(()=>done(!v.paused&&v.currentTime>0),ms);
+  v.addEventListener('playing',yes); }); }
 
 async function step(){
   if(busy||target===scene) return;
@@ -371,9 +372,11 @@ async function step(){
   const dir=target>scene?1:-1, next=scene+dir;
   const T= dir>0 ? fwdOf(scene) : revOf(scene);
   const far=Math.abs(target-scene)>1;
-  if(reduce || !(await waitReady(T,1500))){ settle(next); busy=false; return step(); }
+  T.dataset.active='1'; T.playbackRate= far?3:1.7; try{T.currentTime=0;}catch(e){}
+  play(T);
+  if(!(await waitPlaying(T,2500))){ delete T.dataset.active; T.pause(); settle(next); busy=false; return step(); }
   const f0=FOCAL[scene], f1=FOCAL[next];
-  T.playbackRate= far?3:1.7; try{T.currentTime=0;}catch(e){} frame(T,f0);
+  frame(T,f0);
   let mid=false;
   await new Promise(res=>{
     let started=false, finished=false;
@@ -389,9 +392,9 @@ async function step(){
     };
     T.addEventListener('ended',end,{once:true});
     setTimeout(end,8000); // never get stuck
-    play(T); requestAnimationFrame(onFrame);
+    requestAnimationFrame(onFrame);
   });
-  settle(next); busy=false; step();
+  delete T.dataset.active; settle(next); busy=false; step();
 }
 
 // scroll: one screen of scroll per scene, plus a short run-out at the end for the footer
@@ -412,7 +415,9 @@ document.querySelectorAll('[data-jump]').forEach(el=>el.addEventListener('click'
 addEventListener('resize',()=>{ sizeStory(); Object.values(vids).forEach(v=>frame(v,v===current?focalNow:FOCAL[scene])); onScroll(); });
 addEventListener('scroll',onScroll,{passive:true});
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&current&&!busy&&!reduce) play(current); });
-addEventListener('touchstart',()=>{ if(current&&current.paused&&!reduce) play(current); },{passive:true,once:true}); // iOS low-power mode
+const wake=()=>{ if(current&&current.paused&&!busy) play(current); Object.values(vids).forEach(v=>{ if(v!==current) prime(v); }); };
+['touchstart','touchend','click','keydown'].forEach(ev=>addEventListener(ev,wake,{passive:true}));
+setInterval(()=>{ if(current&&current.paused&&!busy&&!document.hidden&&story.getBoundingClientRect().bottom>0) play(current); },1500);
 sizeStory(); settle(0); onScroll();
 
 /* ---------- contact form -> email ---------- */

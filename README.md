@@ -27,7 +27,6 @@ Every action pushes its own event name to `window.dataLayer`. To load your conta
 | `hero_see_how_it_works_click` | See how it works |
 | `header_logo_click` | Logo |
 | `menu_open_click` | Chapter menu button |
-| `menu_marketing_click`, `menu_search_click`, `menu_automation_click`, `menu_paid_media_click`, `menu_results_click`, `menu_contact_click` | Chapter menu links |
 | `footer_email_click` | Email in the footer |
 | `film_scene_1_view` … `film_scene_7_view` | Each scene reached (once per visit) |
 | `film_watched_to_end` | Last scene reached |
