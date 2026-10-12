@@ -188,9 +188,9 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 }
 @media (max-width:900px) and (max-height:760px){ .beat p{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden} }
 @media (max-width:520px){ .stats,.steps{grid-template-columns:1fr} }
-.mmenu{display:none;gap:4px;overflow-x:auto;padding:0 12px 10px;margin:0;list-style:none;scrollbar-width:none}
+.mmenu{display:none;gap:2px;overflow-x:auto;justify-content:space-between;padding:0 12px 10px;margin:0;list-style:none;scrollbar-width:none}
 .mmenu::-webkit-scrollbar{display:none}
-.mmenu a{display:block;text-decoration:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:7px 12px;border-radius:999px;white-space:nowrap;background:rgba(255,255,255,.5)}
+.mmenu a{display:block;text-decoration:none;font-size:12px;font-weight:500;color:var(--ink-2);padding:7px 8px;border-radius:999px;white-space:nowrap;background:rgba(255,255,255,.5)}
 .mmenu a.on{color:var(--ink);background:#fff;box-shadow:inset 0 -2px 0 var(--amber)}
 @media (prefers-reduced-motion:reduce){ .beat,.beat.on{transition:none} }
 </style>
@@ -206,10 +206,6 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
       <li><a href="#c3" data-key="search" data-jump="2">Search</a></li>
       <li><a href="#c4" data-key="automation" data-jump="3">Automation</a></li>
       <li><a href="#c5" data-key="paid" data-jump="4">Paid media</a></li>
-      <li><a href="#results" data-key="results">Results</a></li>
-      <li><a href="#tools" data-key="tools">Tools</a></li>
-      <li><a href="#process" data-key="process">Process</a></li>
-      <li><a href="#faq" data-key="faq">FAQs</a></li>
       <li><a href="#contact" data-key="contact">Contact</a></li>
     </ul>
     <a class="btn" href="#contact" style="margin-left:auto">Book a call <span class="arw">→</span></a>
@@ -219,10 +215,6 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
     <li><a href="#c3" data-key="search" data-jump="2">Search</a></li>
     <li><a href="#c4" data-key="automation" data-jump="3">Automation</a></li>
     <li><a href="#c5" data-key="paid" data-jump="4">Paid media</a></li>
-    <li><a href="#results" data-key="results">Results</a></li>
-    <li><a href="#tools" data-key="tools">Tools</a></li>
-    <li><a href="#process" data-key="process">Process</a></li>
-    <li><a href="#faq" data-key="faq">FAQs</a></li>
     <li><a href="#contact" data-key="contact">Contact</a></li>
   </ul>
 </header>
@@ -481,8 +473,8 @@ function render(p){
 /* ---------- menu that follows the scroll ---------- */
 const links=[...document.querySelectorAll('[data-key]')];
 const mm=document.querySelector('.mmenu');
-const SCENE_KEY=[null,'marketing','search','automation','paid','results','contact'];
-const SECTIONS=['results','tools','process','faq','contact'].map(id=>document.getElementById(id));
+const SCENE_KEY=[null,'marketing','search','automation','paid',null,'contact'];
+const SECTIONS=['contact'].map(id=>document.getElementById(id));
 let activeKey;
 function setKey(k){
   if(k===activeKey) return; activeKey=k;
