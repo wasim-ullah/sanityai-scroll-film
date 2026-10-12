@@ -43,18 +43,18 @@ h1{font-size:54px} h2{font-size:46px}
 /* label chip, like pear's "AT YOUR SERVICE" */
 .chip{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--white);
   background:rgba(255,255,255,.14);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:8px 10px;border-radius:4px;margin:0 0 22px}
-/* buttons: pear.no style, black with white mono caps and a small outlined arrow box */
-.btn{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;color:#fff;
-  background:#0b0b0d;padding:6px 6px 6px 18px;border-radius:4px;display:inline-flex;gap:22px;align-items:center;min-height:42px;box-sizing:border-box;
-  box-shadow:0 8px 24px -14px rgba(0,0,0,.8);transition:background .3s,transform .35s var(--ease)}
-.btn:hover{background:#1c1c22}
-.btn .arw{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(255,255,255,.55);border-radius:3px;font-family:var(--text);font-size:13px;letter-spacing:0;transition:transform .35s var(--ease)}
+/* buttons: pear.no sizes, measured on pear.no at 1440px wide (hero button 193x31, header 90x30); they scale with the window */
+.btn{font:400 clamp(9.5px,.66vw,11.5px)/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer;color:#fff;
+  background:#0b0a09;padding:.42em .42em .42em 1.36em;border-radius:4px;display:inline-flex;gap:1.67em;align-items:center;box-sizing:border-box;
+  transition:background .3s}
+.btn:hover{background:#1f1d1a}
+.btn .arw{display:grid;place-items:center;width:2.42em;height:2.42em;border:1px solid rgba(255,255,255,.3);border-radius:3px;font-family:var(--text);font-size:.92em;letter-spacing:0;transition:transform .35s var(--ease)}
 .btn:hover .arw{transform:translateX(2px)}
-.btn.ghost{background:rgba(11,11,13,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.btn.ghost:hover{background:rgba(11,11,13,.7)}
+.btn.ghost{background:rgba(11,10,9,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn.ghost:hover{background:rgba(11,10,9,.7)}
 .btn.wa{background:#1fae5b}
 .btn.wa:hover{background:#199a50}
-.btn svg{width:15px;height:15px}
+.btn svg{width:1.3em;height:1.3em}
 
 /* ---------- header: white logo, menu button, book a call ---------- */
 .top{position:fixed;inset:0 0 auto 0;z-index:40;display:flex;align-items:center;gap:16px;padding:calc(22px + env(safe-area-inset-top,0px)) var(--gut) 0 var(--gut);pointer-events:none}
@@ -68,8 +68,8 @@ h1{font-size:54px} h2{font-size:46px}
 .menu-open .menu-btn i{opacity:0}
 .menu-open .menu-btn::before{opacity:1;transform:rotate(45deg)} .menu-open .menu-btn::after{opacity:1;transform:rotate(-45deg)}
 .menu-btn i{transition:opacity .3s}
-.top .btn{min-height:40px;padding:5px 5px 5px 16px;gap:18px}
-.top .btn .arw{width:26px;height:26px}
+.top .btn{font-size:clamp(9.5px,.72vw,12.5px);letter-spacing:.2em;padding:.5em .5em .5em 1.15em;gap:1.1em}
+.top .btn .arw{width:1.93em;height:1.93em}
 
 /* ---------- chapter menu overlay ---------- */
 .chapters{position:fixed;inset:0;z-index:35;display:grid;place-items:center;opacity:0;visibility:hidden;
@@ -177,8 +177,6 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .field-co{display:none}
   .field textarea{min-height:40px;height:40px}
   .form-foot{gap:8px}
-  .form-foot .btn{min-height:38px;padding:5px 5px 5px 14px;gap:14px;font-size:11px}
-  .form-foot .btn .arw{width:24px;height:24px}
   .form-foot .btn.wa{display:none}
   .foot{padding:16px 84px calc(16px + env(safe-area-inset-bottom,0px)) var(--gut)}
   .at-end .copy{transform:translateY(-12px)}
