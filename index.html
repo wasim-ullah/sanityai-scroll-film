@@ -62,9 +62,9 @@ h1{font-size:30px}h2{font-size:25px}h3{font-size:20px}
 .bar{height:var(--hh);display:flex;align-items:center;gap:24px;padding-inline:var(--gut)}
 .logo{display:block;height:16px;width:auto}
 .menu{flex:1;display:flex;justify-content:center;gap:4px;margin:0;padding:0;list-style:none;min-width:0}
-.menu a{display:block;text-decoration:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:8px 12px;border-radius:999px;white-space:nowrap;transition:color .3s,background .3s}
-.menu a:hover{color:var(--ink);background:rgba(27,29,58,.06)}
-.menu a.on{color:var(--ink);background:#fff;box-shadow:inset 0 -2px 0 var(--amber),0 2px 8px -4px rgba(27,29,58,.25)}
+.menu a{display:block;text-decoration:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:8px 12px;white-space:nowrap;transition:color .3s}
+.menu a:hover{color:var(--ink)}
+.menu a.on,.mmenu a.on{color:var(--coral);font-weight:600}
 .top .btn{padding:10px 15px}
 
 /* ---------- film ---------- */
@@ -152,12 +152,13 @@ form{display:grid;gap:10px;padding:22px}
 form .btn{justify-self:start}
 form .btn[disabled]{opacity:.6;cursor:wait}
 
-footer{background:linear-gradient(135deg,var(--indigo),#18194a 70%);color:#d8d9ee;padding-block:52px 60px;padding-inline:var(--gut)}
+footer{background:linear-gradient(135deg,var(--amber),#f7b955 55%,var(--peach));color:var(--ink);padding-block:52px 60px;padding-inline:var(--gut)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:28px 64px;justify-content:space-between;align-items:flex-start}
 footer .logo{height:18px;margin-bottom:12px}
-footer p{margin:0;color:#aeb0d4;max-width:42ch}
-footer .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8f92c2;display:block;margin-bottom:8px}
-footer a{text-decoration:none;color:#fff}
+footer p{margin:0;color:#3a3420;max-width:42ch}
+footer .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6b4a12;font-weight:600;display:block;margin-bottom:8px}
+footer a{text-decoration:none;color:var(--ink);font-weight:500}
+footer a:hover{text-decoration:underline;text-underline-offset:3px}
 footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 
 .wa-float{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;width:54px;height:54px;border-radius:50%;
@@ -193,13 +194,26 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
   .row2{grid-template-columns:1fr}
   .wa-float{width:48px;height:48px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 }
-@media (min-width:601px) and (max-width:900px){ .mmenu{justify-content:center;gap:6px} .mmenu a{padding:7px 14px} }
-@media (max-width:600px){ .beat .tags{display:none} .beat.open .tags{display:flex} }
+@media (min-width:601px) and (max-width:900px){ .mmenu{justify-content:center!important;gap:18px} .mmenu a{padding:6px 12px} }
+@media (max-width:600px){
+  .mmenu{display:none!important}
+  .beat .tags{display:none} .beat.open .tags{display:flex}
+  /* lighter, smaller cards so the film shows through */
+  .copy{bottom:58px;left:10px;right:10px}
+  .beat{background:rgba(255,250,244,.42);backdrop-filter:blur(4px) saturate(1.1);-webkit-backdrop-filter:blur(4px) saturate(1.1);
+    border:1px solid rgba(255,255,255,.45);box-shadow:0 10px 30px -18px rgba(27,29,58,.5);padding:12px 14px 12px}
+  .beat.open{background:rgba(255,250,244,.82)}
+  .beat h1,.beat h2,.beat h1+p,.beat h2+p,.beat .eyebrow{text-shadow:0 0 12px rgba(255,250,244,.95),0 0 3px rgba(255,250,244,.9)}
+  .eyebrow{font-size:10px;margin-bottom:4px;color:var(--ink);font-weight:600}
+  .beat h1+p,.beat h2+p{margin-top:6px;font-size:13px;line-height:1.5;color:var(--ink)}
+  .actions{margin-top:10px}
+  .actions .btn{padding:10px 14px}
+  .figs div{background:rgba(255,255,255,.75)}
+}
 @media (max-width:520px){ .stats,.steps{grid-template-columns:1fr} }
 .mmenu{display:none;gap:2px;overflow-x:auto;justify-content:space-between;padding:0 12px 10px;margin:0;list-style:none;scrollbar-width:none}
 .mmenu::-webkit-scrollbar{display:none}
-.mmenu a{display:block;text-decoration:none;font-size:12px;font-weight:500;color:var(--ink-2);padding:7px 8px;border-radius:999px;white-space:nowrap;background:rgba(255,255,255,.5)}
-.mmenu a.on{color:var(--ink);background:#fff;box-shadow:inset 0 -2px 0 var(--amber)}
+.mmenu a{display:block;text-decoration:none;font-size:13px;font-weight:500;color:var(--ink-2);padding:6px 8px;white-space:nowrap;transition:color .3s}
 @media (prefers-reduced-motion:reduce){ .beat,.beat.on{transition:none} }
 </style>
 </head>
@@ -208,22 +222,22 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 
 <header class="top" id="top">
   <div class="bar">
-    <a href="#story" data-jump="0" aria-label="SanityAI home"><img class="logo" src="assets/logo-dark.png" alt="SanityAI" width="709" height="104"></a>
+    <a href="#story" data-jump="0" aria-label="SanityAI home" data-ev="header_logo_click"><img class="logo" src="assets/logo-dark.png" alt="SanityAI" width="709" height="104"></a>
     <ul class="menu" aria-label="Sections">
-      <li><a href="#c2" data-key="marketing" data-jump="1">Marketing</a></li>
-      <li><a href="#c3" data-key="search" data-jump="2">Search</a></li>
-      <li><a href="#c4" data-key="automation" data-jump="3">Automation</a></li>
-      <li><a href="#c5" data-key="paid" data-jump="4">Paid media</a></li>
-      <li><a href="#contact" data-key="contact">Contact</a></li>
+      <li><a href="#c2" data-ev="menu_marketing_click" data-key="marketing" data-jump="1">Marketing</a></li>
+      <li><a href="#c3" data-ev="menu_search_click" data-key="search" data-jump="2">Search</a></li>
+      <li><a href="#c4" data-ev="menu_automation_click" data-key="automation" data-jump="3">Automation</a></li>
+      <li><a href="#c5" data-ev="menu_paid_media_click" data-key="paid" data-jump="4">Paid media</a></li>
+      <li><a href="#contact" data-ev="menu_contact_click" data-key="contact">Contact</a></li>
     </ul>
-    <a class="btn" href="#contact" style="margin-left:auto">Book a call <span class="arw">→</span></a>
+    <a class="btn" href="#contact" style="margin-left:auto" data-ev="header_book_call_click">Book a call <span class="arw">→</span></a>
   </div>
   <ul class="mmenu" aria-label="Sections">
-    <li><a href="#c2" data-key="marketing" data-jump="1">Marketing</a></li>
-    <li><a href="#c3" data-key="search" data-jump="2">Search</a></li>
-    <li><a href="#c4" data-key="automation" data-jump="3">Automation</a></li>
-    <li><a href="#c5" data-key="paid" data-jump="4">Paid media</a></li>
-    <li><a href="#contact" data-key="contact">Contact</a></li>
+    <li><a href="#c2" data-ev="tablet_menu_marketing_click" data-key="marketing" data-jump="1">Marketing</a></li>
+    <li><a href="#c3" data-ev="tablet_menu_search_click" data-key="search" data-jump="2">Search</a></li>
+    <li><a href="#c4" data-ev="tablet_menu_automation_click" data-key="automation" data-jump="3">Automation</a></li>
+    <li><a href="#c5" data-ev="tablet_menu_paid_media_click" data-key="paid" data-jump="4">Paid media</a></li>
+    <li><a href="#contact" data-ev="tablet_menu_contact_click" data-key="contact">Contact</a></li>
   </ul>
 </header>
 
@@ -236,7 +250,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
         <p class="eyebrow">Marketing, search and automation · Dubai</p>
         <h1>Marketing that makes sense again.</h1>
         <p>People find businesses through ads, Google and now AI assistants like ChatGPT. Most teams juggle all three with tools that don't talk to each other. We bring strategy, search, automation and advertising together so they work as one, and we've been doing it across the Gulf for over 11 years.</p>
-        <div class="actions"><a class="btn" href="#contact">Book a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1">See how it works</a></div>
+        <div class="actions"><a class="btn" href="#contact" data-ev="hero_book_call_click">Book a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1" data-ev="hero_see_how_it_works_click">See how it works</a></div>
       </article>
       <article class="beat" id="c2">
         <p class="eyebrow"><b>01</b> Marketing strategy</p>
@@ -272,7 +286,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
         <p class="eyebrow"><b>06</b> Contact</p>
         <h2>Let's pick up the thread.</h2>
         <p>Tell us what you sell, where you sell it and what isn't working. We'll look at your setup before we talk and bring three specific changes we'd make first. We reply within two working days.</p>
-        <div class="actions"><a class="btn" href="#contact">Write to us <span class="arw">→</span></a><a class="btn wa" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener">WhatsApp us</a></div>
+        <div class="actions"><a class="btn" href="#contact" data-ev="film_write_to_us_click">Write to us <span class="arw">→</span></a><a class="btn wa" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener" data-ev="whatsapp_click_film_scene">WhatsApp us</a></div>
       </article>
     </div>
     <div class="readout" aria-hidden="true"><span class="track"><i id="bar"></i></span><span><span id="ro">01</span> / 07</span><span class="loading" id="loading">· loading</span></div>
@@ -344,7 +358,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
       <h2 id="contact-h">Let's pick up the thread.</h2>
       <p>Tell us what you sell, where you sell it and what isn't working. We'll look at your setup before we talk and bring three specific changes we'd make first. You see the plan before any monthly commitment, and we reply within two working days.</p>
       <p>Prefer to chat? Message us on WhatsApp and we'll get back to you the same day.</p>
-      <div class="actions"><a class="btn wa" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>WhatsApp us</a></div>
+      <div class="actions"><a class="btn wa" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener" data-ev="whatsapp_click_contact_section"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>WhatsApp us</a></div>
     </div>
     <form id="contact-form" class="panel" novalidate>
       <div class="row2">
@@ -354,7 +368,7 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
       <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization"></div>
       <div class="field"><label for="f-msg">What would you like to fix?</label><textarea id="f-msg" name="message" required></textarea></div>
       <div class="hp" aria-hidden="true"><label for="f-hp">Leave empty</label><input id="f-hp" name="_honey" tabindex="-1" autocomplete="off"></div>
-      <button class="btn dark" type="submit" id="f-send">Send message <span class="arw">→</span></button>
+      <button class="btn" type="submit" id="f-send">Send message <span class="arw">→</span></button>
       <p class="note" id="f-note" role="status"></p>
     </form>
   </div>
@@ -363,15 +377,15 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 
 <footer>
   <div class="wrap">
-    <div><img class="logo" src="assets/logo-light.png" alt="SanityAI" width="709" height="104"><p>Marketing strategy, search, automation and paid ads, working together. Based in Dubai, working across the Gulf and beyond.</p></div>
+    <div><img class="logo" src="assets/logo-dark.png" alt="SanityAI" width="709" height="104"><p>Marketing strategy, search, automation and paid ads, working together. Based in Dubai, working across the Gulf and beyond.</p></div>
     <div class="cols">
-      <div><span class="lbl">Explore</span><a href="#results">Results</a><br><a href="#process">How we work</a><br><a href="#faq">FAQs</a></div>
-      <div><span class="lbl">Talk to us</span><a href="#contact">Send a message</a><br><a href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener">WhatsApp +971 58 578 5819</a></div>
+      <div><span class="lbl">Explore</span><a href="#results" data-ev="footer_results_click">Results</a><br><a href="#process" data-ev="footer_how_we_work_click">How we work</a><br><a href="#faq" data-ev="footer_faqs_click">FAQs</a></div>
+      <div><span class="lbl">Talk to us</span><a href="#contact" data-ev="footer_send_message_click">Send a message</a><br><a href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener" data-ev="whatsapp_click_footer">WhatsApp +971 58 578 5819</a></div>
     </div>
   </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener" aria-label="Chat with SanityAI on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+<a class="wa-float" href="https://wa.me/971585785819?text=Hi%20SanityAI%2C%20I%27d%20like%20to%20talk%20about%20my%20marketing" target="_blank" rel="noopener" data-ev="whatsapp_click_floating_button" aria-label="Chat with SanityAI on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -389,11 +403,25 @@ footer .cols{display:flex;gap:56px;flex-wrap:wrap}
 
 <script>
 (()=>{
+/* ---------- Google Tag Manager events ----------
+   Every action pushes its own event name to the dataLayer. In GTM, add a Custom Event trigger per name. */
+window.dataLayer=window.dataLayer||[];
+const track=(event,params={})=>{ try{ window.dataLayer.push(Object.assign({event},params)); }catch(e){} };
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-ev]'); if(!el) return;
+  track(el.dataset.ev,{click_text:(el.textContent||el.getAttribute('aria-label')||'').trim().slice(0,80),click_url:el.href||'',
+    action_type: el.dataset.ev.startsWith('whatsapp_')?'whatsapp_click':el.dataset.ev.includes('book_call')||el.dataset.ev.includes('write_to_us')?'cta_click':'navigation_click'});
+});
+document.querySelectorAll('.faq details').forEach((d,i)=>d.addEventListener('toggle',()=>{ if(d.open) track('faq_question_open',{faq_number:i+1,faq_question:d.querySelector('summary').textContent.trim()}); }));
+const seenSec=new Set();
+const io=new IntersectionObserver(es=>es.forEach(x=>{ if(x.isIntersecting&&!seenSec.has(x.target.id)){ seenSec.add(x.target.id); track('section_view_'+x.target.id,{section:x.target.id}); } }),{threshold:.4});
+['results','process','faq','contact'].forEach(id=>{const el=document.getElementById(id); el&&io.observe(el);});
+
 /* ---------- film ---------- */
 const BASE='', MEDIA='film-23d14b43/', PACK='bin';
 const SCENES=7;
 const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];
-const HOLD=0.45, MOVE=2.4;
+const HOLD=0.15, MOVE=2.6;
 const tier=(innerWidth<600?'m':'d');
 const narrow=()=>innerWidth<=900;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -408,9 +436,13 @@ const sizeStory=()=>{ story.style.height=((TOTAL+1)*100)+'vh'; };
 sizeStory();
 
 const keys=new Array(SCENES);
-const clips=Array.from({length:SCENES-1},()=>({frames:null,count:0,state:'idle'}));
+const clips=Array.from({length:SCENES-1},()=>({blobs:null,count:0,state:'idle',cache:new Map(),pending:new Set()}));
 const loadKey=i=>new Promise(r=>{const im=new Image(); im.decoding='async'; im.onload=()=>{keys[i]=im;r();}; im.onerror=r; im.src=`${BASE}${MEDIA}keys/k${i+1}-${tier}.webp`;});
 
+// Frames stay compressed in memory and are unpacked only around the current scroll position,
+// so phones never run out of memory and playback starts as soon as a clip arrives.
+const BUDGET = tier==='m' ? 40 : 70;
+let decoded=0, here=0;
 async function loadClip(n){
   const c=clips[n]; if(c.state!=='idle') return; c.state='loading';
   try{
@@ -424,12 +456,25 @@ async function loadClip(n){
       const list=await fetch(url).then(r=>{if(!r.ok) throw 0; return r.json();});
       blobs=list.map(s=>{const bin=atob(s),u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i); return new Blob([u],{type:'image/webp'});});
     }
-    c.count=blobs.length; c.frames=new Array(c.count);
-    await Promise.all(blobs.map((b,k)=>createImageBitmap(b).then(x=>{c.frames[k]=x;}).catch(()=>{})));
-    c.state='ready';
+    c.blobs=blobs; c.count=blobs.length; c.state='ready';
+    ensure(n,0,8); ensure(n,c.count-8,c.count-1);
   }catch(e){ c.state='failed'; }
   progress(); want=true;
 }
+function decode(n,f){
+  const c=clips[n]; if(c.state!=='ready'||f<0||f>=c.count||c.cache.has(f)||c.pending.has(f)) return;
+  c.pending.add(f);
+  createImageBitmap(c.blobs[f]).then(bm=>{ c.pending.delete(f); c.cache.set(f,bm); decoded++; trim(); want=true; })
+    .catch(()=>{ c.pending.delete(f); });
+}
+function ensure(n,a,b){ for(let f=Math.max(0,a);f<=b;f++) decode(n,f); }
+function trim(){
+  if(decoded<=BUDGET) return;
+  const all=[]; clips.forEach((c,n)=>c.cache.forEach((bm,f)=>all.push({n,f,d:Math.abs((n+f/Math.max(1,c.count-1))-here)})));
+  all.sort((x,y)=>y.d-x.d);
+  for(const e of all){ if(decoded<=BUDGET) break; const c=clips[e.n]; const bm=c.cache.get(e.f); bm&&bm.close&&bm.close(); c.cache.delete(e.f); decoded--; }
+}
+function frameNear(c,f){ if(c.cache.has(f)) return c.cache.get(f); for(let d=1;d<c.count;d++){ if(c.cache.has(f-d)) return c.cache.get(f-d); if(c.cache.has(f+d)) return c.cache.get(f+d); } return null; }
 function progress(){
   const done=clips.filter(c=>c.state==='ready'||c.state==='failed').length;
   loadEl.textContent=`· loading ${Math.round(done/clips.length*100)}%`;
@@ -451,13 +496,13 @@ function sceneAt(p){ const {s,t}=locate(p); return s.t==='hold'?s.i:(t<.5?s.i:s.
 function render(p){
   const {s,t}=locate(p);
   ctx.fillStyle='#f7efe3'; ctx.fillRect(0,0,cv.width,cv.height);
-  if(s.t==='hold'){ draw(keys[s.i],fx(s.i),1+PUSH*t); return; }
+  if(s.t==='hold'){ here=s.i; if(s.i<SCENES-1&&clips[s.i].state==='ready') ensure(s.i,0,12); if(s.i>0&&clips[s.i-1].state==='ready'){const c=clips[s.i-1]; ensure(s.i-1,c.count-12,c.count-1);} draw(keys[s.i],fx(s.i),1+PUSH*t); return; }
   const n=s.i, c=clips[n], z=1+PUSH*(1-smooth(t));
   const focal= tier==='m'?0.5:lerp(FOCAL[n],FOCAL[n+1],smooth(t));
   if(c.state==='ready'&&c.count&&!reduce){
     const f=Math.min(c.count-1,Math.round(t*(c.count-1)));
-    let img=c.frames[f]; for(let d=1;!img&&d<c.count;d++) img=c.frames[f-d]||c.frames[f+d];
-    if(draw(img,focal,z)) return;
+    here=n+f/(c.count-1); ensure(n,f-6,f+12);
+    if(draw(frameNear(c,f),focal,z)) return;
   }
   if(c.state==='idle') loadClip(n);
   draw(keys[n],fx(n),z); ctx.globalAlpha=smooth(t); draw(keys[n+1],fx(n+1),z); ctx.globalAlpha=1;
@@ -465,7 +510,7 @@ function render(p){
 
 beats.forEach(b=>{ const p=b.querySelector('h1+p,h2+p'); if(!p) return;
   const m=document.createElement('button'); m.type='button'; m.className='more'; m.textContent='Read more'; m.setAttribute('aria-expanded','false');
-  m.addEventListener('click',()=>{ const o=b.classList.toggle('open'); m.textContent=o?'Show less':'Read more'; m.setAttribute('aria-expanded',String(o)); });
+  m.addEventListener('click',()=>{ const o=b.classList.toggle('open'); if(o) track('film_read_more_open',{scene:b.id}); m.textContent=o?'Show less':'Read more'; m.setAttribute('aria-expanded',String(o)); });
   p.after(m); });
 
 /* ---------- menu that follows the scroll ---------- */
@@ -482,6 +527,7 @@ function setKey(k){
 }
 
 let cur=0,target=0,want=true,active=-1;
+const seenScene=new Set(), SCENE_NAME=['intro','marketing_strategy','search','automation','paid_media','results','contact'];
 function tick(){
   const total=story.offsetHeight-innerHeight, r=story.getBoundingClientRect();
   target=total>0?Math.min(Math.max(-r.top,0),total)/total*TOTAL:0;
@@ -493,6 +539,7 @@ function tick(){
       active=sc;
       beats.forEach((b,i)=>b.classList.toggle('on',i===sc));
       ro.textContent=String(sc+1).padStart(2,'0');
+      if(!seenScene.has(sc)){ seenScene.add(sc); track('film_scene_'+(sc+1)+'_view',{scene_number:sc+1,scene_name:SCENE_NAME[sc]}); if(sc===SCENES-1) track('film_watched_to_end'); }
       if(sc>0) loadClip(sc-1); if(sc<SCENES-1) loadClip(sc);
     }
     bar.style.transform=`scaleX(${cur/TOTAL})`;
@@ -512,29 +559,31 @@ function jump(i){
 document.querySelectorAll('[data-jump]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();jump(+el.dataset.jump);}));
 addEventListener('resize',()=>{sizeStory();resize();});
 resize();
-loadKey(0).then(()=>{want=true; return Promise.all([1,2,3,4,5,6].map(loadKey));}).then(()=>{want=true;
-  (async()=>{for(let n=0;n<clips.length;n++) await loadClip(n);})();
+loadKey(0).then(()=>{want=true; loadClip(0); return Promise.all([1,2,3,4,5,6].map(loadKey));}).then(()=>{want=true;
+  (async()=>{for(let n=1;n<clips.length;n++) await loadClip(n);})();
 });
 progress(); requestAnimationFrame(tick);
 
 /* ---------- contact form -> email ---------- */
 const form=document.getElementById('contact-form'), note=document.getElementById('f-note'), send=document.getElementById('f-send');
 const ENDPOINT='https://formsubmit.co/ajax/wasim@sanity.ai';
+let started=false;
+form.addEventListener('focusin',()=>{ if(!started){ started=true; track('contact_form_start'); } });
 form.addEventListener('submit',async e=>{
   e.preventDefault();
   const d=Object.fromEntries(new FormData(form));
   if(d._honey) return;
   if(!d.name||!/^\S+@\S+\.\S+$/.test(d.email||'')||!d.message){
-    note.className='note err'; note.textContent='Please add your name, a valid work email and a short note about what you want to fix.'; return; }
+    track('contact_form_validation_error'); note.className='note err'; note.textContent='Please add your name, a valid work email and a short note about what you want to fix.'; return; }
   if(!ENDPOINT.startsWith('http')){ note.className='note ok'; note.textContent='Preview only. On the live site this goes straight to our inbox.'; return; }
-  send.disabled=true; note.className='note'; note.textContent='Sending…';
+  track('contact_form_submit_attempt'); send.disabled=true; note.className='note'; note.textContent='Sending…';
   try{
     const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
       body:JSON.stringify({name:d.name,email:d.email,company:d.company||'',message:d.message,_subject:`New enquiry from ${d.name}${d.company?' ('+d.company+')':''}`,_template:'table',_captcha:'false',_replyto:d.email,page:location.href})});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||String(j.success)==='false') throw 0;
-    note.className='note ok'; note.textContent='Thanks, your message is on its way. We reply within two working days.'; form.reset();
-  }catch{ note.className='note err'; note.textContent='Sorry, that didn\'t send. Please try again, or message us on WhatsApp.'; }
+    track('contact_form_submit_success',{form_company:d.company?'provided':'empty'}); note.className='note ok'; note.textContent='Thanks, your message is on its way. We reply within two working days.'; form.reset();
+  }catch{ track('contact_form_submit_error'); note.className='note err'; note.textContent='Sorry, that didn\'t send. Please try again, or message us on WhatsApp.'; }
   send.disabled=false;
 });
 })();
