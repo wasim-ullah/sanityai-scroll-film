@@ -525,6 +525,9 @@ const wake=()=>{ if(current&&current.paused&&!busy) play(current); Object.values
 ['touchstart','touchend','click','keydown'].forEach(ev=>addEventListener(ev,wake,{passive:true}));
 setInterval(()=>{ if(current&&current.paused&&!busy&&!document.hidden&&story.getBoundingClientRect().bottom>0) play(current); },1500);
 settle(0);
+// links like sanity.ai/#c3 open straight on that section (used by the 404 page and shared links)
+const deep=(location.hash.match(/^#c([1-7])$/)||[])[1];
+if(deep&&+deep>1) setTimeout(()=>jump(+deep-1),60);
 
 /* ---------- contact form -> email ---------- */
 const form=document.getElementById('contact-form'), note=document.getElementById('f-note'), send=document.getElementById('f-send');
