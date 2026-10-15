@@ -200,7 +200,8 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .actions{margin-top:18px}
   .figs{margin-top:18px;gap:22px}
   .figs strong{font-size:34px}
-  .beat.on{max-height:calc(100svh - 160px);overflow:auto;scrollbar-width:none}
+  .beat.on{max-height:calc(100svh - 150px - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .beat.on::-webkit-scrollbar{display:none}
   #c7 .lead{display:none}
   #c7 h2{font-size:28px}
   form{margin-top:12px;gap:6px}
@@ -220,7 +221,16 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .at-end .copy{transform:translateY(calc(-1 * var(--foot-h,96px) + 64px))}
   .wa-float{width:48px;height:48px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
 }
-@media (max-width:900px) and (max-height:700px){ .lead{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden} }
+/* short phone screens (Safari with its toolbars): tighter type, never cut text. If a scene's words still don't fit,
+   they scroll inside the text block, with a soft fade showing there is more */
+@media (max-width:900px) and (max-height:700px){
+  h1{font-size:32px} h2{font-size:27px} .chip{margin-bottom:10px}
+  .lead{font-size:14px;line-height:1.45;margin-top:10px}
+  .actions{margin-top:14px} .figs{margin-top:14px} .figs strong{font-size:28px}
+  .guides .h{top:64px}
+}
+.beat.more{-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(180deg,#000 calc(100% - 44px),transparent)}
+.beat.more.bottom{-webkit-mask-image:none;mask-image:none}
 @media (prefers-reduced-motion:reduce){ .beat,.beat>*,.chapters a{transition:none!important} }
 </style>
 </head>
@@ -424,7 +434,8 @@ let scene=0, shownScene=-1, busy=false, target=0, current=null, abort=false;
 const seenScene=new Set(), SCENE_NAME=['intro','marketing_strategy','search','automation','paid_media','results','contact'];
 function setCard(i){
   if(i===shownScene) return; shownScene=i;
-  beats.forEach((b,k)=>b.classList.toggle('on',k===i));
+  beats.forEach((b,k)=>{ b.classList.toggle('on',k===i); if(k===i) b.scrollTop=0; });
+  setTimeout(()=>typeof markMore==='function'&&markMore(),1000);   // after the words have slid into place
   chapterLinks.forEach(a=>a.classList.toggle('on',+a.dataset.key===i));
   if(!seenScene.has(i)){ seenScene.add(i); track('film_scene_'+(i+1)+'_view',{scene_number:i+1,scene_name:SCENE_NAME[i]}); if(i===SCENES-1) track('film_watched_to_end'); }
 }
@@ -511,6 +522,8 @@ let wAcc=0, wLast=0, wLock=false, wLockAt=0, wPeak=0;
 addEventListener('wheel',e=>{
   if(root.classList.contains('menu-open')) return;
   if(typing(e.target)&&e.target.scrollHeight>e.target.clientHeight) return;
+  { const bx=e.target.closest&&e.target.closest('.beat.on'); if(canScroll(bx)){ const max=bx.scrollHeight-bx.clientHeight;
+    if((e.deltaY>0&&bx.scrollTop<max-1)||(e.deltaY<0&&bx.scrollTop>1)) return; } }
   e.preventDefault();
   const now=performance.now(), d=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1), a=Math.abs(d);
   if(now-wLast>180){ wLock=false; wAcc=0; }
@@ -532,14 +545,29 @@ addEventListener('keydown',e=>{
   else if(k==='End'){ e.preventDefault(); jump(SCENES-1); }
 });
 // touch: a short swipe is enough, and the scene changes as soon as the finger lifts
-let tY=null, tX=0, tT=0;
-addEventListener('touchstart',e=>{ if(typing(e.target)||e.touches.length>1||root.classList.contains('menu-open')){ tY=null; return; } tY=e.touches[0].clientY; tX=e.touches[0].clientX; tT=performance.now(); },{passive:true});
-addEventListener('touchmove',e=>{ if(tY!==null&&e.cancelable) e.preventDefault(); },{passive:false});
+// When a scene's words are taller than the space (small phones), a swipe on them scrolls the words first;
+// only a swipe that starts at the top or bottom of the text moves to the next scene.
+let tY=null, tX=0, tT=0, tBox=null, tTop=0, tScrolled=false;
+const canScroll=el=>el&&el.scrollHeight>el.clientHeight+2;
+addEventListener('touchstart',e=>{ if(typing(e.target)||e.touches.length>1||root.classList.contains('menu-open')){ tY=null; return; }
+  tY=e.touches[0].clientY; tX=e.touches[0].clientX; tT=performance.now(); tScrolled=false;
+  const b=e.target.closest&&e.target.closest('.beat.on'); tBox=canScroll(b)?b:null; tTop=tBox?tBox.scrollTop:0; },{passive:true});
+addEventListener('touchmove',e=>{
+  if(tY===null) return;
+  if(tBox){ const dy=tY-e.touches[0].clientY, max=tBox.scrollHeight-tBox.clientHeight;
+    if((dy>0&&tTop<max-1)||(dy<0&&tTop>1)){ tScrolled=true; return; } }   // native scroll of the text
+  if(e.cancelable) e.preventDefault(); },{passive:false});
 const touchEnd=e=>{
   if(tY===null) return;
   const t=e.changedTouches[0], dy=tY-t.clientY, dx=tX-t.clientX; tY=null;
+  if(tScrolled) return;
   if(Math.abs(dy)>30&&Math.abs(dy)>Math.abs(dx)*1.2) go(Math.sign(dy));
 };
+// mark text blocks that have more below, and reset them to the top whenever a scene is shown
+const markMore=()=>beats.forEach(b=>{ const more=b.classList.contains('on')&&b.scrollHeight>b.clientHeight+24;
+  b.classList.toggle('more',more); b.classList.toggle('bottom',more&&b.scrollTop+b.clientHeight>=b.scrollHeight-4); });
+beats.forEach(b=>b.addEventListener('scroll',markMore,{passive:true}));
+addEventListener('resize',markMore);
 addEventListener('touchend',touchEnd,{passive:true});
 addEventListener('touchcancel',()=>{ tY=null; },{passive:true});
 addEventListener('resize',()=>{ frame(still,FOCAL[scene]); Object.values(vids).forEach(v=>frame(v,v===current?focalNow:FOCAL[scene])); });
