@@ -551,7 +551,9 @@ const holdAt=i=>i*TRANS*U;
 const posFromScroll=y=>Math.max(0,Math.min(SCENES-1,y/U/TRANS));
 let P=0, Pt=0, lastMove=0, lastT=performance.now();
 const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
-const NEAR=0.06;                                       // within this of a scene counts as being on it
+const NEAR=0.06;                                       // within this of a scene counts as being on it (its loop plays)
+const WORDS_IN=0.15, WORDS_HOLD=3500;                  // words come in this close to a scene and stay at least 3.5s
+let wordsFor=0, wordsSeen=0;
 function tick(t){
   const dt=Math.min(0.05,(t-lastT)/1000); lastT=t;
   Pt=posFromScroll(scrollY);
@@ -559,8 +561,12 @@ function tick(t){
   // a mouse wheel scrolls in steps, so on a desktop the film eases after it; on a phone it follows the finger exactly
   if(Math.abs(d)>1e-4){ P = fine ? P+d*(1-Math.exp(-dt*9)) : Pt; if(Math.abs(Pt-P)<5e-4) P=Pt; lastMove=t; dirty=true; }
   const n=Math.round(P), near=Math.abs(P-n)<NEAR, still_=t-lastMove>220;
-  root.classList.toggle('moving',!near);
-  if(near) setCard(n);
+  // the words: they come in once you are close to a scene, and then stay for at least a few seconds while you
+  // are still on that scene's side of the scroll; they go as soon as you move on into another scene
+  const close=Math.abs(P-n)<WORDS_IN;
+  if(close){ if(n!==wordsFor){ wordsFor=n; setCard(n); } wordsSeen=t; }
+  const keepWords = wordsFor===n && (close || t-wordsSeen<WORDS_HOLD);
+  root.classList.toggle('moving',!keepWords);
   if(near&&still_){ if(settledAt!==n) settle(n); }
   else { if(settledAt>=0&&(!near||settledAt!==n)) unsettle(); if(settledAt<0&&dirty){ dirty=false; render(); } }
   requestAnimationFrame(tick);
