@@ -137,9 +137,15 @@ h1{font-size:54px} h2{font-size:46px}
 .copy{position:absolute;z-index:4;left:var(--gut);top:0;bottom:0;width:min(580px,43vw);display:grid;align-items:center;transition:transform .6s var(--ease)}
 .beat{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s;text-shadow:0 1px 18px rgba(14,16,48,.35)}
 .beat.on{opacity:1;visibility:visible;transition:opacity .6s var(--ease) .1s,visibility 0s}
+/* the words travel with the scroll (set by the script each frame) */
+.flow .beat,.flow .beat.on{transition:none;will-change:transform,opacity}
+.flow .beat>*,.flow .beat.on>*{transform:none;transition:none}
 .beat>*{transform:translateY(18px);transition:transform .9s var(--ease)}
 .beat.on>*{transform:none}
 .beat.on>*:nth-child(2){transition-delay:.06s}.beat.on>*:nth-child(3){transition-delay:.12s}.beat.on>*:nth-child(4){transition-delay:.18s}.beat.on>*:nth-child(5){transition-delay:.24s}
+/* desktop shows the full paragraph, phones the short one */
+.lead .st{display:none}
+@media (max-width:900px){ .lead .lt{display:none} .lead .st{display:inline} }
 .lead{font-size:clamp(15px,1.06vw,17px);line-height:1.58;color:rgba(255,255,255,.95);margin:22px 0 0;max-width:44ch;
   text-shadow:0 1px 2px rgba(14,16,48,.55),0 0 22px rgba(14,16,48,.45)}
 .tags{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
@@ -208,6 +214,7 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .last .beat.on{max-height:calc(100svh - 96px - var(--foot-h,120px));}
   .beat.on{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .beat.on::-webkit-scrollbar{display:none}
+  .flow .beat.on,.flow .last .beat.on{max-height:none;overflow:visible}
   #c7 .lead{display:none}
   #c7 h2{font-size:28px}
   form{margin-top:12px;gap:6px}
@@ -271,43 +278,43 @@ form .btn[disabled]{opacity:.6;cursor:wait}
       <article class="beat on" id="c1">
         <p class="chip hero-chip">Marketing · Search · Automation</p>
         <h1>Marketing that makes sense again.</h1>
-        <p class="lead">People find you through ads, Google and AI assistants like ChatGPT. We make all of it work as one, and have since 2013.</p>
+        <p class="lead"><span class="lt">People find businesses through ads, Google and now AI assistants like ChatGPT. Most teams juggle all three with tools that don't talk to each other. We bring strategy, search, automation and advertising together so they work as one, and we've been doing it across the continents since 2013.</span><span class="st">People find you through ads, Google and AI assistants like ChatGPT. We make all of it work as one, and have since 2013.</span></p>
         <div class="actions"><a class="btn" href="#c7" data-jump="6" data-ev="hero_request_call_click">Request a call <span class="arw">→</span></a><a class="btn ghost" href="#c2" data-jump="1" data-ev="hero_learn_more_click">Learn more <span class="arw">↓</span></a></div>
       </article>
       <article class="beat" id="c2">
         <p class="chip">Marketing strategy</p>
         <h2>The right questions create clarity.</h2>
-        <p class="lead">We start with who buys from you and why. You get a 90-day plan built on real sales numbers, with an owner for every step.</p>
+        <p class="lead"><span class="lt">We start every project by asking who buys from you, why they buy, and what it costs you to win each customer today. Then we look at your real sales numbers, not likes and clicks. You get a simple 90-day plan with a clear owner and a target for every step.</span><span class="st">We start with who buys from you and why. You get a 90-day plan built on real sales numbers, with an owner for every step.</span></p>
         <ul class="tags"><li>Sales funnel review</li><li>GTM strategy</li></ul>
       </article>
       <article class="beat" id="c3">
         <p class="chip">Search</p>
         <h2>Be the answer they find.</h2>
-        <p class="lead">Customers now search on Google and in AI assistants like ChatGPT and Gemini. We help you show up in both.</p>
+        <p class="lead"><span class="lt">Customers now search in two places: Google, and AI assistants like ChatGPT, Perplexity, Gemini and Claude. We help you show up in both. That means a website search engines understand, content people actually want to read, and the trusted mentions AI tools look for before they recommend a business.</span><span class="st">Customers now search on Google and in AI assistants like ChatGPT and Gemini. We help you show up in both.</span></p>
         <ul class="tags"><li>Website health</li><li>Search everywhere optimization</li></ul>
       </article>
       <article class="beat" id="c4">
         <p class="chip">Automation</p>
         <h2>Systems that never sleep.</h2>
-        <p class="lead">Leads go cold in minutes. AI phone assistants answer in English and Arabic at any hour, and WhatsApp follows up on time.</p>
+        <p class="lead"><span class="lt">Leads go cold in minutes. We set up help that responds straight away: AI phone assistants that answer in English and Arabic at any hour, WhatsApp messages that follow up on time, and simple workflows that put every new lead into your sales system. Your team spends its time talking to buyers, not copying data.</span><span class="st">Leads go cold in minutes. AI phone assistants answer in English and Arabic at any hour, and WhatsApp follows up on time.</span></p>
         <ul class="tags"><li>Sales system setup</li><li>Marketing automation</li></ul>
       </article>
       <article class="beat" id="c5">
         <p class="chip">Paid media</p>
         <h2>Every coin aimed true.</h2>
-        <p class="lead">Google, Meta, LinkedIn and Bing ads as one budget, judged on sales, not clicks. In four Gulf markets, that cut cost per customer by 60%.</p>
+        <p class="lead"><span class="lt">We run Google, Meta, LinkedIn and Bing ads as one budget and judge them on sales, not clicks. With accurate tracking in place, the platforms learn who actually buys and find more people like them. Every week we cut what isn't working and move the money to what is. In four Gulf markets, that cut the cost of each new customer by 60%.</span><span class="st">Google, Meta, LinkedIn and Bing ads as one budget, judged on sales, not clicks. In four Gulf markets, that cut cost per customer by 60%.</span></p>
         <ul class="tags"><li>Accurate tracking</li><li>Lead generation campaigns</li></ul>
       </article>
       <article class="beat" id="c6">
         <p class="chip">Results</p>
         <h2>Sustainable growth is the destination.</h2>
-        <p class="lead">Everything we do should show up in your sales figures.</p>
+        <p class="lead"><span class="lt">Everything we do should show up in your sales figures. We report on leads and revenue by channel, and every recommendation comes with the number it should move.</span><span class="st">Everything we do should show up in your sales figures.</span></p>
         <div class="figs"><div><strong>$1M+</strong><span>Revenue traced to our campaigns</span></div><div><strong>60%</strong><span>Lower cost per customer</span></div><div><strong>40%</strong><span>Of leads turned into sales</span></div></div>
       </article>
       <article class="beat" id="c7">
         <p class="chip">Contact</p>
         <h2 id="contact-h">Let's pick up the thread.</h2>
-        <p class="lead">Tell us what isn't working. We'll study your setup and bring three changes we'd make first.</p>
+        <p class="lead"><span class="lt">Tell us what you sell, where you sell it and what isn't working. We'll look at your setup before we talk and bring three specific changes we'd make first. We reply within two working days.</span><span class="st">Tell us what isn't working. We'll study your setup and bring three changes we'd make first.</span></p>
         <form id="contact-form" novalidate aria-labelledby="contact-h">
           <div class="row2">
             <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" placeholder="Name" required></div>
@@ -465,7 +472,7 @@ function warm(i){
 }
 // arrive on scene i: its loop takes over from the exact pose the change ended on
 function settle(i){
-  settledAt=i; scene=i; setCard(i);
+  settledAt=i; scene=i; setCard(i); if(typeof restAt!=='undefined') restAt=i;
   const L=loopOf(i), from=cameFrom;
   // arriving from the scene before: the change ended on loop frame loopIn; from the scene after: on backLoopIn
   const at = from<i ? (SEAMS[i]?SEAMS[i].loopIn:0) : from>i ? (SEAMS[i+1]?SEAMS[i+1].backLoopIn:0) : 0;
@@ -502,16 +509,15 @@ function render(){
 /* ---- the motion, like pear.no: the page really scrolls, so the picture moves at the speed of your finger,
    with the phone's own momentum. Each scene has a short resting stretch (its loop plays and its words show),
    then a longer stretch where the scene change is drawn frame by frame as you scroll. ---- */
-const HOLD=0.25, TRANS=1.0, SEG=HOLD+TRANS;          // in screen heights
+const HOLD=0, TRANS=1.0, SEG=HOLD+TRANS;          // in screen heights
 const trackEl=story;
 let U=innerHeight;                                     // one screen height, measured without the phone's toolbars
 const probe=document.createElement('div'); probe.style.cssText='position:fixed;top:0;height:100svh;width:0;visibility:hidden;pointer-events:none';
 document.body.appendChild(probe);
 function measure(){ U=probe.getBoundingClientRect().height||innerHeight;
-  trackEl.style.height=((SCENES-1)*SEG+HOLD)*U+U+'px'; }
-const holdAt=i=>(i*SEG+(i?HOLD*0.5:0))*U;           // scroll position of scene i's resting stretch
-function posFromScroll(y){ const s=Math.max(0,y/U), k=Math.min(SCENES-1,Math.floor(s/SEG)), r=s-k*SEG;
-  if(k>=SCENES-1||r<=HOLD) return Math.min(SCENES-1,k); return k+Math.min(1,(r-HOLD)/TRANS); }
+  trackEl.style.height=(SCENES-1)*SEG*U+U+'px'; }
+const holdAt=i=>i*SEG*U;           // scroll position of scene i's resting stretch
+function posFromScroll(y){ const s=Math.max(0,Math.min(SCENES-1,y/U/SEG)); return Math.abs(s-Math.round(s))<0.004?Math.round(s):s; }
 let P=0, Pt=0, dragging=false;
 const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 let lastT=performance.now();
@@ -524,8 +530,31 @@ function tick(t){
   const atRest=P===Pt&&Number.isInteger(P);
   if(atRest){ if(settledAt!==P) settle(P); }
   else { unsettle(); setCard(Math.round(P)); if(dirty){ render(); dirty=false; } }
+  flowWords(scrollY);
   requestAnimationFrame(tick);
 }
+
+// the words travel with the scroll like ordinary page content, fading as they leave
+function flowWords(y){
+  beats.forEach((b,i)=>{ const off=holdAt(i)-y, a=Math.abs(off)/U;
+    const o=Math.max(0,Math.min(1,1-(a-0.12)/0.38));
+    if(o<=0){ if(b._o!==0){ b.style.opacity=0; b.style.visibility='hidden'; b._o=0; } return; }
+    b.style.visibility='visible'; b.style.opacity=o.toFixed(3); b._o=o;
+    b.style.transform=`translate3d(0,${off.toFixed(1)}px,0)`;
+    b.style.pointerEvents=o>0.6?'auto':'none'; });
+}
+// when the finger lifts and the page comes to rest between two scenes, it glides on to the nearer one
+let touching=false, idleT=0;
+addEventListener('touchstart',()=>{ touching=true; clearTimeout(idleT); },{passive:true});
+addEventListener('touchend',()=>{ touching=false; restSoon(); },{passive:true});
+addEventListener('touchcancel',()=>{ touching=false; restSoon(); },{passive:true});
+function restSoon(){ clearTimeout(idleT); idleT=setTimeout(()=>{ if(touching||root.classList.contains('menu-open')) return;
+  const s=scrollY/U/SEG, d=s-restAt; if(Math.abs(s-Math.round(s))<=0.004) return;
+  // it carries on in the direction you were going (a nudge of under 8% settles back)
+  const n=Math.abs(d)<0.08?restAt:d>0?Math.ceil(s):Math.floor(s);
+  scrollTo({top:holdAt(Math.max(0,Math.min(SCENES-1,n))),behavior:'smooth'}); },180); }
+let restAt=0;
+addEventListener('scroll',restSoon,{passive:true});
 
 /* ---- input: the browser scrolls; menu, buttons and keys move to a scene ---- */
 const clampP=v=>Math.max(0,Math.min(SCENES-1,v));
@@ -580,6 +609,7 @@ document.addEventListener('visibilitychange',()=>{ if(!document.hidden) wake(); 
 ['touchend','click','keydown'].forEach(ev=>addEventListener(ev,wake,{passive:true}));
 setInterval(()=>{ if(!document.hidden) wake(); },2000);
 addEventListener('resize',()=>{ const p=P; measure(); if(Number.isInteger(p)) scrollTo({top:holdAt(p),behavior:'instant'}); });
+root.classList.add('flow');
 measure();
 sizeCanvas();
 { const im=stillImg(0); const paint=()=>draw(im,FOCAL[0],1); if(im.complete) paint(); else im.addEventListener('load',paint,{once:true}); }
