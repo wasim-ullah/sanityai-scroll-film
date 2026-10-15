@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" as="image" href="film-292e1f38/keys/k1-d.webp">
+<link rel="preload" as="image" href="film-8e78d819/keys/k1-d.webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/PPMondwest-Regular.woff2" crossorigin>
 <title>SanityAI</title>
 <meta name="description" content="SanityAI brings marketing strategy, search, automation and advertising together so they work as one. Working across the continents since 2013, $1M+ in traceable revenue, 60% lower cost per customer.">
@@ -121,11 +121,9 @@ h1{font-size:54px} h2{font-size:46px}
 .film video.prev{opacity:1;z-index:2}
 .film video.on{opacity:1;z-index:3}
 .film video.under{opacity:1;z-index:2}
-/* each scene is a layer (key picture + looping video); the next scene opens through a soft circle as you scroll */
-.film .layer{position:absolute;inset:0;display:none;will-change:transform;transform-origin:50% 46%}
-.film .layer.base{display:block;z-index:2}
-.film .layer.top{display:block;z-index:3}
-.film .layer img,.film .layer video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;pointer-events:none}
+/* scene changes are drawn here as you scroll, frame by frame from the original film; hidden while a scene's loop plays */
+.film canvas.seq{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+.film canvas.seq.off{opacity:0;transition:opacity .55s ease}
 .film video.loop{transition:opacity .35s ease}   /* a scene's loop fades in over the end of its scene change */
 /* shading so white type reads on bright skies, kept to the text side */
 .shade{position:absolute;inset:0;z-index:3;pointer-events:none;
@@ -378,10 +376,11 @@ chapters.addEventListener('click',e=>{ if(e.target===chapters||e.target===chapte
 
 /* ---------- film ----------
    Built like pear.no: the page scrolls for real and the film follows the scroll exactly, frame by frame, and stays
-   wherever you stop. Between two scenes the next one opens out of the middle of the current one through a soft circle,
-   both as their own full-quality looping videos, so the picture is always sharp and alive. The words of a scene
-   show when you are on it. */
-const BASE='', MEDIA='film-292e1f38/';
+   wherever you stop. Each scene change is the original full-resolution film, stored as single frames (every frame,
+   nothing resized), drawn on a canvas by how far you have scrolled. Frames are decoded ahead of where you are
+   heading, so the picture never waits on the decoder. When you rest on a scene its looping video plays; the words
+   of a scene show when you are on it. */
+const BASE='', MEDIA='film-8e78d819/';
 const SCENES=7;
 const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];
 const tier=(innerWidth<600?'m':'d');
@@ -389,37 +388,103 @@ const narrow=()=>innerWidth<=900;
 const story=document.getElementById('story'), film=document.querySelector('.film');
 const beats=[...document.querySelectorAll('.beat')];
 const poster=i=>`${BASE}${MEDIA}keys/k${i+1}-${tier}.webp`;
-const FPS=24;
+const SEAMS={"1":{"endFrame":118,"loopIn":29,"depart":[1,1,1,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],"backDepart":[118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,117,117,117,117,117,115,115,115,115,115,115,115,115,115,115,115,115,115,115,115,117,117,117,117,117,117,117,117,117,117,117,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,115,117],"backEnd":1,"backLoopIn":1},"2":{"endFrame":120,"loopIn":0,"depart":[2,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],"backDepart":[120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120],"backEnd":5,"backLoopIn":6},"3":{"endFrame":92,"loopIn":94,"depart":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"backDepart":[92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,91,91,91,91,91,91,91,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92,92],"backEnd":1,"backLoopIn":0},"4":{"endFrame":120,"loopIn":44,"depart":[0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"backDepart":[120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,116,120,116,116,116,116,116,114,114,114,114,114,114,116,116,116,114,116,116,116,116,116,116,116,116,116,116,118,118,118,118,118,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,119,120],"backEnd":0,"backLoopIn":3},"5":{"endFrame":105,"loopIn":109,"depart":[1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,3,6,6,6,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9,9,9,9,9,8,7,7,7,7,7,7,7,7,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,7,7,7,7,7,7,7,7,7,7,7,7,7,9,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8],"backDepart":[105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105,105],"backEnd":2,"backLoopIn":10},"6":{"endFrame":116,"loopIn":7,"depart":[4,5,5,5,5,5,5,5,5,5,5,6,6,4,3,3,3,3,3,3,3,6,3,3,3,3,3,3,3,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7],"backDepart":[112,112,112,112,112,113,114,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,115,115,115,115,115,115,115,115,115,115,115,115,107,115,115,115,115,115,115,115,115,115,115,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,107,107,107,106,106,106,106,103,103,102,103,103,106,107,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116,116],"backEnd":4,"backLoopIn":13}}, FRN={"1":118,"2":116,"3":92,"4":121,"5":104,"6":113}, FPS=24;
 const still=film.querySelector('.still'), veil=film.querySelector('.veil');
 still.src=poster(0);
+const stills=[]; const stillImg=i=>{ if(!stills[i]){ const im=new Image(); im.decoding='async'; im.src=poster(i); stills[i]=im; } return stills[i]; };
 const play=v=>{ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); return p; };
 function mkVideo(cls){ const v=document.createElement('video'); v.muted=true; v.defaultMuted=true; v.playsInline=true;
   v.setAttribute('playsinline',''); v.setAttribute('muted',''); v.disablePictureInPicture=true; if(cls) v.className=cls; return v; }
 
-// framing: character at 74% across on wide screens, centred on small screens (phone films are already centred)
+// the canvas the scene changes are drawn on: above the loops, hidden while a scene's loop plays
+const cv=document.createElement('canvas'); cv.className='seq off'; film.insertBefore(cv,veil);
+const cx=cv.getContext('2d',{alpha:false});
+let CW=0,CH=0;
+function sizeCanvas(){ const d=Math.min(devicePixelRatio||1,2); CW=Math.round(film.clientWidth*d); CH=Math.round(film.clientHeight*d);
+  if(cv.width!==CW||cv.height!==CH){ cv.width=CW; cv.height=CH; cx.imageSmoothingEnabled=true; cx.imageSmoothingQuality='high'; } dirty=true; }
+
+// framing: character at 74% across on wide screens, centred on small screens (phone frames are already centred)
+function geom(sw,sh,f,W,H){ const s=Math.max(W/sw,H/sh), dw=sw*s, dh=sh*s, fx=tier==='m'?0.5:f;
+  let x=(narrow()?W/2:W*0.74)-fx*dw; x=Math.min(0,Math.max(W-dw,x)); return [x,(H-dh)/2,dw,dh]; }
 function frame(v,f){ const vw=v&&(v.videoWidth||v.naturalWidth), vh=v&&(v.videoHeight||v.naturalHeight); if(!vw) return;
-  const W=film.clientWidth,H=film.clientHeight, s=Math.max(W/vw,H/vh), dw=vw*s, fx=tier==='m'?0.5:f;
-  let x=(narrow()?W/2:W*0.74)-fx*dw; x=Math.min(0,Math.max(W-dw,x)); v.style.objectPosition=`${x.toFixed(1)}px 50%`; }
+  const [x]=geom(vw,vh,f,film.clientWidth,film.clientHeight); v.style.objectPosition=`${x.toFixed(1)}px 50%`; }
+function draw(img,f,alpha){ const w=img.videoWidth||img.naturalWidth||img.width, h=img.videoHeight||img.naturalHeight||img.height; if(!w) return false;
+  const [x,y,dw,dh]=geom(w,h,f,CW,CH); cx.globalAlpha=alpha; cx.drawImage(img,x,y,dw,dh); cx.globalAlpha=1; return true; }
 still.addEventListener('load',()=>frame(still,FOCAL[scene]));
 
-/* ---- each scene is a layer: its key picture, with its looping video on top once that has loaded ---- */
-const layers={};
-function layer(i){
-  if(layers[i]) return layers[i];
-  const d=document.createElement('div'); d.className='layer';
-  const img=new Image(); img.decoding='async'; img.alt=''; img.src=poster(i); img.onload=()=>frame(img,FOCAL[i]);
-  const v=mkVideo(); v.loop=true; v.preload='auto'; v.src=`${BASE}${MEDIA}v/L${i+1}-${tier}.mp4`;
-  v.addEventListener('loadedmetadata',()=>frame(v,FOCAL[i]));
-  d.append(img,v); film.insertBefore(d,veil);
-  return layers[i]={i,d,img,v};
+/* ---- scene changes: seq[k] is the change from scene k-1 into scene k (k = 1..6), every frame at full resolution.
+   Frames are downloaded (compressed) into memory; only the ones around where you are get decoded. ---- */
+const seqs={};
+const EXT=tier==='d'?'webp':'jpg';
+const fsrc=(k,j)=>`${BASE}${MEDIA}fr/t${k}-${tier}/${String(j).padStart(3,'0')}.${EXT}`;
+const AHEAD=tier==='d'?10:8, BEHIND=3;
+const canBitmap=typeof createImageBitmap==='function';
+function loadSeq(k,pri){
+  if(k<1||k>SCENES-1) return null; if(seqs[k]){ seqs[k].pri=pri; return seqs[k]; }
+  const n=FRN[k], o={k,n,blob:new Array(n),bm:new Array(n),dec:new Uint8Array(n),req:new Uint8Array(n),pri,queue:[],ctl:new AbortController()};
+  seqs[k]=o;
+  // both ends first (where you arrive from either scene), then coarse to fine, so a fast scroll always has a picture
+  const seen=new Set(), add=j=>{ if(j>=0&&j<n&&!seen.has(j)){ seen.add(j); o.queue.push(j); } };
+  for(let j=0;j<=AHEAD;j++){ add(j); add(n-1-j); }
+  for(const st of [8,4,2,1]) for(let j=0;j<n;j+=st) add(j);
+  pump(); return o;
 }
-function dropLayer(i){ const L=layers[i]; if(!L) return; L.v.pause(); L.v.removeAttribute('src'); try{L.v.load();}catch(e){} L.d.remove(); delete layers[i]; }
-// only the scenes within reach stay in memory: the one you are on, and one either side
-function keep(i){ for(const k of Object.keys(layers)) if(Math.abs(+k-i)>1&&Math.abs(+k-(i+1))>1) dropLayer(+k);
-  layer(i); if(i+1<SCENES) layer(i+1); if(i>0) layer(i-1); }
+function dropSeq(k){ const o=seqs[k]; if(!o) return; o.dead=true; o.ctl.abort();
+  o.bm.forEach(b=>{ if(b&&b.close) b.close(); }); delete seqs[k]; }
+let inflight=0, want={k:0,j:0,dir:1};
+function nextReq(){
+  // what you are scrolling through right now comes first: the frames just ahead of you
+  const a=seqs[want.k];
+  if(a&&!a.dead) for(let d=0;d<=24;d++){ for(const j of [want.j+want.dir*d, d<=4?want.j-want.dir*d:-1]) if(j>=0&&j<a.n&&!a.req[j]) return [a,j]; }
+  const o=Object.values(seqs).filter(o=>!o.dead&&o.queue.length).sort((x,y)=>x.pri-y.pri)[0]; if(!o) return null;
+  while(o.queue.length){ const j=o.queue.shift(); if(!o.req[j]) return [o,j]; }
+  return nextReq();
+}
+function pump(){
+  while(inflight<6){
+    const r=nextReq(); if(!r) return; const [o,j]=r; o.req[j]=1; inflight++;
+    fetch(fsrc(o.k,j),{signal:o.ctl.signal}).then(x=>{ if(!x.ok) throw 0; return x.blob(); })
+      .then(b=>{ inflight--; if(o.dead) return; o.blob[j]=b; dirty=true; keepDecoded(); pump(); },
+            ()=>{ inflight--; if(!o.dead) o.req[j]=0; pump(); });
+  }
+}
+// decode ahead of you (off the main thread) and let go of what is far behind, so memory stays small
+let decoding=0;
+function decodeOne(o,j){
+  o.dec[j]=1; decoding++;
+  const done=bm=>{ decoding--; if(o.dead||!bm){ if(bm&&bm.close) bm.close(); o.dec[j]=0; return; }
+    o.bm[j]=bm; dirty=true; keepDecoded(); };
+  if(canBitmap) createImageBitmap(o.blob[j]).then(done,()=>{ decoding--; o.dec[j]=0; });
+  else { const im=new Image(), u=URL.createObjectURL(o.blob[j]); im.src=u;
+    im.decode().then(()=>{ URL.revokeObjectURL(u); done(im); },()=>{ URL.revokeObjectURL(u); decoding--; o.dec[j]=0; }); }
+}
+function keepDecoded(){
+  for(const o of Object.values(seqs)){
+    // the change you are in: a window around you, mostly ahead; the others: their ends, ready for a scroll from rest
+    const lo=[], act=o.k===want.k;
+    if(act){ for(let d=0;d<=AHEAD;d++) lo.push(want.j+want.dir*d); for(let d=1;d<=BEHIND;d++) lo.push(want.j-want.dir*d); }
+    else { for(let d=0;d<4;d++){ lo.push(d); lo.push(o.n-1-d); } }
+    const keep=new Set(lo.filter(j=>j>=0&&j<o.n));
+    for(let j=0;j<o.n;j++) if(o.bm[j]&&!keep.has(j)&&!(act&&Math.abs(j-want.j)<=AHEAD+4)){ if(o.bm[j].close) o.bm[j].close(); o.bm[j]=null; o.dec[j]=0; }
+    for(const j of lo){ if(decoding>=3) return; if(j>=0&&j<o.n&&o.blob[j]&&!o.dec[j]) decodeOne(o,j); }
+  }
+}
+// nearest decoded frame to j
+function seqFrame(o,j){ if(o.bm[j]) return o.bm[j];
+  for(let d=1;d<o.n;d++){ if(o.bm[j-d]) return o.bm[j-d]; if(o.bm[j+d]) return o.bm[j+d]; } return null; }
+
+/* ---- scene loops ---- */
+const vids={};
+function loopOf(i,pre='auto'){ const name='L'+(i+1); let v=vids[name];
+  if(v){ if(pre==='auto'&&v.preload!=='auto') v.preload='auto'; return v; }
+  v=mkVideo('loop'); v.loop=true; v.preload=pre;
+  v.addEventListener('loadedmetadata',()=>frame(v,FOCAL[i])); v.src=`${BASE}${MEDIA}v/${name}-${tier}.mp4`;
+  film.insertBefore(v,cv); vids[name]=v; return v; }
+function releaseLoops(keep){ Object.entries(vids).forEach(([k,v])=>{ if(keep.has(k)||v===current) return;
+  v.pause(); v.removeAttribute('src'); try{v.load();}catch(e){} v.remove(); delete vids[k]; }); }
 
 /* ---- state ---- */
-let scene=0, shownScene=-1, dirty=true, lastI=-1;
+let scene=0, current=null, settledAt=-1, shownScene=-1, dirty=true, cameFrom=0;
 const seenScene=new Set(), SCENE_NAME=['intro','marketing_strategy','search','automation','paid_media','results','contact'];
 function setCard(i){
   if(i===shownScene) return; shownScene=i;
@@ -428,23 +493,52 @@ function setCard(i){
   chapterLinks.forEach(a=>a.classList.toggle('on',+a.dataset.key===i));
   if(!seenScene.has(i)){ seenScene.add(i); track('film_scene_'+(i+1)+'_view',{scene_number:i+1,scene_name:SCENE_NAME[i]}); if(i===SCENES-1) track('film_watched_to_end'); }
 }
+// keep in memory only what the next scroll can reach: the changes on either side, and the loops beside us
+let warmT=0;
+function warm(i){
+  for(const k of Object.keys(seqs)) if(+k!==i&&+k!==i+1) dropSeq(+k);
+  loadSeq(i+1,0); loadSeq(i,1);
+  clearTimeout(warmT);
+  warmT=setTimeout(()=>{ if(settledAt!==i) return; const keep=new Set(['L'+(i+1)]);
+    if(i<SCENES-1) keep.add('L'+(i+2)); if(i>0) keep.add('L'+i); releaseLoops(keep);
+    if(i<SCENES-1) loopOf(i+1,'metadata'); if(i>0) loopOf(i-1,'metadata'); },1500);
+}
+// resting on scene i: its loop takes over from the exact pose the scene change ended on, and the canvas fades away
+function settle(i){
+  settledAt=i; scene=i;
+  const L=loopOf(i), from=cameFrom;
+  const at = from<i ? (SEAMS[i]?SEAMS[i].loopIn:0) : from>i ? (SEAMS[i+1]?SEAMS[i+1].backLoopIn:0) : 0;
+  if(current!==L){ if(current){ current.pause(); current.classList.remove('on'); } current=L; try{ L.currentTime=at/FPS; }catch(e){} }
+  frame(L,FOCAL[i]); play(L);
+  const reveal=()=>{ if(settledAt!==i||current!==L) return; L.classList.add('on'); cv.style.opacity=''; cv.classList.add('off'); };
+  if(L.readyState>=2&&!L.seeking&&!L.paused&&L.requestVideoFrameCallback) L.requestVideoFrameCallback(reveal);
+  else { const once=()=>{ L.removeEventListener('playing',once); L.removeEventListener('seeked',once);
+      if(L.requestVideoFrameCallback) L.requestVideoFrameCallback(reveal); else requestAnimationFrame(reveal); };
+    L.addEventListener('playing',once); L.addEventListener('seeked',once); }
+  still.src=poster(i); frame(still,FOCAL[i]);
+  warm(i);
+}
+function unsettle(){ if(settledAt<0) return; cameFrom=settledAt; settledAt=-1; dirty=true; }
 
-/* ---- one moment between scene i and i+1 (f = 0..1): scene i+1 opens out of the middle of scene i,
-   through a soft-edged circle (like pear.no), while scene i eases forward. Both stay sharp and alive. ---- */
-const setMask=(el,css)=>{ el.style.webkitMaskImage=css; el.style.maskImage=css; };
+/* ---- one moment between scene i and i+1 (f = 0..1): that frame of the original film ---- */
+let lastJ=-1;
 function render(){
-  const i=Math.min(SCENES-1,Math.floor(P)), f=Math.max(0,P-i);
-  if(i!==lastI){ keep(i); lastI=i; scene=i; }
-  const e=f*f*(3-2*f);                                  // ease in and out
-  Object.values(layers).forEach(L=>{
-    const role = L.i===i ? 'base' : (L.i===i+1&&f>0.001) ? 'top' : '';
-    L.d.className='layer'+(role?' '+role:'');
-    if(role){ if(L.v.paused) play(L.v); } else if(!L.v.paused) L.v.pause();
-    if(role==='base'){ L.d.style.transform=`scale(${(1+0.07*e).toFixed(4)})`; setMask(L.d,'none'); }
-    if(role==='top'){ const r=e*125, soft=22;
-      L.d.style.transform=`scale(${(1.1-0.1*e).toFixed(4)})`;
-      setMask(L.d, e>=0.999?'none':`radial-gradient(circle at 50% 46%, #000 ${Math.max(0,r-soft).toFixed(2)}%, rgba(0,0,0,0) ${r.toFixed(2)}%)`); }
-  });
+  const i=Math.min(SCENES-2,Math.floor(P)), f=Math.max(0,P-i), k=i+1, o=seqs[k]||loadSeq(k,0);
+  const foc=FOCAL[i]+(FOCAL[i+1]-FOCAL[i])*f;
+  const j=Math.round(f*(o.n-1)); if(j!==lastJ){ want={k,j,dir:j>=lastJ?1:-1}; lastJ=j; keepDecoded(); pump(); }
+  const live=current&&current.readyState>=2&&current.classList.contains('on')?current:null, ls=live?+current.src.match(/L(\d)-/)[1]-1:-1;
+  const img=seqFrame(o,j);
+  // leaving a scene, its live loop (still playing underneath) hands over to the film over a short stretch:
+  // only the canvas's opacity changes, so the hand-over costs nothing to draw
+  let a=0;
+  if(live){ const dist=ls===i?f:ls===i+1?1-f:9; a=Math.max(0,Math.min(1,1-(dist-NEAR)/0.06)); }
+  if(img) draw(img,foc,1);
+  else if(live&&(ls===i||ls===i+1)) a=1;
+  else { const s=f<0.5?i:i+1, im=stillImg(s); if(im.complete&&im.naturalWidth) draw(im,FOCAL[s],1); }
+  cv.style.opacity = a>0 ? String(1-a) : '';
+  cv.classList.remove('off');
+  // once the film has fully taken over, the loop underneath rests (and wakes again on the way back)
+  if(current){ if(a===0&&!current.paused) current.pause(); else if(a>0&&current.paused) play(current); }
 }
 
 /* ---- the motion: the page really scrolls; the film follows it and stays wherever you stop ---- */
@@ -455,7 +549,7 @@ document.body.appendChild(probe);
 function measure(){ U=probe.getBoundingClientRect().height||innerHeight; story.style.height=(SCENES-1)*TRANS*U+U+'px'; }
 const holdAt=i=>i*TRANS*U;
 const posFromScroll=y=>Math.max(0,Math.min(SCENES-1,y/U/TRANS));
-let P=0, Pt=0, lastT=performance.now();
+let P=0, Pt=0, lastMove=0, lastT=performance.now();
 const fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
 const NEAR=0.06;                                       // within this of a scene counts as being on it
 function tick(t){
@@ -463,11 +557,12 @@ function tick(t){
   Pt=posFromScroll(scrollY);
   const d=Pt-P;
   // a mouse wheel scrolls in steps, so on a desktop the film eases after it; on a phone it follows the finger exactly
-  if(Math.abs(d)>1e-4){ P = fine ? P+d*(1-Math.exp(-dt*9)) : Pt; if(Math.abs(Pt-P)<5e-4) P=Pt; dirty=true; }
-  const n=Math.round(P), near=Math.abs(P-n)<NEAR;
-  root.classList.toggle('moving',!near);               // the words of a scene show while you are on it
+  if(Math.abs(d)>1e-4){ P = fine ? P+d*(1-Math.exp(-dt*9)) : Pt; if(Math.abs(Pt-P)<5e-4) P=Pt; lastMove=t; dirty=true; }
+  const n=Math.round(P), near=Math.abs(P-n)<NEAR, still_=t-lastMove>220;
+  root.classList.toggle('moving',!near);
   if(near) setCard(n);
-  if(dirty){ render(); dirty=false; }
+  if(near&&still_){ if(settledAt!==n) settle(n); }
+  else { if(settledAt>=0&&(!near||settledAt!==n)) unsettle(); if(settledAt<0&&dirty){ dirty=false; render(); } }
   requestAnimationFrame(tick);
 }
 
@@ -483,7 +578,11 @@ function glideTo(y){ stopGlide(); const y0=scrollY, dy=y-y0; if(Math.abs(dy)<1) 
 ['touchstart','wheel','mousedown'].forEach(ev=>addEventListener(ev,stopGlide,{passive:true}));
 const clampP=v=>Math.max(0,Math.min(SCENES-1,v));
 function jump(i,smooth){ setMenu(false); i=clampP(i);
-  if(Math.abs(i-P)>1.01||smooth===false){ stopGlide(); scrollTo({top:holdAt(i),behavior:'instant'}); P=Pt=i; dirty=true; }   // far: cut straight there
+  const far=Math.abs(i-P)>1.01;
+  if(far||smooth===false){ // far away: cut straight there, like pear.no's menu
+    stopGlide(); cameFrom=i; if(current){ current.pause(); current.classList.remove('on'); current=null; } settledAt=-1;
+    still.src=poster(i); frame(still,FOCAL[i]); cv.style.opacity=''; cv.classList.add('off');
+    scrollTo({top:holdAt(i),behavior:'instant'}); P=Pt=i; warm(i); }
   else glideTo(holdAt(i)); }
 const go=dir=>jump(Math.round(P)+dir);
 document.querySelectorAll('[data-jump]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();jump(+el.dataset.jump);}));
@@ -501,8 +600,8 @@ addEventListener('wheel',e=>{ if(root.classList.contains('menu-open')) e.prevent
 addEventListener('touchmove',e=>{ if(root.classList.contains('menu-open')&&e.cancelable) e.preventDefault(); },{passive:false});
 const canScroll=el=>el&&el.scrollHeight>el.clientHeight+2;
 const markMore=()=>{};
-addEventListener('resize',()=>{ const p=P; measure(); if(Number.isInteger(p)) scrollTo({top:holdAt(p),behavior:'instant'});
-  Object.values(layers).forEach(L=>{ frame(L.img,FOCAL[L.i]); frame(L.v,FOCAL[L.i]); }); dirty=true; });
+addEventListener('resize',()=>{ const p=P; measure(); sizeCanvas(); if(Number.isInteger(p)) scrollTo({top:holdAt(p),behavior:'instant'});
+  frame(still,FOCAL[scene]); Object.entries(vids).forEach(([k,v])=>frame(v,FOCAL[+k.slice(1)-1])); dirty=true; });
 
 // the footer (logo, email, company line) sits over the bottom of the last scene, and the words make room for it
 const foot=document.querySelector('.foot');
@@ -518,8 +617,8 @@ if(fine){
   addEventListener('pointermove',e=>{ if(e.pointerType!=='mouse') return; mx=e.clientX/innerWidth*2-1; my=e.clientY/innerHeight*2-1; if(!raf) raf=requestAnimationFrame(drift); },{passive:true});
   film.style.transform='scale(1.03)';
 }
-// videos the browser paused (tab hidden, phone power saving) restart on the next touch or click
-const wake=()=>{ dirty=true; };
+// a scene loop that the browser paused (tab hidden, phone power saving) restarts on the next touch or click
+const wake=()=>{ if(current&&current.paused&&settledAt>=0) play(current); };
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden) wake(); });
 ['touchend','click','keydown'].forEach(ev=>addEventListener(ev,wake,{passive:true}));
 setInterval(()=>{ if(!document.hidden) wake(); },2000);
@@ -528,14 +627,16 @@ setInterval(()=>{ if(!document.hidden) wake(); },2000);
 if(/[?&]debug/.test(location.search)){ const d=document.createElement('div');
   d.style.cssText='position:fixed;left:8px;top:80px;z-index:99;background:rgba(0,0,0,.7);color:#0f0;font:11px/1.4 monospace;padding:6px 8px;border-radius:6px;pointer-events:none;white-space:pre';
   document.body.appendChild(d);
-  setInterval(()=>{ d.textContent=`y ${Math.round(scrollY)}  P ${P.toFixed(3)}\n`+Object.values(layers).map(L=>`L${L.i+1} ${L.d.className.replace('layer','').trim()||'-'} ${L.v.readyState>=2?(L.v.paused?'paused':'playing'):'loading'}`).join('\n')+`\nU ${Math.round(U)}  ${innerWidth}x${innerHeight}`; },120); }
+  setInterval(()=>{ const k=Math.min(SCENES-1,Math.floor(P)+1), o=seqs[k];
+    const nb=o?o.blob.filter(Boolean).length:0, nd=o?o.bm.filter(Boolean).length:0;
+    d.textContent=`y ${Math.round(scrollY)}  P ${P.toFixed(3)}\nscene ${settledAt}  canvas ${cv.classList.contains('off')?'off':'on'}\nchange t${k}: ${o?nb+'/'+o.n+' loaded, '+nd+' decoded':'none'}\nloop ${current?current.src.split('/').pop()+' '+(current.paused?'paused':'playing'):'-'}\nU ${Math.round(U)}  ${innerWidth}x${innerHeight}`; },120); }
 
-measure();
+measure(); sizeCanvas();
 if('scrollRestoration' in history) history.scrollRestoration='manual';
 scrollTo({top:0,behavior:'instant'});
-keep(0); setCard(0); dirty=true;
+settle(0); setCard(0);
 requestAnimationFrame(tick);
-window.__film={get P(){return P},get Pt(){return Pt},get layers(){return layers}};
+window.__film={get P(){return P},get Pt(){return Pt},get settled(){return settledAt},get seqs(){return seqs},get want(){return want}};
 // links like sanity.ai/#c3 open straight on that section (used by the 404 page and shared links)
 const deep=(location.hash.match(/^#c([1-7])$/)||[])[1];
 if(deep){ history.replaceState(null,'',location.pathname+location.search); if(+deep>1) setTimeout(()=>jump(+deep-1,false),60); }
