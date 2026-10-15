@@ -138,8 +138,9 @@ h1{font-size:54px} h2{font-size:46px}
 .beat{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s;text-shadow:0 1px 18px rgba(14,16,48,.35)}
 .beat.on{opacity:1;visibility:visible;transition:opacity .6s var(--ease) .1s,visibility 0s}
 /* the words travel with the scroll (set by the script each frame) */
-.flow .beat,.flow .beat.on{transition:none;will-change:transform,opacity}
-.flow .beat>*,.flow .beat.on>*{transform:none;transition:none}
+/* the words only show once a scene has arrived; while the film moves they step aside */
+.moving .beat.on{opacity:0;visibility:hidden;transition:opacity .2s ease,visibility 0s .2s}
+.moving .beat.on>*{transform:translateY(18px)}
 .beat>*{transform:translateY(18px);transition:transform .9s var(--ease)}
 .beat.on>*{transform:none}
 .beat.on>*:nth-child(2){transition-delay:.06s}.beat.on>*:nth-child(3){transition-delay:.12s}.beat.on>*:nth-child(4){transition-delay:.18s}.beat.on>*:nth-child(5){transition-delay:.24s}
@@ -214,7 +215,7 @@ form .btn[disabled]{opacity:.6;cursor:wait}
   .last .beat.on{max-height:calc(100svh - 96px - var(--foot-h,120px));}
   .beat.on{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .beat.on::-webkit-scrollbar{display:none}
-  .flow .beat.on,.flow .last .beat.on{max-height:none;overflow:visible}
+  .beat.on,.last .beat.on{max-height:none;overflow:visible}
   #c7 .lead{display:none}
   #c7 h2{font-size:28px}
   form{margin-top:12px;gap:6px}
@@ -498,11 +499,12 @@ function render(){
     if(a){ drew=draw(a,foc,1);
       // soften the gap between two stored frames: blend the next one in
       const jb=Math.min(o.n-1,ja+1), w=x-ja; if(w>0.02&&jb!==ja&&o.ok[jb]) draw(o.imgs[jb],foc,Math.min(1,w)); } }
-  if(!drew){ const im=stillImg(f<0.5?i:i+1); draw(im.complete?im:still,foc,1); }
+  if(!drew&&!cv._drawn){ const im=stillImg(i); if(im.complete) draw(im,foc,1); }
+  if(drew) cv._drawn=true;
   // leaving a scene, its live picture dissolves into the change over the first fifth of the way (and the last, going up)
   const live=current&&current.readyState>=2?current:null, ls=live?+current.src.match(/L(\d)-/)[1]-1:-1;
-  if(live&&ls===i&&f<0.2) draw(live,FOCAL[i],1-f/0.2);
-  if(live&&ls===i+1&&f>0.8) draw(live,FOCAL[i+1],(f-0.8)/0.2);
+  if(live&&ls===i&&f<0.07) draw(live,FOCAL[i],1-f/0.07);
+  if(live&&ls===i+1&&f>0.93) draw(live,FOCAL[i+1],(f-0.93)/0.07);
   if(!o||!o.ok.some(Boolean)) loadSeq(k,0);
 }
 
@@ -528,21 +530,12 @@ function tick(t){
   const d=Pt-P;
   if(Math.abs(d)>1e-4){ P = fine ? P+d*(1-Math.exp(-dt*10)) : Pt; if(Math.abs(Pt-P)<2e-3) P=Pt; dirty=true; }
   const atRest=P===Pt&&Number.isInteger(P);
+  root.classList.toggle('moving',!atRest);
   if(atRest){ if(settledAt!==P) settle(P); }
-  else { unsettle(); setCard(Math.round(P)); if(dirty){ render(); dirty=false; } }
-  flowWords(scrollY);
+  else { unsettle(); if(dirty){ render(); dirty=false; } }
   requestAnimationFrame(tick);
 }
 
-// the words travel with the scroll like ordinary page content, fading as they leave
-function flowWords(y){
-  beats.forEach((b,i)=>{ const off=holdAt(i)-y, a=Math.abs(off)/U;
-    const o=Math.max(0,Math.min(1,1-(a-0.12)/0.38));
-    if(o<=0){ if(b._o!==0){ b.style.opacity=0; b.style.visibility='hidden'; b._o=0; } return; }
-    b.style.visibility='visible'; b.style.opacity=o.toFixed(3); b._o=o;
-    b.style.transform=`translate3d(0,${off.toFixed(1)}px,0)`;
-    b.style.pointerEvents=o>0.6?'auto':'none'; });
-}
 // when the finger lifts and the page comes to rest between two scenes, it glides on to the nearer one
 let touching=false, idleT=0;
 addEventListener('touchstart',()=>{ touching=true; clearTimeout(idleT); },{passive:true});
@@ -609,7 +602,6 @@ document.addEventListener('visibilitychange',()=>{ if(!document.hidden) wake(); 
 ['touchend','click','keydown'].forEach(ev=>addEventListener(ev,wake,{passive:true}));
 setInterval(()=>{ if(!document.hidden) wake(); },2000);
 addEventListener('resize',()=>{ const p=P; measure(); if(Number.isInteger(p)) scrollTo({top:holdAt(p),behavior:'instant'}); });
-root.classList.add('flow');
 measure();
 sizeCanvas();
 { const im=stillImg(0); const paint=()=>draw(im,FOCAL[0],1); if(im.complete) paint(); else im.addEventListener('load',paint,{once:true}); }
@@ -617,6 +609,12 @@ if('scrollRestoration' in history) history.scrollRestoration='manual';
 scrollTo({top:holdAt(0),behavior:'instant'});
 settle(0);
 requestAnimationFrame(tick);
+// ?debug shows what the film is doing (for checking on a phone)
+if(/[?&]debug/.test(location.search)){ const d=document.createElement('div');
+  d.style.cssText='position:fixed;left:8px;top:80px;z-index:99;background:rgba(0,0,0,.7);color:#0f0;font:11px/1.4 monospace;padding:6px 8px;border-radius:6px;pointer-events:none;white-space:pre';
+  document.body.appendChild(d);
+  setInterval(()=>{ const k=Math.min(SCENES-1,Math.floor(P)+1), o=seqs[k];
+    d.textContent=`y ${Math.round(scrollY)}  P ${P.toFixed(3)}\nscene ${settledAt}  canvas ${cv.classList.contains('off')?'off':'on'}\nframes t${k}: ${o?o.ok.reduce((a,b)=>a+b,0)+'/'+o.n:'none'}\nloop ${current?current.src.split('/').pop()+' '+(current.paused?'paused':'playing'):'-'}\nU ${Math.round(U)}  ${innerWidth}x${innerHeight}`; },120); }
 window.__film={get P(){return P},get Pt(){return Pt},get dragging(){return dragging},get settled(){return settledAt}};
 addEventListener('load',()=>setTimeout(()=>{ for(let i=0;i<SCENES;i++) stillImg(i); },1500),{once:true});
 // links like sanity.ai/#c3 open straight on that section (used by the 404 page and shared links)
