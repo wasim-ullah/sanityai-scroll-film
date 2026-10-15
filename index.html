@@ -11,7 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" as="image" href="film-95887671/keys/k1-d.webp">
+<link rel="preload" as="image" href="film-696e0100/keys/k1-d.webp">
 <link rel="preload" as="font" type="font/woff2" href="assets/PPMondwest-Regular.woff2" crossorigin>
 <title>SanityAI</title>
 <meta name="description" content="SanityAI brings marketing strategy, search, automation and advertising together so they work as one. Working across the continents since 2013, $1M+ in traceable revenue, 60% lower cost per customer.">
@@ -378,7 +378,7 @@ chapters.addEventListener('click',e=>{ if(e.target===chapters||e.target===chapte
    trackpad, can stop half way and reverses instantly. Nothing has to start, seek or hand over mid-gesture.
    When you stop on a scene, its gently looping video takes over (and if a phone won't play video, the last
    frame simply stays). */
-const BASE='', MEDIA='film-95887671/';
+const BASE='', MEDIA='film-696e0100/';
 const SCENES=7;
 const FOCAL=[0.78,0.86,0.66,0.76,0.74,0.80,0.74];
 const tier=(innerWidth<600?'m':'d');
@@ -398,9 +398,10 @@ const play=v=>{ const p=v.play(); if(p&&p.catch) p.catch(()=>{}); return p; };
 // the canvas the scene changes are drawn on; it sits above the videos and is hidden while a loop plays
 const cv=document.createElement('canvas'); cv.className='seq'; film.insertBefore(cv,veil);
 const cx=cv.getContext('2d',{alpha:false});
+const smooth=()=>{ cx.imageSmoothingEnabled=true; cx.imageSmoothingQuality='high'; };   // reset whenever the canvas is resized
 let CW=0,CH=0;
 function sizeCanvas(){ const d=Math.min(devicePixelRatio||1,2); CW=Math.round(film.clientWidth*d); CH=Math.round(film.clientHeight*d);
-  if(cv.width!==CW||cv.height!==CH){ cv.width=CW; cv.height=CH; } dirty=true; }
+  if(cv.width!==CW||cv.height!==CH){ cv.width=CW; cv.height=CH; } smooth(); dirty=true; }
 
 // framing: character at 74% across on wide screens, centred on small screens (phone frames are already centred)
 function geom(sw,sh,f,W,H){ const s=Math.max(W/sw,H/sh), dw=sw*s, dh=sh*s, fx=tier==='m'?0.5:f;

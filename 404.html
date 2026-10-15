@@ -12,7 +12,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="preload" as="image" href="/film-95887671/keys/k5-d.webp">
+<link rel="preload" as="image" href="/film-696e0100/keys/k5-d.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
@@ -25,7 +25,7 @@ html,body{margin:0;height:100%;background:#0e1030;color:#fff;overflow:hidden}
 body{font-family:var(--text);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
-.film{position:fixed;inset:0;background:#0e1030 url("/film-95887671/keys/k5-d.webp") center/cover no-repeat}
+.film{position:fixed;inset:0;background:#0e1030 url("/film-696e0100/keys/k5-d.webp") center/cover no-repeat}
 .film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:78% 50%;opacity:0;transition:opacity .6s ease}
 .film video.on{opacity:1}
 .shade{position:fixed;inset:0;pointer-events:none;
@@ -138,7 +138,7 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-ev]'); if
 
 // the archer's scene keeps moving in the background, like the home page
 const v=document.getElementById('v');
-v.src='/film-95887671/v/L5-'+(innerWidth<600?'m':'d')+'.mp4';
+v.src='/film-696e0100/v/L5-'+(innerWidth<600?'m':'d')+'.mp4';
 v.addEventListener('playing',()=>v.classList.add('on'),{once:true});
 const go=()=>{const p=v.play(); if(p&&p.catch) p.catch(()=>{});};
 go(); ['touchstart','click','keydown'].forEach(ev=>addEventListener(ev,go,{once:true,passive:true}));
