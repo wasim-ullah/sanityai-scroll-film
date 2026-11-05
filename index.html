@@ -39,7 +39,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 .grow{animation:grow linear both;animation-timeline:view();animation-range:entry 0% entry 85%}
 }
 @media (prefers-reduced-motion:reduce){.rise,.msg,.sv,.fv,.ink,.px,.grow{animation:none !important}}
-@media (max-width:900px){.stage{grid-template-columns:minmax(0,1fr) !important}.peek{display:none !important}.navlinks{display:none !important}.split{grid-template-columns:1fr !important}.sticky{position:static !important}}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px;border:0 !important;background:transparent !important}.tiles>div{border:1px solid #dcdcd8 !important;border-radius:8px;min-height:150px !important}.navwa{display:none !important}.stage{grid-template-columns:minmax(0,1fr) !important}.peek{display:none !important}.navlinks{display:none !important}.split{grid-template-columns:1fr !important}.sticky{position:static !important}}
 </style>
 
 <style>[hidden]{display:none !important}html{scroll-behavior:smooth}</style>
@@ -59,8 +59,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <a href="#industries" style="text-decoration: none; display: flex; align-items: center; gap: 6px;">Industries <span aria-hidden="true" style="width: 16px; height: 16px; border-radius: 3px; background: #e7e7e4; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; color: #111111;">+</span></a>
 </nav>
 <div style="margin-left: auto; display: flex; gap: 8px;">
-<a href="https://wa.me/971585785819" style="font-size: 13px; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">WhatsApp</a>
-<a href="#start" style="font-size: 13px; color: #ffffff; background: #111111; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; gap: 6px; border-radius: 6px; white-space: nowrap;">Book a call <span aria-hidden="true">↗</span></a>
+<a class="navwa" href="https://wa.me/971585785819" style="font-size: 13px; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">WhatsApp</a>
+<a href="#start" style="font-size: 13px; color: #ffffff; background: #111111; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; gap: 6px; border-radius: 6px; white-space: nowrap;">Book a call <span aria-hidden="true">↗︎</span></a>
 </div>
 </div>
 </header>
@@ -73,7 +73,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <div class="rise d2" style="flex: 0 1 270px; padding-top: 6px;">
 <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #4a4b50;">Websites, ads, search and WhatsApp automation from one team, measured on enquiries and revenue.</p>
 <div style="margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap;">
-<a href="#start" style="font-size: 13px; color: #ffffff; background: #111111; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; gap: 6px; border-radius: 6px; white-space: nowrap;">Book a call <span aria-hidden="true">↗</span></a>
+<a href="#start" style="font-size: 13px; color: #ffffff; background: #111111; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; gap: 6px; border-radius: 6px; white-space: nowrap;">Book a call <span aria-hidden="true">↗︎</span></a>
 <a href="#approach" style="font-size: 13px; text-decoration: none; padding: 0 14px; min-height: 36px; display: flex; align-items: center; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">How we work</a>
 </div>
 </div>
@@ -132,7 +132,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <section id="services" style="max-width: 1100px; margin: 0 auto; padding: 150px 16px 0; box-sizing: border-box;">
 <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #33343a;"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 3px; background: #e2e2df; display: inline-flex; align-items: center; justify-content: center;"><span style="width: 5px; height: 5px; background: #9a9aa0; transform: rotate(45deg);"></span></span>A simpler way to grow</div>
 <p class="sv" style="margin: 18px 0 0; max-width: 21em; font-size: clamp(26px, 2.6vw, 36px); line-height: 1.2; letter-spacing: -0.035em; color: #a3a3a6;">Your business doesn't need <span class="focus ink" style="color: #111111;">another supplier</span> to manage. It needs <span class="focus ink" style="color: #111111;">one team that owns the result</span>. We bring your website, ads, search and follow-up into one place.</p>
-<div class="sv" style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border: 1px solid #e2e2df; background: #f0f0ee;">
+<div class="sv tiles" style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border: 1px solid #e2e2df; background: #f0f0ee;">
 
 <div class="hz-tile" style="min-height:190px;padding:16px;display:flex;flex-direction:column;box-sizing:border-box;border-right:1px solid #e2e2df;">
 <button type="button" class="hz-tbtn" aria-expanded="false" aria-label="More about Websites" style="width: 28px; height: 28px; border: 0; border-radius: 5px; background: #e2e2df; color: #111111; cursor: pointer; font-size: 16px;">+</button>
@@ -194,7 +194,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <img src="/assets/haze/haze-lilac.jpg" alt="" class="px" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
 <div class="panel fv" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(320px, calc(100% - 40px)); border-radius: 10px; overflow: hidden;">
 <div style="display: flex; align-items: center; gap: 5px; padding: 9px 12px; border-bottom: 1px solid #e7e7e4;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #d4d4d0;"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #d4d4d0;"></span><span style="width: 7px; height: 7px; border-radius: 50%; background: #d4d4d0;"></span><span style="margin-left: 8px; font-size: 11px; color: #6e6f74;">yourstudio.ae</span></div>
-<div style="padding: 18px 16px 20px;"><div style="font-size: 22px; line-height: 1.1; letter-spacing: -0.04em;">Rooms that feel like you.</div><div style="margin-top: 8px; font-size: 11px; color: #6e6f74;">Book a site visit ↗</div></div>
+<div style="padding: 18px 16px 20px;"><div style="font-size: 22px; line-height: 1.1; letter-spacing: -0.04em;">Rooms that feel like you.</div><div style="margin-top: 8px; font-size: 11px; color: #6e6f74;">Book a site visit ↗︎</div></div>
 </div>
 </div>
 <p class="sv" style="margin: 16px 0 0; font-size: 13px; line-height: 1.5; color: #77787d; max-width: 30em;"><span style="color: #111111; font-weight: 500;">Look like the best option.</span> A website people remember, ads that match it and tracking that shows where every lead came from.</p>
@@ -207,7 +207,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <div class="grow" style="position: relative; height: 330px; overflow: hidden;">
 <img src="/assets/haze/haze-dawn.jpg" alt="" class="px" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
 <div class="panel fv" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(300px, calc(100% - 40px)); border-radius: 10px; padding: 12px 14px; font-size: 12px; display: flex; flex-direction: column; gap: 4px;">
-<div style="display: flex; justify-content: space-between; align-items: center; color: #55565a; padding-bottom: 6px;"><span>Quick actions</span><span aria-hidden="true">↺</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; color: #55565a; padding-bottom: 6px;"><span>Quick actions</span><span aria-hidden="true">↺︎</span></div>
 <div style="padding: 7px 0; border-top: 1px solid #ececea;">Reply to tonight's enquiries</div>
 <div style="padding: 7px 0; border-top: 1px solid #ececea;">Send this month's report</div>
 <div style="padding: 7px 0; border-top: 1px solid #ececea;">Pause the ad that isn't booking</div>
@@ -220,7 +220,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <div class="split" style="margin-top: 96px; display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: end;">
 <div>
 <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #33343a;">Less time chasing suppliers.<br>More time with your clients.</p>
-<a href="#start" style="margin-top: 16px; font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Book a call <span aria-hidden="true">↗</span></a>
+<a href="#start" style="margin-top: 16px; font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Book a call <span aria-hidden="true">↗︎</span></a>
 </div>
 <div class="sv" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px;">
 <div><div style="font-size: clamp(44px, 4.4vw, 60px); letter-spacing: -0.06em; line-height: 1;">$1M+</div><div style="margin-top: 10px; font-size: 12px; font-weight: 500;">Revenue traced to our campaigns</div></div>
@@ -238,7 +238,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <div class="grow" style="position: relative; height: 380px; overflow: hidden;">
 <img src="/assets/haze/haze-dusk.jpg" alt="" class="px" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
 <div class="panel fv" style="position: absolute; left: 24px; top: 40px; width: min(260px, calc(100% - 48px)); border-radius: 10px; padding: 14px 16px; font-size: 11px; display: flex; flex-direction: column; gap: 8px;">
-<div style="display: flex; justify-content: space-between; color: #55565a;"><span>Clinic dashboard</span><span aria-hidden="true">⤢</span></div>
+<div style="display: flex; justify-content: space-between; color: #55565a;"><span>Clinic dashboard</span><span aria-hidden="true">⤢︎</span></div>
 <div style="color: #6e6f74;">Today, 9:41</div>
 <div style="display: flex; gap: 8px;"><span aria-hidden="true">•</span>Missed calls now get a WhatsApp reply</div>
 <div style="display: flex; gap: 8px;"><span aria-hidden="true">•</span>Whitening ads bring most bookings</div>
@@ -246,7 +246,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 </div>
 </div>
 <p class="sv" style="margin: 16px 0 0; font-size: 13px; line-height: 1.5; color: #77787d; max-width: 26em;"><span style="color: #111111; font-weight: 500;">Clinics and health.</span> Full diaries from ads, search and instant WhatsApp replies.</p>
-<a href="#start" style="margin-top: 14px; font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Explore <span aria-hidden="true">↗</span></a>
+<a href="#start" style="margin-top: 14px; font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Explore <span aria-hidden="true">↗︎</span></a>
 </article>
 <article class="sv">
 <div class="grow" style="position: relative; height: 380px; overflow: hidden;">
@@ -258,7 +258,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 </div>
 </div>
 <p class="sv" style="margin: 16px 0 0; font-size: 13px; line-height: 1.5; color: #77787d; max-width: 26em;"><span style="color: #111111; font-weight: 500;">Real estate and design.</span> Sites and campaigns that make high-value buyers book the viewing.</p>
-<a href="#start" style="margin-top: 14px; font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Explore <span aria-hidden="true">↗</span></a>
+<a href="#start" style="margin-top: 14px; font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Explore <span aria-hidden="true">↗︎</span></a>
 </article>
 </div>
 </section>
@@ -270,7 +270,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <div style="position: relative; max-width: 1100px; margin: 0 auto; padding: 72px 16px 72px; box-sizing: border-box;">
 <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 12px;"><span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 3px; background: rgba(255,255,255,0.3);"></span>11+ years marketing in the Gulf</div>
 <h2 class="sv" style="margin: 14px 0 0; font-weight: 400; font-size: clamp(30px, 3vw, 42px); line-height: 1.1; letter-spacing: -0.045em; max-width: 12em;">Better marketing starts with a <span class="focus">clearer plan.</span></h2>
-<a href="https://wa.me/971585785819" style="margin-top: 18px; font-size: 12px; color: #111111; background: #ffffff; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px;">Book a call <span aria-hidden="true">↗</span></a>
+<a href="https://wa.me/971585785819" style="margin-top: 18px; font-size: 12px; color: #111111; background: #ffffff; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px;">Book a call <span aria-hidden="true">↗︎</span></a>
 
 <div class="smoke sv" style="margin: 120px 0 0 auto; max-width: 640px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
 <div style="padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 64px;">
@@ -298,7 +298,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <div role="img" aria-label="SanityAI" style="font-size: 14px;"><span class="mark">Sanity<span class="bar"></span>AI</span></div>
 <div style="margin-top: 14px; font-size: 22px; line-height: 1.15; letter-spacing: -0.04em; max-width: 10em;">Your business, <span class="focus">found and chosen.</span></div>
 <div style="margin-top: 14px; display: flex; gap: 6px;">
-<a href="#start" style="font-size: 12px; color: #ffffff; background: #111111; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px;">Book a call <span aria-hidden="true">↗</span></a>
+<a href="#start" style="font-size: 12px; color: #ffffff; background: #111111; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px;">Book a call <span aria-hidden="true">↗︎</span></a>
 <a href="mailto:work@sanity.ai" style="font-size: 12px; text-decoration: none; padding: 0 12px; min-height: 32px; display: inline-flex; align-items: center; border: 1px solid #d6d6d2; border-radius: 6px; background: #ffffff;">Email us</a>
 </div>
 </div>
@@ -307,7 +307,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #1111
 <span style="font-size: 12px; color: #55565a; line-height: 1.45;">One short email a month on what's working in GCC marketing.</span>
 <div style="display: flex; gap: 6px; margin-top: 4px;">
 <input id="news" type="email" placeholder="Enter your email" style="flex: 1; min-width: 0; height: 34px; border: 1px solid #d6d6d2; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 12px; background: #ffffff;">
-<button type="submit" style="height: 34px; padding: 0 12px; border: 0; border-radius: 6px; background: #111111; color: #ffffff; font-size: 12px; cursor: pointer;">Subscribe ↗</button>
+<button type="submit" style="height: 34px; padding: 0 12px; border: 0; border-radius: 6px; background: #111111; color: #ffffff; font-size: 12px; cursor: pointer;">Subscribe ↗︎</button>
 </div>
 </form>
 </div>
